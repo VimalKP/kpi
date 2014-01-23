@@ -1,3 +1,16 @@
+<script type="text/javascript">
+    function addmore()
+    {
+        var no=document.getElementById("tb_no").value;
+        var next=parseInt(no)+1;
+        $("#tb_no").val(next);
+        $("#lists").append('<input type="text" name="usertype_list[]" class="form-control rounded" style="margin-bottom: 5px;" value="" id="l'+(next)+'">');
+    }
+    //            function deleteTb(){
+    //                var no=$("tb_no").val();
+    //
+    //            }
+</script>
 <div class="all-wrapper fixed-header left-menu">
     <div class="main-content">
         <div class="modal-dialog">
@@ -31,7 +44,7 @@
                             <div class="modal-body">
                                 <form action="#" role="form" class="form-horizontal">
 
-
+                                    <input type="hidden" value="1" name="tb_no" id="tb_no">
 
                                     <div class="form-group">
                                         <label class="col-md-4 control-label">Company Name</label>
@@ -91,6 +104,15 @@
                                         <div class="col-md-8">
                                             <input class="form-control rounded" placeholder="Enter Company's Twitter Page Link If Available">
                                         </div>
+                                    </div>
+                                    <div class="form-group" >
+                                        <label class="col-md-4 control-label">Company Website</label>
+                                        <div class="col-md-6" id="lists">
+                                            <input type="text" name="usertype_list[]" class="form-control rounded" style="margin-bottom: 5px;" value="" id="l1">
+                                        </div>
+                                        <a href="javascript:addmore();">
+                                            <img alt="+" src="<?php echo base_url(); ?>images/add.png" width="29" height="29" style="padding: 0px; margin: 0px 0px -9px;">
+                                        </a>
                                     </div>
 
                                     <div class="form-group">
