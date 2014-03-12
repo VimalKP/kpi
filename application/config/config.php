@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://kpi.net16.net/';
+$config['base_url']	= 'http://localhost/kpi/';
 
 /*
 |--------------------------------------------------------------------------
