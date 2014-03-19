@@ -72,7 +72,7 @@ class Registration_model extends CI_Model {
     public function select($loginValues) {
         extract($loginValues);
 //        print_r($loginValues);
-        $query = $this->db->get_where('registration', array('username' => $username, 'password' => $password));
+        $query = $this->db->get_where('registration', array('username' => $username, 'password' => $password,'registration_status' => 0));
 
 //       / print_r($loginValues);
         return $query->result();
@@ -80,12 +80,24 @@ class Registration_model extends CI_Model {
     }
 
     public function get_user() {
-
-        $query = $this->db->get('registration');
+//        $this->db->where('registration_status', 0);
+//        $query = $this->db->get('registration');
+        $query = $this->db->get_where('registration', array('company_id' => $company_id, 'registration_status' => 0));
+//        return $query->result();
 //        print_r($query);
 //        exit ();
 
         return $query->result();
+    }
+
+    public function del_particular_user($user_id,$regstatus) {
+        $data = array(
+            'registration_status' => $regstatus,
+        );
+//        $this->db->where('id', $id);
+        $this->db->where('user_id', $user_id);
+        $this->db->update('registration', $data);
+//        return $query->result();
     }
 
     function get_child_user($userid) {
@@ -93,12 +105,14 @@ class Registration_model extends CI_Model {
         return $query->result();
     }
 
-    function get_user_detail() {
-        $this->db->select('firstname, lastname, username, email_id, phone_number, parent_id'); //
-        $this->db->select('user_id');
+    function get_user_detail($company_id) {
+        $this->db->select('*');
+        $query = $this->db->get_where('registration', array('company_id' => $company_id));
+//        $this->db->select('user_id');
+//        $parent_name = array(user_id,username);
 //        $this->db->from('blogs');
 //        $this->db->join('comments', 'comments.id = blogs.id');
-        $query = $this->db->get('registration');
+//        $query = $this->db->get('registration');
         return $query->result();
     }
 
@@ -119,10 +133,10 @@ class Registration_model extends CI_Model {
         return $query->result();
     }
 
-    public function getimage($image) {
-        $query2 = $this->db->query("SELECT images FROM registration WHERE user_id = $image")->row();
-        return $query2->images;
-    }
+//    public function getimage($image) {
+//        $query2 = $this->db->query("SELECT images FROM registration WHERE user_id = $image")->row();
+//        return $query2->images;
+//    }
 
     public function updatedata($postArr, $id) {
 

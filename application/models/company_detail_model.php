@@ -65,6 +65,7 @@ class Company_detail_model extends CI_Model {
 
     public function insertdata($companyarr) {
         $this->db->insert('company_detail', $companyarr);
+        return $this->db->insert_id();
     }
 
     public function getcompanydetail($cid) {

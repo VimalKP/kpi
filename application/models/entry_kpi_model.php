@@ -71,6 +71,33 @@ class Entry_kpi_model extends CI_Model {
 //        exit();
         return $query->result();
     }
+    
+    
+    function get_assign_target($user_id_fk) {
+//         $names = array('Frank', 'Todd', 'James');
+//SELECT *
+//FROM `kpi_master` AS k
+//JOIN target AS t ON t.kpi_id_fk = k.kpi_id
+//WHERE k.kpi_id
+//IN ( 3, 1 )
+//AND t.user_id_fk =4
+//         $this->db->select('*');
+//        $this->db->from($this->tableName);
+//        $this->db->join('brand_detail', 'brand_detail.brand_id = posts.brand_id_fk');
+//        $this->db->where('brand_detail.company_id_fk', $comany_id);
+//        $this->db->where('brand_detail.channel_name', $channel_name);
+        $this->db->select('*');
+        $this->db->from('kpi_master as k');
+        $this->db->join('target as t', 't.kpi_id_fk = k.kpi_id');
+        $this->db->where('t.user_id_fk', $user_id_fk);
+//        $this->db->where_in('k.kpi_id', $kpiarr);
+//        $query = $this->db->get('kpi_master');
+        $query = $this->db->get();
+        if ($query->num_rows() > 0)
+            return $query->result_array();
+        else
+            return array();
+    }
 
 }
 

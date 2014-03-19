@@ -71,6 +71,15 @@ class Kpi_master_model extends CI_Model {
 //        exit ();
     }
 
+    public function get_kpis_record($kpiArr = array()) {
+        $this->db->where_in('kpi_id', $kpiArr);
+        $sql = $this->db->get($this->tableName);
+        if ($sql->num_rows() > 0)
+            return $sql->result_array();
+        else
+            return array();
+    }
+
 }
 
 ?>

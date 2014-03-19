@@ -5,6 +5,12 @@
         <link rel="stylesheet" type="text/css" href="css/style2.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="css/devheart-examples.css" media="screen" />
         <link type="text/css" rel="stylesheet" href="<?php echo base_url() ?>font-awesome/css/font-awesome.min.css" >
+<!--         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+        <script type="text/javascript" src="<?php echo base_url() ?>js/jquery.tokeninput.js"></script>
+
+        <link rel="stylesheet" href="<?php echo base_url() ?>css/token-input.css" type="text/css" />
+        <link rel="stylesheet" href="<?php echo base_url() ?>css/token-input-facebook.css" type="text/css" />-->
+     
     </head>
 
     <body class="glossed" data-savefrom-link-count="182">
@@ -51,7 +57,7 @@
                                 <div class="padded-no-sides">
                                     <div id="areachart" style="height: 250px;">
 
-                                        
+
 
                                     </div>
 
@@ -155,56 +161,67 @@
 
                             <div class="widget-content">
                                 <ul class="chat-messages-list">
-                                    <li>
-                                        <div class="row">
-                                            <div class="col-xs-2">
-                                                <div class="avatar">
-                                                    <img src="images/no-avatar.png" alt="">
+                                    <?php
+                                    if (isset($twitterdata)) {
+                                        for ($i = 0; $i < count($twitterdata); $i++) {
+                                            $content = $twitterdata[$i]['content'];
+                                            $brand = $twitterdata[$i]['brand'];
+                                            $posted = date('M d', strtotime($twitterdata[$i]['posted']));
+                                            ?>
+                                            <li>
+                                                <div class="row">
+                                                    <div class="col-xs-2">
+                                                        <div class="avatar">
+                                                            <img src="images/no-avatar.png" alt="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-10">
+                                                        <div class="chat-bubble chat-bubble-right">
+                                                            <div class="bubble-arrow"></div>
+                                                            <div class="meta-info"><a href="#">@<?= ucfirst($brand) ?></a> on <?= $posted ?></div>
+                                                            <p><?= $content ?></p>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-xs-10">
-                                                <div class="chat-bubble chat-bubble-right">
-                                                    <div class="bubble-arrow"></div>
-                                                    <div class="meta-info"><a href="#">@johnronald</a> on Jun 25</div>
-                                                    <p>Mr. Rajesh Patel (Salse Department) Won Gold Medal In Final Year Of Master Of Management.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <li>
-                                        <div class="row">
-                                            <div class="col-xs-2">
-                                                <div class="avatar">
-                                                    <img src="images/no-avatar.png" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-10">
-                                                <div class="chat-bubble chat-bubble-right">
-                                                    <div class="bubble-arrow"></div>
-                                                    <div class="meta-info"><a href="#">@johnronald</a> on Jun 26</div>
-                                                    <p>Leave Management Page Is Start Soon.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <li>
-                                        <div class="row">
-                                            <div class="col-xs-2">
-                                                <div class="avatar">
-                                                    <img src="images/no-avatar.png" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-10">
-                                                <div class="chat-bubble chat-bubble-right">
-                                                    <div class="bubble-arrow"></div>
-                                                    <div class="meta-info"><a href="#">@johnronald</a> on Jun 27</div>
-                                                    <p>CONGRATULATION, Company Won Best Company Award Of Year 2013.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
+                                            </li>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+                                    <!--
+                                                                        <li>
+                                                                            <div class="row">
+                                                                                <div class="col-xs-2">
+                                                                                    <div class="avatar">
+                                                                                        <img src="images/no-avatar.png" alt="">
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-10">
+                                                                                    <div class="chat-bubble chat-bubble-right">
+                                                                                        <div class="bubble-arrow"></div>
+                                                                                        <div class="meta-info"><a href="#">@johnronald</a> on Jun 26</div>
+                                                                                        <p>Leave Management Page Is Start Soon.</p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+                                    
+                                                                        <li>
+                                                                            <div class="row">
+                                                                                <div class="col-xs-2">
+                                                                                    <div class="avatar">
+                                                                                        <img src="images/no-avatar.png" alt="">
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-10">
+                                                                                    <div class="chat-bubble chat-bubble-right">
+                                                                                        <div class="bubble-arrow"></div>
+                                                                                        <div class="meta-info"><a href="#">@johnronald</a> on Jun 27</div>
+                                                                                        <p>CONGRATULATION, Company Won Best Company Award Of Year 2013.</p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>-->
 
                                 </ul>
                             </div>
@@ -310,13 +327,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">  <?php $this->load->view('company_temp_view'); ?></div>
-
-
-
-
-
-
+                <div class="row">  <?php
+                                    $company_id = $this->session->userdata('company_id');
+//                                    echo '<pre>';
+//                                    print_r($company_id);
+//                                    echo '</pre>';
+//                                    exit();
+                                    if ($company_id == '') {
+                                        $this->load->view('company_temp_view');
+                                    }
+                                    ?></div>
             </div>
 
         </div>

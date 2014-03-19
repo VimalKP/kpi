@@ -54,15 +54,8 @@ $this->load->library('form_validation');
                                     }
                                     ?>
 
-                                     <input class="form-control rounded" type="text" id="" name=""  value="<?php echo $username; ?>">
+                                    <input class="form-control rounded" type="text" id="" name=""  value="<?php echo $username; ?>" disabled="disabled">
 
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Name Of KPI / Assigned KPI</label>
-                                <div class="col-xs-6">
-                                    <input class="form-control rounded" type="text" id="" name="" placeholder="Name Of KPI" disabled="disabled">
                                 </div>
                             </div>
 
@@ -75,14 +68,20 @@ $this->load->library('form_validation');
                                                         </div>-->
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label" style="font-size: 15px;">Task Name</label>
+                                <label class="col-md-3 control-label" style="font-size: 15px;">Task Name</label>
                                 <div class="col-md-8">
                                     <label class="col-md-6 control-label" style="font-size: 15px;">Entry Of Work (With Assigned Work)</label>
                                 </div>
                             </div>
 
+
+
+
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Task 1</label>
+                                <?php
+                                     $kpiname=array();
+                                ?>
+                                <label class="col-md-3 control-label">    </label>
 
                                 <div class="row bottom-margin">
                                     <div class="col-xs-2">
@@ -93,98 +92,23 @@ $this->load->library('form_validation');
                                         <input class="form-control" type="text" placeholder="50" disabled="disabled">
                                     </div>
 
-                                    <div class="col-xs-3">
+                                    <div class="col-xs-2">
                                         <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <input type="checkbox">
-                                            </span>
                                             <textarea class="form-control" rows="1" type="text" placeholder="Comment..."></textarea>
                                         </div>
                                     </div>
-                                </div>
-
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Task 2</label>
-
-                                <div class="row bottom-margin">
-                                    <div class="col-xs-2">
-                                        <input class="form-control">
-                                    </div>
 
                                     <div class="col-xs-2">
-                                        <input class="form-control" type="text" placeholder="30" disabled="disabled">
+                                        <button id="" type="submit" class="btn btn-primary">ADD</button>
                                     </div>
 
-                                    <div class="col-xs-3">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <input type="checkbox">
-                                            </span>
-                                            <textarea class="form-control" rows="1" type="text" placeholder="Comment..."></textarea>
-                                        </div>
-                                    </div>
                                 </div>
 
                             </div>
 
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Task 3</label>
-
-                                <div class="row bottom-margin">
-                                    <div class="col-xs-2">
-                                        <input class="form-control" type="text">
-                                    </div>
-
-                                    <div class="col-xs-2">
-                                        <input class="form-control" type="text" placeholder="10" disabled="disabled">
-                                    </div>
-
-                                    <div class="col-xs-3">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <input type="checkbox">
-                                            </span>
-                                            <textarea class="form-control" rows="1" type="text" placeholder="Comment..."></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Task 4</label>
-
-                                <div class="row bottom-margin">
-
-                                    <div class="col-xs-4">
-                                        <select id="" name="" class="form-control rounded">
-                                            <option>YES</option>
-                                            <option>NO</option>
-                                        </select>
-                                    </div>
 
 
-                                    <div class="col-xs-3">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <input type="checkbox">
-                                            </span>
-                                            <textarea class="form-control" rows="1" type="text" placeholder="Comment..."></textarea>
-                                        </div>
-                                    </div>
-                                </div>
 
-                            </div>
-
-                            <div class="form-group">
-
-                                <div class="col-xs-12">
-                                    <center><button id="" type="submit" class="btn btn-primary">SUBMIT</button></center>
-                                </div>
-
-                            </div>
 
                         </form>
                     </div>

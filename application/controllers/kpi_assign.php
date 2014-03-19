@@ -14,7 +14,7 @@ class Kpi_assign extends CI_Controller {
         $this->load->model('registration_model');
         $data['usergetArr'] = $this->registration_model->get_child_user($userid);
         $this->load->model('kpi_master_model');
-        $data['kpiArr'] = $this->kpi_master_model->getAllKpi();
+        $data['kpiArr'] = $this->kpi_master_model->get_record();
 
         $this->load->view('common/header_view');
         $this->load->view('common/sidebar_view');
@@ -48,6 +48,42 @@ class Kpi_assign extends CI_Controller {
 //        }
 //    }
 
+    public function fetch_kpi_of_user() {
+
+        $user_id_fk = $this->input->post('userid');
+
+        $this->load->model('kpi_user_model');
+        $this->load->model('kpi_master_model');
+        $assignkpiarr = $this->kpi_user_model->get_record(array('user_id_fk' => $user_id_fk));
+
+        $all_kpi = $this->kpi_master_model->get_record();
+        $all_kpi_arr = array();
+        if (count($all_kpi) > 0)
+            foreach ($all_kpi as $value) {
+                $all_kpi_arr[$value['kpi_id']] = $value['kpi_name'];
+            }
+
+        if (count($assignkpiarr) > 0) {
+            $assignkpi = $assignkpiarr[0]['kpi_id_fk'];
+            $kpiarr = explode(',', $assignkpi);
+
+            $assigned_kpi = $this->kpi_master_model->get_kpis_record($kpiarr);
+
+            $assigned_kpi_arr = array();
+            if (count($assigned_kpi) > 0)
+                foreach ($assigned_kpi as $value) {
+                    $assigned_kpi_arr[$value['kpi_id']] = $value['kpi_name'];
+                }
+            $result['assigned_kpi'] = $assigned_kpi_arr;
+            $unassgned = array_diff($all_kpi_arr, $assigned_kpi_arr);
+            $result['unassigned_kpi'] = $unassgned;
+        } else {
+            $result['unassigned_kpi'] = $all_kpi_arr;
+        }
+        
+        echo json_encode($result);
+    }
+
     public function assign() {
 
         $kpi_assign_user_id_fk = $this->input->post('user_id_fk');
@@ -73,7 +109,8 @@ class Kpi_assign extends CI_Controller {
             $this->load->helper(array('form'));
             $this->load->model('kpi_user_model');
 
-             $this->kpi_user_model->insert_record($postArray);
+//             $this->kpi_user_model->insert_record($postArray);
+            $this->kpi_user_model->upsert_record($kpi_assign_user_id_fk, $kpi_assign_kpi_id_fk);
 
 //            echo"<pre>";
 //            print_r($postArray);
@@ -82,7 +119,7 @@ class Kpi_assign extends CI_Controller {
 
             $this->load->view('common/header_view');
             $this->load->view('common/sidebar_view');
-            $this->load->view('target_assign_view');
+            $this->load->view('home_view');
             $this->load->view('common/footer_view');
         }
     }

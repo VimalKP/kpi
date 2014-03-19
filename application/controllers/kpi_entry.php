@@ -15,9 +15,16 @@ class Kpi_entry extends CI_Controller {
 //            $this->load->view('login_view');
 //            $this->load->view('common/footer_view');
 //        } else {
+        $user_id = $this->session->userdata('user_id');
         $this->load->model('entry_kpi_model');
-        $data['data'] = $this->entry_kpi_model->getentrydetail($this->session->userdata('user_id'));
+        $data['data'] = $this->entry_kpi_model->getentrydetail($user_id);
 
+
+        $data['get_target'] = $this->entry_kpi_model->get_assign_target($user_id);
+//        echo '<pre>';
+//        print_r($data);
+//        echo '</pre>';
+//        exit();
         $this->load->view('common/header_view');
         $this->load->view('common/sidebar_view');
 

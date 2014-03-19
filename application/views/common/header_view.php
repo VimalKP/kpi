@@ -28,7 +28,8 @@
 
         <title>KPI Growth Management</title>
 
-        <script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+        <script type="text/javascript" src="<?php echo base_url() ?>js/jquery-1.3.2.min.js"></script>
+        <script type="text/javascript" src="<?php echo base_url() ?>js/application.js"></script>
 
 
         <script type="text/javascript">
@@ -134,7 +135,7 @@
                     <div class="dropdown">
                         <?php
                         if ($this->session->userdata('user_type_id_fk') != '') {
-                        ?>
+                            ?>
 
 
                             <a href="#" class="header-link clearfix" data-toggle="dropdown">
@@ -142,51 +143,51 @@
     <!--                                    <img src="<?php echo base_url() ?>images/no-avatar.png" alt="">-->
 
                                     <img src="<?php echo base_url() ?>images/profile_pic/<?= $img ?>">
-    <!--                                    <img src="<?php // echo site_url("register/loadImg/")        ?>">-->
+    <!--                                    <img src="<?php // echo site_url("register/loadImg/")         ?>">-->
 
                                 </div>
 
                                 <div class="user-name-w">
+                                    <?php
+                                    if ($this->session->userdata('user_type_id_fk') != '') {
+                                        $username = $this->session->userdata('username');
+                                        print_r($username);
+                                    }
+                                    ?>
+                                </div>
+
+                                <i class="fa fa-caret-down"></i>
+
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Profile</a></li>
+    <!--                            <li><a href="<?php echo base_url(); ?>register/edit_user?id=<?= $row->user_id ?>">Profile</a></li>-->
+
+
                                 <?php
                                 if ($this->session->userdata('user_type_id_fk') != '') {
-                                    $username = $this->session->userdata('username');
-                                    print_r($username);
-                                }
-                                ?>
-                            </div>
-
-                            <i class="fa fa-caret-down"></i>
-
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Profile</a></li>
-<!--                            <li><a href="<?php echo base_url(); ?>register/edit_user?id=<?= $row->user_id ?>">Profile</a></li>-->
-
-
-                            <?php
-                                if ($this->session->userdata('user_type_id_fk') != '') {
-                            ?>
+                                    ?>
 
 
                                     <li>
                                         <a href="<?php echo base_url() ?>login/logout" data-toggle="tooltip" data-placement="right">Logout</a>
                                     </li>
-                            <?php
+                                    <?php
                                 }
-                            ?>
+                                ?>
 
 
 
                             </ul>
-                        <?php
-                            }
+                            <?php
+                        }
                         ?>
-
-                        </div>
 
                     </div>
 
-                    <a class="current logo hidden-xs" href="<?php echo base_url() ?>home"><i class="fa fa-rocket"></i></a>
+                </div>
+
+                <a class="current logo hidden-xs" href="<?php echo base_url() ?>home"><i class="fa fa-rocket"></i></a>
 <!--                <a class="menu-toggler" href="#"><i class="fa fa-bars"></i></a>-->
                 <h1>KEY PERFORMANCE INDICATOR</h1>
             </div>

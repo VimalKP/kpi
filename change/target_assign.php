@@ -28,12 +28,28 @@ class Target_assign extends CI_Controller {
         $user_id_fk = $this->input->post('userid');
 
         $this->load->model('kpi_user_model');
+        $this->load->model('kpi_master_model');
         $assignkpiarr = $this->kpi_user_model->get_record(array('user_id_fk' => $user_id_fk));
         $assignkpi = $assignkpiarr[0]['kpi_id_fk'];
         $kpiarr = explode(',', $assignkpi);
 
-        $result = $this->kpi_user_model->get_assign_kpi($kpiarr, $user_id_fk);
-        
+        $all_kpi = $this->kpi_master_model->get_record();
+        $assigned_kpi = $this->kpi_user_model->get_assign_kpi($kpiarr);
+
+        $all_kpi_arr = array();
+        if (count($all_kpi) > 0)
+            foreach ($all_kpi as $value) {
+                $all_kpi_arr[$value['kpi_id']] = $value['kpi_name'];
+            }
+        $assigned_kpi_arr = array();
+        if (count($assigned_kpi) > 0)
+            foreach ($assigned_kpi as $value) {
+                $assigned_kpi_arr[$value['kpi_id']] = $value['kpi_name'];
+            }
+        $result['assigned_kpi'] = $assigned_kpi_arr;
+        $unassgned = array_diff($all_kpi_arr, $assigned_kpi_arr);
+        $result['unassigned_kpi'] = $unassgned;
+
         echo json_encode($result);
     }
 
@@ -41,16 +57,9 @@ class Target_assign extends CI_Controller {
         $kpi_id_fk = $this->input->post('kpi_id_fk');
         $value = $this->input->post('value_of_target');
         $user_id_fk = $this->input->post('user_id_fk');
-        $select = array('kpi_id_fk' => $kpi_id_fk, 'user_id_fk' => $user_id_fk);
-        $update = array('value_of_target' => $value, 'target_date_added' => date("Y-m-d H:i:s"));
         $postArr = array('kpi_id_fk' => $kpi_id_fk, 'value_of_target' => $value, 'target_date_added' => date("Y-m-d H:i:s"), 'user_id_fk' => $user_id_fk);
         $this->load->model('target_model');
-        $data = $this->target_model->get_record($select);
-        if (count($data) > 0) {
-            $this->target_model->update_record($select, $update);
-        } else {
-            $this->target_model->insert_record($postArr);
-        }
+        $this->target_model->insert_record($postArr);
     }
 
 }

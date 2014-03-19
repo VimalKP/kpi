@@ -134,6 +134,21 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="col-md-4 control-label">User Type</label>
+                    <div class="col-md-8">
+
+                        <?php
+                        // if ((isset($data)) && $data[0]->facebook_page != '') {
+                        //   $cmpname = $data[0]->facebook_page;
+                        //} else {
+                        //    $cmpname = set_value('facebook_page');
+                        // }
+                        ?>
+                        <input type="text" id="usertypearr" name="usertype" class="form-control rounded"   placeholder="Enter user type"  />  
+<!--                        <input type="text" id="facebook_page" class="form-control rounded" placeholder="Enter Company's Facebook Page Link If Available" value="<?php // echo $cmpname;    ?>">-->
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="col-md-4 control-label">Facebook Page Link</label>
                     <div class="col-md-8">
 
@@ -166,7 +181,7 @@
 
 
                 <div class="form-group" style="display: none;">
-<!--                <div class="form-group" style="display: none;" >-->
+                    <!--                <div class="form-group" style="display: none;" >-->
                     <label class="col-md-4 control-label">User Type</label>
                     <div class="col-md-6" id="lists">
 
@@ -217,3 +232,14 @@
         </div>
     </div>
 </div>
+<!--<script type="text/javascript">
+    $(document).ready(function() {
+        $("#usertypearr").tokenInput("http://shell.loopj.com/tokeninput/tvshows.php", {
+            searchingText: "Meowing...",
+            allowCustomEntry: true,
+            preventDuplicates: true,
+            tokenDelimiter: "|",
+            theme: "facebook"
+        });
+    });
+</script>-->

@@ -1,11 +1,7 @@
 <?php
 $this->load->library('form_validation');
 ?>
-<style type="text/css">
-    .ui-sortable li{
-        border-radius: 15px;
-    }
-</style>
+
 <script type="text/javascript" src="<?php echo base_url(); ?>js/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>js/jquery-ui-1.8.custom.min.js"></script>
 <div class="all-wrapper fixed-header left-menu">
@@ -55,7 +51,7 @@ $this->load->library('form_validation');
                                     <?php
                                     $selected = set_value('user_id');
                                     ?>
-                                    <select id="user_id_fk" name="user_id_fk" class="form-control rounded" onchange="kpidrag(this.value);">
+                                    <select id="ait" name="user_id_fk" class="form-control rounded" onchange="kpidrag(this.value);">
                                         <option value="0">-----------------------SELECT--------------------------</option>
                                         <?php
                                         if (isset($usergetArr) && $usergetArr != array()) {
@@ -90,22 +86,24 @@ $this->load->library('form_validation');
 
                                         <!-- BEGIN: XHTML for example 1.3 -->
 
-                                        <div id="example-1-3" style="margin-left: 20%;">
+                                        <div id="example-1-3">
+
                                             <div class="column left first">
+
                                                 <h4><label class="kpiname">Available KPI :-</label></h4>
                                                 <ul class="sortable-list"  id="left_drag">
                                                     <?php
                                                     if (isset($kpiArr) && $kpiArr != array())
                                                         foreach ($kpiArr as $kpi) {
-                                                            ?>
-                                                            <li class="sortable-item" id="<?= $kpi['kpi_id'] ?>"><?= $kpi['kpi_name'] ?></li>
-                                                            <?php
+                                                    ?>
+                                                            <li class="sortable-item" id="<?= $kpi->kpi_id ?>"><?= $kpi->kpi_name ?></li>
+                                                    <?php
                                                         }
                                                     ?>
                                                 </ul>
                                             </div>
-                                            <div class="column left">
-                                                <h4><label id="kpi_id_fk" name="kpi_id_fk">Assign KPI :-</label></h4>
+                                            <h4><label id="kpi_id_fk" name="kpi_id_fk">Assign KPI :-</label></h4>
+                                            <div class="column left" >
                                                 <ul class="sortable-list right_ul" id="right_drag">
                                                 </ul>
                                             </div>
@@ -114,16 +112,12 @@ $this->load->library('form_validation');
                                         </div>
                                     </div>
 
-                                    <div class="alert alert-danger" id="errorDiv" style="display: none;margin-top: 15px;">
-                                        <i class="fa fa-times-circle"></i> &nbsp;&nbsp;<span id="errortext"></span>
-                                    </div>
+
                                     <div class="form-group">
                                         <div class="col-md-12">
                                             <!--                                    <button id="focusedInput" type="submit" class="">SIGN UP</button>-->
 
 <!--                                    <input type="submit" class="input-button" id="btn-get" value="Get items" />-->
-
-
 
                                             <br/>
                                             <center>
@@ -152,13 +146,8 @@ $this->load->library('form_validation');
             //                    containment: "parent"
         });
         $('#btn-get').click(function(){
-            $("#errorDiv").fadeOut("slow");
             var kpi_assign= getItems('#example-1-3');
-            if(kpi_assign==''){
-                $("#errortext").html("Please Assign atleast one KPI");
-                $("#errorDiv").fadeIn("slow");
-                return false;
-            }
+            //            console.log(kpi_assign);
             $("#assign_kpi_id").val(kpi_assign);
 
         });
