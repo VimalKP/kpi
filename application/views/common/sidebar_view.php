@@ -18,7 +18,7 @@ $this->load->library('calendar');
             </li>
 
             <?php
-            if ($this->session->userdata('user_type_id_fk') == 1) {
+            if ($this->session->userdata('user_type_id_fk') == 1) {//parent id =0
             ?>
                 <li>
                     <a href="<?php echo base_url() ?>register/get_register" data-toggle="tooltip" data-placement="right" title="" data-original-title="Users">
@@ -37,8 +37,18 @@ $this->load->library('calendar');
                 </li>
             <?php
             }
+            
+            if ($this->session->userdata('user_type_id_fk') == 1) {//parentid
+            ?>
+                <li>
+                    <a href="<?php echo base_url() ?>company/get_company" data-toggle="tooltip" data-placement="right" title="" data-original-title="All Company">
+                        <i class="fa fa-briefcase"></i>
+                    </a>
+                </li>
+            <?php
+            }
 
-            if ($this->session->userdata('user_type_id_fk') == 1) {
+            if ($this->session->userdata('user_type_id_fk') == 1) {//parent_id =0 
             ?>
                 <li>
                     <a href="<?php echo base_url() ?>company" data-toggle="tooltip" data-placement="right" title="" data-original-title="Company Details">

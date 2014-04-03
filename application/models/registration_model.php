@@ -72,14 +72,14 @@ class Registration_model extends CI_Model {
     public function select($loginValues) {
         extract($loginValues);
 //        print_r($loginValues);
-        $query = $this->db->get_where('registration', array('username' => $username, 'password' => $password,'registration_status' => 0));
+        $query = $this->db->get_where('registration', array('username' => $username, 'password' => $password, 'registration_status' => 0));
 
 //       / print_r($loginValues);
         return $query->result();
 //        return print_r($loginValues);
     }
 
-    public function get_user() {
+    public function get_user($company_id) {
 //        $this->db->where('registration_status', 0);
 //        $query = $this->db->get('registration');
         $query = $this->db->get_where('registration', array('company_id' => $company_id, 'registration_status' => 0));
@@ -90,7 +90,7 @@ class Registration_model extends CI_Model {
         return $query->result();
     }
 
-    public function del_particular_user($user_id,$regstatus) {
+    public function del_particular_user($user_id, $regstatus) {
         $data = array(
             'registration_status' => $regstatus,
         );
@@ -101,8 +101,17 @@ class Registration_model extends CI_Model {
     }
 
     function get_child_user($userid) {
-        $query = $this->db->get_where('registration', array('parent_id' => $userid));
+        $query = $this->db->get_where('registration', array('parent_id' => $userid,'registration_status'=>0));
         return $query->result();
+    }
+
+    function get_child_user_array($userid) {
+        $query = $this->db->get_where('registration', array('parent_id' => $userid,'registration_status'=>0));
+//        return $query->result();
+        if ($query->num_rows() > 0)
+            return $query->result_array();
+        else
+            return array();
     }
 
     function get_user_detail($company_id) {
@@ -117,7 +126,7 @@ class Registration_model extends CI_Model {
     }
 
     public function getuseralldetail($userid) {
-        $query = $this->db->get_where('registration', array('user_id' => $userid));
+        $query = $this->db->get_where('registration', array('user_id' => $userid,'registration_status'=>0));
         return $query->result();
     }
 
@@ -142,6 +151,18 @@ class Registration_model extends CI_Model {
 
         $this->db->where('user_id', $id);
         $this->db->update('registration', $postArr);
+    }
+
+    public function getAllregister() {
+        $query = $this->db->get('registration');
+        return $query->result();
+//        print_r($query);
+//        exit ();
+    }
+
+    function updateparentid($userid, $company_id) {
+        $query = $this->db->query("UPDATE registration as r ,(SELECT user_id FROM registration WHERE parent_id=0 AND company_id=$company_id AND registration_status=0 LIMIT 1) as e SET r.parent_id=e.user_id WHERE r.user_id=$userid");
+//        return $query->result();
     }
 
 //    function getext($id) {

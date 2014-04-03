@@ -88,7 +88,7 @@ $this->load->library('form_validation');
                                                 $sel = "selected";
                                             ?>
 
-                                            <input id="target_<?= $value->user_id ?>" class="" type="radio" name="user" style="cursor: pointer" onclick="kpigetname(this.id);">
+                                            <input id="usertarget_<?= $value->user_id ?>" class="" type="radio" name="user" style="cursor: pointer" onclick="kpigetname(this.id);">
 
                                             <?php
                                             echo "<label for='target_$value->user_id'>".$value->username . "</label></br>";

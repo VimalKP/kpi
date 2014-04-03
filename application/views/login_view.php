@@ -55,7 +55,7 @@ $this->load->library('form_validation');
                                         <span class="error"><?php echo form_error('password'); ?></span>
                                     </div>
                                 </div>
-                                <div class="form-group">
+<!--                                <div class="form-group">
                                     <div class="col-md-offset-3 col-md-9">
                                         <div class="checkbox">
                                             <label>
@@ -63,7 +63,7 @@ $this->load->library('form_validation');
                                             </label>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
 
                                 <div class="form-group">
                                     <div class="col-md-offset-3 col-md-9">

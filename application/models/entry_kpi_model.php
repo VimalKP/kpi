@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Description of Entry_kpi_model
  *
@@ -71,8 +72,7 @@ class Entry_kpi_model extends CI_Model {
 //        exit();
         return $query->result();
     }
-    
-    
+
     function get_assign_target($user_id_fk) {
 //         $names = array('Frank', 'Todd', 'James');
 //SELECT *
@@ -92,6 +92,36 @@ class Entry_kpi_model extends CI_Model {
         $this->db->where('t.user_id_fk', $user_id_fk);
 //        $this->db->where_in('k.kpi_id', $kpiarr);
 //        $query = $this->db->get('kpi_master');
+        $query = $this->db->get();
+        if ($query->num_rows() > 0)
+            return $query->result_array();
+        else
+            return array();
+    }
+
+    function get_child_entry($childArr) {
+        /*
+          SELECT * FROM `entry_kpi` as ke
+          join target as t ON t.user_id_fk=ke.user_id_fk
+          join kpi_master as k ON ke.kpi_id_fk=k.kpi_id
+          join registration r on ke.user_id_fk=r.user_id where ke.user_id_fk IN (4) AND date(ke.entry_kpi_date_added)=CURDATE() AND t.kpi_id_fk=ke.kpi_id_fk
+         * 
+         */
+//        $where = "name='Joe' AND status='boss' OR status='active'";
+
+//        $this->db->where($where);
+//        $query="SELECT * FROM `entry_kpi` as ke
+//          join target as t ON t.user_id_fk=ke.user_id_fk
+//          join kpi_master as k ON ke.kpi_id_fk=k.kpi_id
+//          join registration r on ke.user_id_fk=r.user_id where ke.user_id_fk IN (4) AND date(ke.entry_kpi_date_added)=CURDATE() AND t.kpi_id_fk=ke.kpi_id_fk";
+        $this->db->select('*');
+        $this->db->from('entry_kpi as ke');
+        $this->db->join('target as t', 't.user_id_fk=ke.user_id_fk');
+        $this->db->join('kpi_master as k', 'ke.kpi_id_fk=k.kpi_id');
+        $this->db->join('registration as r', 'ke.user_id_fk=r.user_id');
+        $this->db->where('t.kpi_id_fk =ke.kpi_id_fk');
+        $this->db->where_in('ke.user_id_fk', $childArr);
+        $this->db->where_in('date(ke.entry_kpi_date_added)', date('Y-m-d'));
         $query = $this->db->get();
         if ($query->num_rows() > 0)
             return $query->result_array();

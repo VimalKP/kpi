@@ -64,9 +64,9 @@ class User_type_model extends CI_Model {
             return FALSE;
     }
 
-    public function get_usertype() {
+    public function get_usertype($id) {
 //        extract();
-
+        $this->db->where_in('company_id_fk', $id);
         $query = $this->db->get('user_type');
 
         return $query->result();

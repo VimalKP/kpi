@@ -40,7 +40,8 @@ $this->load->library('form_validation');
 
                 <div class="widget-content">
                     <div class="modal-body">
-                        <form action="<?php echo base_url() ?>kpi_approve" role="form" class="form-horizontal" method="post">
+                        <form class="form-horizontal">
+<!--                        <form action="<?php // echo base_url()          ?>kpi_approve" role="form" class="form-horizontal" method="post">-->
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">User Name</label>
@@ -79,31 +80,80 @@ $this->load->library('form_validation');
 
                             <div class="form-group">
                                 <?php
-                                     $kpiname=array();
-                                ?>
-                                <label class="col-md-3 control-label">    </label>
+                                $kpiname = array();
+                                if (isset($get_target) && $get_target != array()) {
+                                    for ($i = 0; $i < count($get_target); $i++) {
+                                        $kpi_id = $get_target[$i]['kpi_id'];
+//                                        echo '<pre>';
+//                                        print_r($kpi_id);
+//                                        echo '</pre>';
+//                                        exit();
+                                        $value_of_target = $get_target[$i]['value_of_target'];
+                                        $user_id_fk = $get_target[$i]['user_id_fk'];
+                                        $trueselected = '';
+                                        $falseselected = '';
+                                        $trueselecteddb = '';
+                                        $falseselecteddb = '';
+                                        $comment = '';
+                                        $class = 'add';
+                                        $lable = 'ADD';
+                                        $disabled = '';
+                                        if ($value_of_target == 'true') {
+                                            $trueselecteddb = 'selected';
+                                        } else {
+                                            $falseselecteddb = 'selected';
+                                        }
+                                        $val = '';
+                                        if (isset($fetchentry) && $fetchentry != array()) {
+                                            if (@$fetchentry[$kpi_id]) {
+                                                $val = $fetchentry[$kpi_id]['kpi_value'];
+                                                if ($val == 'true') {
+                                                    $trueselected = 'selected';
+                                                } else {
+                                                    $falseselected = 'selected';
+                                                }
+                                                $class = 'update';
+                                                $lable = 'UPDATE';
+                                                $disabled = 'disabled';
+                                                $comment = $fetchentry[$kpi_id]['comment'];
+                                            }
+                                        }
+                                        ?>
+                                        <label class="col-md-3 control-label"><?= $get_target[$i]['kpi_name'] ?></label>
 
-                                <div class="row bottom-margin">
-                                    <div class="col-xs-2">
-                                        <input class="form-control">
-                                    </div>
+                                        <div class="row bottom-margin">
+                                            <?php if ($get_target[$i]['kpi_type'] == 'boolean') { ?>
+                                                <div class="col-xs-2"><select  <?= $disabled ?> class="form-control rounded" id="kpi_<?= $kpi_id ?>" name=""><option <?= $trueselected ?> value="true">Yes</option><option  <?= $falseselected ?> value="false">No</option></select></div>
 
-                                    <div class="col-xs-2">
-                                        <input class="form-control" type="text" placeholder="50" disabled="disabled">
-                                    </div>
+                                                <div class="col-xs-2"><select disabled="disabled" class="form-control rounded" id="kpitarget_<?= $kpi_id ?>" name=""><option value="true" <?= $trueselecteddb ?>>Yes</option><option value="false"  <?= $falseselecteddb ?>>No</option></select></div> 
+                                            <?php } else { ?>
+                                                <div class="col-xs-2">
+                                                    <input class="form-control" id="kpi_<?= $kpi_id ?>" type="text" value="<?= $val ?>" <?= $disabled ?> >
+                                                </div>
 
-                                    <div class="col-xs-2">
-                                        <div class="input-group">
-                                            <textarea class="form-control" rows="1" type="text" placeholder="Comment..."></textarea>
+                                                <div class="col-xs-2">
+                                                    <input class="form-control" type="text" id="kpitarget_<?= $kpi_id ?>" placeholder="<?= $value_of_target ?>" value="<?= $value_of_target ?>" disabled="disabled">
+                                                </div>
+                                            <?php } ?>
+                                            <div class="col-xs-2">
+                                                <div class="input-group">
+                                                    <textarea class="form-control"  <?= $disabled ?> id="comment_<?= $kpi_id ?>" rows="1" type="text" placeholder="Comment..."><?= $comment ?></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xs-2">
+                                                <button id="button_<?= $kpi_id ?>" type="button" class="btn btn-primary <?= $class ?>" onclick="entrykpi('<?= $kpi_id ?>','<?= $user_id_fk ?>')"><?= $lable ?></button>
+                                            </div>
+
                                         </div>
-                                    </div>
 
-                                    <div class="col-xs-2">
-                                        <button id="" type="submit" class="btn btn-primary">ADD</button>
-                                    </div>
 
-                                </div>
 
+
+                                        <?php
+                                    }
+                                }
+                                ?>
                             </div>
 
 

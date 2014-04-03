@@ -27,7 +27,14 @@
         <h3><i class="fa fa-desktop"></i>Company Detail Form</h3>
     </div><div class="widget-content">
         <div class="modal-body">
-            <form action="<?php echo base_url() ?>company/companydetail" role="form" method="POST" class="form-horizontal">
+            <?php
+            if ($this->session->userdata('company_id') != '') {
+                $action = "company/companydetail";
+            } else {
+                $action = "company/addnewcompany";
+            }
+            ?>
+            <form action="<?php echo base_url() . $action ?>" role="form" method="POST" class="form-horizontal">
 
                 <input type="hidden" value="1" name="tb_no" id="tb_no">
 
@@ -132,22 +139,22 @@
                         <input class="form-control rounded" id="company_website" type="text" name="company_website" placeholder="Enter Officeal Website Of Company   ex., www.example.com" value="<?php echo $cmpweb; ?>">
                     </div>
                 </div>
+                <?php if ($this->session->userdata('company_id') != '') { ?>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">User Type</label>
+                        <div class="col-md-8">
 
-                <div class="form-group">
-                    <label class="col-md-4 control-label">User Type</label>
-                    <div class="col-md-8">
-
-                        <?php
-                        // if ((isset($data)) && $data[0]->facebook_page != '') {
-                        //   $cmpname = $data[0]->facebook_page;
-                        //} else {
-                        //    $cmpname = set_value('facebook_page');
-                        // }
-                        ?>
-                        <input type="text" id="usertypearr" name="usertype" class="form-control rounded"   placeholder="Enter user type"  />  
-<!--                        <input type="text" id="facebook_page" class="form-control rounded" placeholder="Enter Company's Facebook Page Link If Available" value="<?php // echo $cmpname;    ?>">-->
-                    </div>
-                </div>
+                            <?php
+                            // if ((isset($data)) && $data[0]->facebook_page != '') {
+                            //   $cmpname = $data[0]->facebook_page;
+                            //} else {
+                            //    $cmpname = set_value('facebook_page');
+                            // }
+                            ?>
+                            <input type="text" id="usertypearr" name="usertype" class="form-control rounded"   placeholder="Enter user type"  />  
+    <!--                        <input type="text" id="facebook_page" class="form-control rounded" placeholder="Enter Company's Facebook Page Link If Available" value="<?php // echo $cmpname;        ?>">-->
+                        </div>
+                    </div> <?php } ?>
                 <div class="form-group">
                     <label class="col-md-4 control-label">Facebook Page Link</label>
                     <div class="col-md-8">
@@ -178,6 +185,24 @@
                     </div>
                 </div>
 
+
+                <?php if ($this->session->userdata('company_id') == '') { ?>               
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">User Name</label>
+                        <div class="col-md-8">
+
+                            <input type="text" id="username" name="username" class="form-control rounded" placeholder="Enter User Name" value="">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Password</label>
+                        <div class="col-md-8">
+
+                            <input type="password" id="password" name="password" class="form-control rounded" placeholder="Enter Password" value="">
+                        </div>
+                    </div>
+                <?php } ?>
 
 
                 <div class="form-group" style="display: none;">

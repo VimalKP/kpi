@@ -20,7 +20,7 @@ class Register extends CI_Controller {
             $this->load->view('common/footer_view');
         } else {
             $this->load->model('user_type_model');
-            $data['usertypeArr'] = $this->user_type_model->get_usertype();
+            $data['usertypeArr'] = $this->user_type_model->get_usertype($company_id);
 //        print_r($data['usertypeArr']);
 //        exit();
 
@@ -130,10 +130,10 @@ class Register extends CI_Controller {
 
             if (!$this->upload->do_upload('profile_image')) {
                 $error = array('error' => $this->upload->display_errors());
-//                echo '<pre>';
-//                print_r($error);
-//                echo '</pre>';
-//                exit();
+                echo '<pre>';
+                print_r($error);
+                echo '</pre>';
+                exit();
 //                $this->load->view('register_view', $error);
             } else {
                 $data = array('upload_data' => $this->upload->data());
@@ -176,36 +176,50 @@ class Register extends CI_Controller {
         $user_id = $this->input->post('userid');
         $regstatus = $this->input->post('regstatus');
 //        $user_id = $this->input->post['id'];
-//        $company_id = $this->session->userdata('company_id');
+        $company_id = $this->session->userdata('company_id');
 //        $this->db->where('user_id', $id);
 //        $this->db->delete('registration');
         $this->load->model('registration_model');
-        $this->registration_model->del_particular_user($user_id,$regstatus);
+        $data = $this->registration_model->get_record(array('parent_id' => $user_id, "registration_status" => 0));
+//        echo '<pre>';
+//        print_r($data);
+//        echo '</pre>';
+//        exit();
+        if (count($data) > 0) {
+            echo 'no';
+        } else {
+            $this->registration_model->del_particular_user($user_id, $regstatus);
+            $this->registration_model->updateparentid($user_id,$company_id);
+            echo 'yes';
+        }
 //        $data['registerArr'] = $this->registration_model->get_user_detail($company_id);
 //        $this->load->view('common/header_view');
 //        $this->load->view('common/sidebar_view');
 ////       $this->load->view('alluser_view');
 //        $this->load->view('users_view', $data);
 //        $this->load->view('common/footer_view');
-
 // Produces:
     }
 
     function edit_user() {
         $id = $_GET['id'];
         $this->load->model('user_type_model');
-        $data['usertypeArr'] = $this->user_type_model->get_usertype();
+        
 //        print_r($data['usertypeArr']);
 //        exit();
-
+        $company_id = $this->session->userdata('company_id');
+        $data['usertypeArr'] = $this->user_type_model->get_usertype($company_id);
         $this->load->model('registration_model');
-        $data['userArr'] = $this->registration_model->get_user();
+        $data['userArr'] = $this->registration_model->get_user($company_id);
 //        print_r($data['userArr']);
 //        exit();
 
         $this->load->model('registration_model');
-        $data['usergetArr'] = $this->registration_model->get_user();
-
+        $data['usergetArr'] = $this->registration_model->get_user($company_id);
+//        echo '<pre>';
+//        print_r($data);
+//        echo '</pre>';
+//        exit();
         $data['data'] = $this->registration_model->getuseralldetail($id);
 //        echo '<pre>';
 //        print_r($data);

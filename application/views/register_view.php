@@ -88,120 +88,120 @@ $this->load->library('form_validation');
                                         <label class="col-md-4 control-label">First Name</label>
                                         <div class="col-md-8">
                                             <?php
-                                                if ((isset($data)) && $data[0]->firstname != '') {
-                                                    $cmpname = $data[0]->firstname;
-                                                } else {
-                                                    $cmpname = set_value('firstname');
-                                                }
+                                            if ((isset($data)) && $data[0]->firstname != '') {
+                                                $cmpname = $data[0]->firstname;
+                                            } else {
+                                                $cmpname = set_value('firstname');
+                                            }
                                             ?>
 
-                                                <input class="form-control rounded" type="text" id="firstname" name="firstname" placeholder="Enter Your First Name" value="<?php echo $cmpname; ?>">
-                                                <span class="error"><?php echo form_error('firstname'); ?></span>
-                                            </div>
+                                            <input class="form-control rounded" type="text" id="firstname" name="firstname" placeholder="Enter Your First Name" value="<?php echo $cmpname; ?>">
+                                            <span class="error"><?php echo form_error('firstname'); ?></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Last Name</label>
+                                        <div class="col-md-8">
+                                            <?php
+                                            if ((isset($data)) && $data[0]->lastname != '') {
+                                                $cmpname = $data[0]->lastname;
+                                            } else {
+                                                $cmpname = set_value('lastname');
+                                            }
+                                            ?>
+                                            <input class="form-control rounded" type="text" id="lastname" name="lastname" placeholder="Enter Your Last Name" value="<?php echo $cmpname; ?>">
+                                            <span class="error"><?php echo form_error('lastname'); ?></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Username</label>
+                                        <div class="col-md-8">
+                                            <?php
+                                            if ((isset($data)) && $data[0]->username != '') {
+                                                $cmpname = $data[0]->username;
+                                            } else {
+                                                $cmpname = set_value('username');
+                                            }
+                                            ?>
+
+                                            <input id="username" name="username" class="form-control rounded" type="text" placeholder="Choose Your Username" value="<?php echo $cmpname; ?>">
+                                            <span class="error"><?php echo form_error('username'); ?></span>
                                         </div>
 
-                                        <div class="form-group">
-                                            <label class="col-md-4 control-label">Last Name</label>
-                                            <div class="col-md-8">
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Password</label>
+                                        <div class="col-md-8">
                                             <?php
-                                                if ((isset($data)) && $data[0]->lastname != '') {
-                                                    $cmpname = $data[0]->lastname;
-                                                } else {
-                                                    $cmpname = set_value('lastname');
-                                                }
+                                            if ((isset($data)) && $data[0]->password != '') {
+                                                $password = $data[0]->password;
+                                            } else {
+                                                $password = set_value('password');
+                                            }
                                             ?>
-                                                <input class="form-control rounded" type="text" id="lastname" name="lastname" placeholder="Enter Your Last Name" value="<?php echo $cmpname; ?>">
-                                                <span class="error"><?php echo form_error('lastname'); ?></span>
-                                            </div>
+                                            <input id="password" name="password" type="password" class="form-control rounded" placeholder="Choose Your Password" value="<?php echo $password; ?>">
+                                            <span class="error"><?php echo form_error('password'); ?></span>
                                         </div>
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label class="col-md-4 control-label">Username</label>
-                                            <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Re-Password</label>
+                                        <div class="col-md-8">
                                             <?php
-                                                if ((isset($data)) && $data[0]->username != '') {
-                                                    $cmpname = $data[0]->username;
-                                                } else {
-                                                    $cmpname = set_value('username');
-                                                }
+                                            if ((isset($data)) && $data[0]->password != '') {
+                                                $password = $data[0]->password;
+                                            } else {
+                                                $password = set_value('password');
+                                            }
                                             ?>
 
-                                                <input id="username" name="username" class="form-control rounded" type="text" placeholder="Choose Your Username" value="<?php echo $cmpname; ?>">
-                                                <span class="error"><?php echo form_error('username'); ?></span>
-                                            </div>
-
-
+                                            <input id="cpassword" name="cpassword" type="password" class="form-control rounded" placeholder="Re-Enter Your Password" value="<?php echo $password; ?>">
+                                            <span class="error"><?php echo form_error('cpassword'); ?></span>
                                         </div>
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label class="col-md-4 control-label">Password</label>
-                                            <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Email-id</label>
+                                        <div class="col-md-8">
                                             <?php
-                                                if ((isset($data)) && $data[0]->password != '') {
-                                                    $password = $data[0]->password;
-                                                } else {
-                                                    $password = set_value('password');
-                                                }
+                                            if ((isset($data)) && $data[0]->email_id != '') {
+                                                $password = $data[0]->email_id;
+                                            } else {
+                                                $password = set_value('email_id');
+                                            }
                                             ?>
-                                                <input id="password" name="password" type="password" class="form-control rounded" placeholder="Choose Your Password" value="<?php echo $password; ?>">
-                                                <span class="error"><?php echo form_error('password'); ?></span>
-                                            </div>
+                                            <input class="form-control rounded" id="email_id" type="text" name="email_id" placeholder="Enter Your E-mail ID    ex., username@example.com" value="<?php echo $password; ?>">
+                                            <span class="error"><?php echo form_error('email_id'); ?></span>
                                         </div>
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label class="col-md-4 control-label">Re-Password</label>
-                                            <div class="col-md-8">
-                                            <?php
-                                                if ((isset($data)) && $data[0]->password != '') {
-                                                    $password = $data[0]->password;
-                                                } else {
-                                                    $password = set_value('password');
-                                                }
-                                            ?>
-
-                                                <input id="cpassword" name="cpassword" type="password" class="form-control rounded" placeholder="Re-Enter Your Password" value="<?php echo $password; ?>">
-                                                <span class="error"><?php echo form_error('cpassword'); ?></span>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label class="col-md-4 control-label">Email-id</label>
-                                            <div class="col-md-8">
-                                            <?php
-                                                if ((isset($data)) && $data[0]->email_id != '') {
-                                                    $password = $data[0]->email_id;
-                                                } else {
-                                                    $password = set_value('email_id');
-                                                }
-                                            ?>
-                                                <input class="form-control rounded" id="email_id" type="text" name="email_id" placeholder="Enter Your E-mail ID    ex., username@example.com" value="<?php echo $password; ?>">
-                                                <span class="error"><?php echo form_error('email_id'); ?></span>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label class="col-md-4 control-label">Parent User</label>
-                                            <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Parent User</label>
+                                        <div class="col-md-8">
 
                                             <?php
-                                                if ((isset($data)) && $data[0]->parent_id != '') {
-                                                    $cmpname = $data[0]->parent_id;
-                                                } else {
-                                                    $cmpname = set_value('parent_id');
-                                                }
+                                            if ((isset($data)) && $data[0]->parent_id != '') {
+                                                $cmpname = $data[0]->parent_id;
+                                            } else {
+                                                $cmpname = set_value('parent_id');
+                                            }
                                             ?>
 
                                             <?php
-                                                $selected = set_value('parent_id');
+                                            $selected = set_value('parent_id');
                                             ?>
-                                                <select  name="parent_id" class="form-control rounded">
-                                                    <option value="$$">-----------------------SELECT--------------------------</option>
+                                            <select  name="parent_id" class="form-control rounded">
+                                                <option value="$$">-----------------------SELECT--------------------------</option>
                                                 <?php
                                                 if (isset($userArr) && $userArr != array()) {
                                                     foreach ($userArr as $key => $value) {
                                                         $sel = "";
 
-                                                        if ($value->user_id == $data[0]->user_id)
+                                                        if ($value->user_id == $data[0]->parent_id)
                                                             $sel = "selected";
 
                                                         echo "<option value='" . $value->user_id . "' $sel>" . $value->username . "</option>";
@@ -218,72 +218,72 @@ $this->load->library('form_validation');
                                         <label class="col-md-4 control-label">Phone Number</label>
                                         <div class="col-md-8">
                                             <?php
-                                                if ((isset($data)) && $data[0]->phone_number != '') {
-                                                    $password = $data[0]->phone_number;
-                                                } else {
-                                                    $password = set_value('phone_number');
-                                                }
+                                            if ((isset($data)) && $data[0]->phone_number != '') {
+                                                $password = $data[0]->phone_number;
+                                            } else {
+                                                $password = set_value('phone_number');
+                                            }
                                             ?>
-                                                <input type="number" id="phone_number" name="phone_number" class="form-control rounded" placeholder="Enter Your Phone Number" value="<?php echo $password; ?>">
-                                                <span class="error"><?php echo form_error('phone_number'); ?></span>
-                                            </div>
+                                            <input type="number" id="phone_number" name="phone_number" class="form-control rounded" placeholder="Enter Your Phone Number" value="<?php echo $password; ?>">
+                                            <span class="error"><?php echo form_error('phone_number'); ?></span>
                                         </div>
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label class="col-md-4 control-label">Address</label>
-                                            <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Address</label>
+                                        <div class="col-md-8">
                                             <?php
-                                                if ((isset($data)) && $data[0]->address != '') {
-                                                    $password = $data[0]->address;
-                                                } else {
-                                                    $password = set_value('address');
-                                                }
+                                            if ((isset($data)) && $data[0]->address != '') {
+                                                $password = $data[0]->address;
+                                            } else {
+                                                $password = set_value('address');
+                                            }
                                             ?>
-                                                <textarea class="form-control" type="text" id="address" rows="2" name="address" placeholder="Enter Your Address" value="<?php echo $password; ?>"><?= $password ?></textarea>
-                                            </div>
+                                            <textarea class="form-control" type="text" id="address" rows="2" name="address" placeholder="Enter Your Address" value="<?php echo $password; ?>"><?= $password ?></textarea>
                                         </div>
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label class="col-md-4 control-label">Birth Date</label>
-                                            <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Birth Date</label>
+                                        <div class="col-md-8">
                                             <?php
-                                                if ((isset($data)) && $data[0]->birthdate != '') {
-                                                    $password = $data[0]->birthdate;
-                                                } else {
-                                                    $password = set_value('birthdate');
-                                                }
+                                            if ((isset($data)) && $data[0]->birthdate != '') {
+                                                $password = $data[0]->birthdate;
+                                            } else {
+                                                $password = set_value('birthdate');
+                                            }
                                             ?>
-                                                <input class="form-control input-datepicker" id="birthdate" name="birthdate" type="datetime" placeholder="Select Your Birthdate" value="<?php $password; ?>">
-                                            </div>
+                                            <input class="form-control input-datepicker" id="birthdate" name="birthdate" type="datetime" placeholder="Select Your Birthdate" value="<?php $password; ?>">
                                         </div>
+                                    </div>
 
-                                        <div class="form-group">
-                                        </div>
+                                    <div class="form-group">
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label class="col-md-4 control-label">Gender</label>
-                                            <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Gender</label>
+                                        <div class="col-md-8">
                                             <?php
-                                                if ((isset($data)) && $data[0]->gender != '') {
-                                                    $password = $data[0]->gender;
-                                                } else {
-                                                    $password = set_value('gender');
-                                                }
+                                            if ((isset($data)) && $data[0]->gender != '') {
+                                                $password = $data[0]->gender;
+                                            } else {
+                                                $password = set_value('gender');
+                                            }
                                             ?>
-                                                <input id="optionsRadios1" type="radio" value="m" name="gender" checked="checked" >Male &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <input id="optionsRadios2" type="radio" value="f" name="gender">Female
-                                            </div>
+                                            <input id="optionsRadios1" type="radio" value="m" name="gender" checked="checked" >Male &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <input id="optionsRadios2" type="radio" value="f" name="gender">Female
                                         </div>
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label class="col-md-4 control-label">Profile Image</label>
-                                            <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Profile Image</label>
+                                        <div class="col-md-8">
                                             <?php
-                                                if ((isset($data)) && $data[0]->profile_image != '') {
-                                                    $password = $data[0]->profile_image;
-                                                } else {
-                                                    $password = set_value('profile_image');
-                                                }
+                                            if ((isset($data)) && $data[0]->profile_image != '') {
+                                                $password = $data[0]->profile_image;
+                                            } else {
+                                                $password = set_value('profile_image');
+                                            }
                                             ?>
                                             <?php // echo form_open_multipart()?>
                                             <input type="file" name="profile_image" id="profile_image" >
@@ -302,3 +302,5 @@ $this->load->library('form_validation');
                 </div>
             </div>
         </div>
+    </div>
+</div>

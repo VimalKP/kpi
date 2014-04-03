@@ -7,7 +7,6 @@ $this->load->library('form_validation');
         <div class="col-md-12">
             <div class="widget widget-red">
                 <div class="widget-title">
-
                     <div class="widget-controls">
                         <a href="#" class="widget-control widget-control-full-screen" data-toggle="tooltip" data-placement="top" title="" data-original-title="Full Screen"><i class="fa fa-expand"></i></a>
                         <a href="#" class="widget-control widget-control-full-screen widget-control-show-when-full" data-toggle="tooltip" data-placement="left" title="" data-original-title="Exit Full Screen"><i class="fa fa-expand"></i></a>
@@ -32,172 +31,132 @@ $this->load->library('form_validation');
 
                                 <a href="#" class="widget-control widget-control-remove" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove"><i class="fa fa-times-circle"></i></a>-->
                     </div>
-
-                    <h3><i class="fa fa-check"></i> KPI Approve</h3>
+                    <h3><i class="fa fa-check"></i> Approve KPI</h3>
                 </div>
+                <!--                </div>-->
+
 
                 <div class="widget-content">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="widget widget-orange">
+                                <div class="widget-title">
+                                    <div class="widget-controls">
+                                        <a href="#" class="widget-control widget-control-full-screen" data-toggle="tooltip" data-placement="top" title="" data-original-title="Full Screen"><i class="fa fa-expand"></i></a>
+                                        <a href="#" class="widget-control widget-control-full-screen widget-control-show-when-full" data-toggle="tooltip" data-placement="left" title="" data-original-title="Exit Full Screen"><i class="fa fa-expand"></i></a>
 
-                    <form action="<?php echo base_url() ?>graph" role="form" class="form-horizontal" method="post">
+                                        <a href="#" class="widget-control widget-control-minimize" data-toggle="tooltip" data-placement="top" title="" data-original-title="Minimize"><i class="fa fa-minus-circle"></i></a>
+                                    </div>
+                                    <h3><i class="fa fa-users"></i> To Be Approve</h3>
+                                </div>
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Username</label>
-                            <div class="col-xs-8">
                                 <?php
-                                $selected = set_value('user_id');
-                                ?>
-                                <select id="user_id" name="user_id" class="form-control rounded">
-                                    <option value="0">-----------------------SELECT--------------------------</option>
-                                    <?php
-                                    if (isset($usergetArr) && $usergetArr != array()) {
-                                        foreach ($usergetArr as $key => $value) {
-                                            $sel = "";
-                                            if ($value->user_id == $selected)
-                                                $sel = "selected";
+                                $approvedIndex = 0;
+                                $approvedArr = array();
+                                if (isset($childusersArr) && count($childusersArr) > 0) {
+                                    foreach ($childusersArr as $keyuserid => $valueusername) {
+                                        ?>
+                                        <div class="widget-content">
+                                            <div id="user" class="form-group">
+                                                <span class="col-md-12"><?php echo $valueusername; ?></span>
+                                            </div>
+                                            <?php
+                                            if (isset($childkpisArr[$keyuserid])) {
+                                                $kpiValuesArr = array();
+                                                $kpiValuesArr = $childkpisArr[$keyuserid];
+                                                if (isset($kpiValuesArr) && count($kpiValuesArr) > 0) {
 
-                                            echo "<option value='" . $value->user_id . "' $sel>" . $value->username . "</option>";
-                                        }
+                                                    foreach ($kpiValuesArr as $keykpiid => $valuekpi) {
+
+                                                        if ($valuekpi['approved_status'] == 0) {
+                                                            ?>
+                                                            <div id="assign_kpi" class="form-group">
+                                                                <label class="col-md-2 control-label"><?php echo $valuekpi['kpiName']; ?></label>
+                                                                <label class="col-md-1 control-label"><?php echo $valuekpi['kpiValue']; ?></label>
+                                                                <label class="col-md-1 control-label" style="margin-right: 10px;"><?php echo $valuekpi['value_of_target']; ?></label>
+
+                                                                <textarea class="form-control col-md-2" style="width: 20%!important;height: 40px; margin-right: 10px;" rows="1" name="" disabled="disabled"><?php echo $valuekpi['kpiComment']; ?></textarea>
+
+                                                                <textarea class="form-control col-md-2" style="width: 25%!important;height: 40px;" cols="20" type="text" id="comment_<?= $keykpiid ?>" rows="1" name="comment_<?= $keykpiid ?>" placeholder="comment"></textarea>
+                                                                <a href="javascript:void(0)" onclick="approvekpivalue(<?= $keyuserid; ?>,<?= $keykpiid ?>);" style="padding-left: 26px;"> <img title="Approve" src="<?php echo base_url(); ?>images/approve.png" width="30" height="30"></a>
+                                                            </div>
+
+
+                                                            <!--                                                            <div id="assign_kpi" class="form-group">
+                                                                                                                            <label class="col-md-3 control-label"><?php echo $valuekpi['kpiName']; ?></label> 
+                                                                                                                            <label class="col-md-2 control-label"><?php echo $valuekpi['kpiValue']; ?></label> 
+                                                                                                                            <textarea class="form-control col-md-6" style="width: 40%!important;height: 40px;" cols="20" type="text" id="comment_<?= $keykpiid ?>" rows="1" name="comment_<?= $keykpiid ?>" placeholder="comment"></textarea>
+                                                                                                                            <a href="javascript:void(0)" onclick="approvekpivalue(<?= $keyuserid; ?>,<?= $keykpiid ?>);" style="padding-left: 46px;"> <img title="Approve" src="<?php echo base_url(); ?>images/approve.png" width="30" height="30"></a>
+                                                                                                                        </div>-->
+                                                            <?php
+                                                        } else {
+                                                            $approvedArr[$approvedIndex]['userid'] = $keyuserid;
+                                                            $approvedArr[$approvedIndex]['username'] = $valueusername;
+                                                            $approvedArr[$approvedIndex]['kpiid'][] = $keykpiid;
+                                                            $approvedArr[$approvedIndex]['kpis_' . $keykpiid] = $valuekpi;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            $approvedIndex++;
+                                            ?>
+
+                                        </div>
+                                        <?php
                                     }
-                                    ?>
-                                </select>
-                                <span class="error"><?php echo form_error('user_id'); ?></span>
+                                } else {
+                                    echo "Not Entry Found to Approve";
+                                }
+                                ?>
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Name Of KPI / Assigned KPI</label>
-                            <div class="col-xs-8">
-                                <input class="form-control rounded" type="text" id="" name="" placeholder="Name Of KPI" disabled="disabled">
-                            </div>
-                        </div>
-                        <br/>
-                        <div class="col-md-12 text-center">
-                            <h4 class="widget-header">*** Approve The Work ***</h4>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-4 control-label" style="font-size: 15px;">Task Name</label>
-                            <div class="col-md-8">
-                                <label class="col-md-7 control-label" style="font-size: 15px;"> Total Submitted Work (With Assigned Work)</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Task 1</label>
-
-                            <div class="row bottom-margin">
-                                <div class="col-xs-1">
-                                    <input class="form-control" type="text" placeholder="50" disabled="disabled">
+                        <div class="col-md-6">
+                            <div class="widget widget-green">
+                                <div class="widget-title">
+                                    <div class="widget-controls">
+                                        <a href="#" class="widget-control widget-control-full-screen" data-toggle="tooltip" data-placement="top" title="" data-original-title="Full Screen"><i class="fa fa-expand"></i></a>
+                                        <a href="#" class="widget-control widget-control-full-screen widget-control-show-when-full" data-toggle="tooltip" data-placement="left" title="" data-original-title="Exit Full Screen"><i class="fa fa-expand"></i></a>
+                                        <a href="#" class="widget-control widget-control-minimize" data-toggle="tooltip" data-placement="top" title="" data-original-title="Minimize"><i class="fa fa-minus-circle"></i></a>
+                                    </div>
+                                    <h3><i class="fa fa-check"></i> Approved KPI value</h3>
                                 </div>
+                                <?php
+                                if (count($approvedArr) > 0) {
+                                    foreach ($approvedArr as $value) {
+                                        ?>
+                                        <div class="widget-content">
+                                            <div id="user" class="form-group">
+                                                <span class="col-md-12"><?php echo $value['username'] ?></span>
+                                            </div>
+                                            <?php
+                                            $totalkpis = count($value['kpiid']);
+                                            for ($i = 0; $i < $totalkpis; $i++) {
+                                                $kpiid = $value['kpiid'][$i];
+                                                ?>
+                                                <div id="assign_kpi" class="form-group col-md-12">
+                                                    <label class="col-md-6 control-label"><?php echo $value['kpis_' . $kpiid]['kpiName']; ?></label> 
+                                                    <label class="col-md-6 control-label"><?php echo $value['kpis_' . $kpiid]['kpiValue']; ?></label> 
+                                                </div>
+                                                <?php
+                                            }
+                                            ?>
+                                        </div>
+                                        <?php
+                                    }
+                                } else {
+                                    echo "Not approved Till!";
+                                }
+                                ?>
 
-                                <div class="col-xs-1">
-                                    <input class="form-control" type="text" placeholder="50" disabled="disabled">
-                                </div>
 
-                                <div class="col-xs-1">
-                                    <input class="form-control" type="text">
-                                </div>
+                                <div class="widget-content">
+                                    <div class="form-group" id="assign_kpi">
 
-                                <div class="col-xs-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <input type="checkbox">
-                                        </span>
-                                        <textarea class="form-control" rows="1" type="text" placeholder="Comment..."></textarea>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Task 2</label>
-
-                            <div class="row bottom-margin">
-                                <div class="col-xs-1">
-                                    <input class="form-control" type="text" placeholder="20" disabled="disabled">
-                                </div>
-
-                                <div class="col-xs-1">
-                                    <input class="form-control" type="text" placeholder="30" disabled="disabled">
-                                </div>
-
-                                <div class="col-xs-1">
-                                    <input class="form-control" type="text">
-                                </div>
-
-                                <div class="col-xs-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <input type="checkbox">
-                                        </span>
-                                        <textarea class="form-control" rows="1" type="text" placeholder="Comment..."></textarea>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Task 3</label>
-
-                            <div class="row bottom-margin">
-                                <div class="col-xs-1">
-                                    <input class="form-control" type="text" placeholder="07" disabled="disabled">
-                                </div>
-
-                                <div class="col-xs-1">
-                                    <input class="form-control" type="text" placeholder="10" disabled="disabled">
-                                </div>
-
-                                <div class="col-xs-1">
-                                    <input class="form-control" type="text">
-                                </div>
-
-                                <div class="col-xs-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <input type="checkbox">
-                                        </span>
-                                        <textarea class="form-control" rows="1" type="text" placeholder="Comment..."></textarea>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Task 4</label>
-
-                            <div class="row bottom-margin">
-
-                                <div class="col-xs-3">
-                                    <select id="" name="" class="form-control rounded" disabled="disabled">
-                                        <option>YES</option>
-                                        <option>NO</option>
-                                    </select>
-                                </div>
-
-
-                                <div class="col-xs-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <input type="checkbox">
-                                        </span>
-                                        <textarea class="form-control" rows="1" type="text" placeholder="Comment..."></textarea>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-offset-4 col-md-8">
-                                <button type="submit" class="btn btn-primary">Approve</button>
-                            </div>
-                        </div>
-
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

@@ -31,9 +31,19 @@ class Target_assign extends CI_Controller {
         $assignkpiarr = $this->kpi_user_model->get_record(array('user_id_fk' => $user_id_fk));
         $assignkpi = $assignkpiarr[0]['kpi_id_fk'];
         $kpiarr = explode(',', $assignkpi);
-
-        $result = $this->kpi_user_model->get_assign_kpi($kpiarr, $user_id_fk);
-        
+//        echo '<pre>';
+//        print_r($kpiarr);
+//        echo '</pre>';
+//        exit();
+        $this->load->model('target_model');
+        $result['get_assign_kpi'] = $this->kpi_user_model->get_assign_kpi($kpiarr, $user_id_fk);
+        $result['assign_kpi_value'] = $this->target_model->get_record(array('user_id_fk' => $user_id_fk));
+//          $result['get_assign_kpi'] = $all_kpi_arr;
+//          $result['assign_kpi_value'] = $all_kpi_arr;
+//        echo '<pre>';
+//        print_r($result);
+//        echo '</pre>';
+//        exit();
         echo json_encode($result);
     }
 

@@ -72,6 +72,43 @@ class Company_detail_model extends CI_Model {
         $query = $this->db->get_where('company_detail', array('company_id' => $cid));
         return $query->result();
     }
+    
+    function get_company_detail($user_id) {
+        $this->db->select('*');
+        $query = $this->db->get('company_detail');
+//        $this->db->select('user_id');
+//        $parent_name = array(user_id,username);
+//        $this->db->from('blogs');
+//        $this->db->join('comments', 'comments.id = blogs.id');
+//        $query = $this->db->get('registration');
+        return $query->result();
+    }
+    
+    public function get_company($user_id) {
+//        $this->db->where('registration_status', 0);
+//        $query = $this->db->get('registration');
+        $query = $this->db->get_where('company_detail', array('company_status' => 0));
+//        return $query->result();
+//        print_r($query);
+//        exit ();
+
+        return $query->result();
+    }
+
+    public function getcompanyalldetail($company_id) {
+        $query = $this->db->get_where('company_detail', array('company_id' => $company_id));
+        return $query->result();
+    }
+
+    public function del_particular_company($company_id, $companystatus) {
+        $data = array(
+            'company_status' => $companystatus,
+        );
+//        $this->db->where('id', $id);
+        $this->db->where('company_id', $company_id);
+        $this->db->update('company_detail', $data);
+//        return $query->result();
+    }
 
 }
 
