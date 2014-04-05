@@ -1,7 +1,6 @@
 <?php
 $this->load->library('form_validation');
 ?>
-
 <div class="all-wrapper fixed-header left-menu">
     <div class="main-content">
 
@@ -36,18 +35,18 @@ $this->load->library('form_validation');
                 </div>
                 <div class="widget-content">
 
-                    <form action="#" role="form" class="form-horizontal" method="post">
+                    <form action="javascript:void(0)" role="form" class="form-horizontal" method="post">
 
                         <div class="form-group">
                             <label class="col-md-4 control-label">Type Of Graph</label>
                             <div class="col-md-4">
                                 <select id="" name="" class="form-control rounded">
-                                    <option>LINE</option>
-                                    <option>PIE</option>
+                                    <!--                                    <option>LINE</option>
+                                                                        <option>PIE</option>-->
                                     <option>COLUMN</option>
-                                    <option>BAR</option>
-                                    <option>STACKED</option>
-                                    <option>ROW</option>
+                                    <!--                                    <option>BAR</option>
+                                                                        <option>STACKED</option>
+                                                                        <option>ROW</option>-->
                                 </select>
                             </div>
                         </div>
@@ -55,7 +54,24 @@ $this->load->library('form_validation');
                         <div class="form-group">
                             <label class="col-md-4 control-label">Username</label>
                             <div class="col-md-4">
-                                <input id="username" name="username" class="form-control rounded" type="text" placeholder="Enter Username">
+<!--                                <input id="username" name="username" class="form-control rounded" type="text" placeholder="Enter Username">-->
+                                <?php
+                                $selected = set_value('user_id');
+                                ?>
+                                <select id="user_name" name="user_name" class="form-control rounded">
+                                    <option value="0">-----------------------SELECT--------------------------</option>
+                                    <?php
+                                    if (isset($registerArr) && $registerArr != array()) {
+                                        foreach ($registerArr as $key => $value) {
+                                            $sel = "";
+                                            if ($value->user_id == $selected)
+                                                $sel = "selected";
+
+                                            echo "<option value='" . $value->user_id . "' $sel>" . $value->username . "</option>";
+                                        }
+                                    }
+                                    ?>
+                                </select>
                             </div>
                         </div>
 
@@ -66,12 +82,12 @@ $this->load->library('form_validation');
                             <label class="col-md-4 control-label">KPI name</label>
                             <div class="col-md-4">
 
-                                <?php
-                                $selected = set_value('kpi_id');
-                                ?>
-                                <select id="kpi_name" name="kpi_name" class="form-control rounded">
-                                    <option value="0">-----------------------SELECT--------------------------</option>
-                                    <?php
+<?php
+                                    $selected = set_value('kpi_id');
+?>
+                                    <select id="kpi_name" name="kpi_name" class="form-control rounded">
+                                        <option value="0">-----------------------SELECT--------------------------</option>
+<?php
                                     if (isset($kpiArr) && $kpiArr != array()) {
                                         foreach ($kpiArr as $key => $value) {
                                             $sel = "";
@@ -81,38 +97,40 @@ $this->load->library('form_validation');
                                             echo "<option value='" . $value->kpi_id . "' $sel>" . $value->kpi_name . "</option>";
                                         }
                                     }
-                                    ?>
+?>
                                 </select>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Time Period</label>
-                            <div class="col-md-6">
-                                <div class="col-md-4">
-                                    <label class="control-label">FROM:</label>
-                                    <input class="form-control" type="text" placeholder="01/01/2014">
-                                </div>
+                        <!--                        <div class="form-group">-->
+                        <!--                            <label class="col-md-4 control-label">Time Period</label>
+                                                    <div class="col-md-6">
+                                                        <div class="col-md-4">
+                                                            <label class="control-label">FROM:</label>
+                                                            <input class="form-control" type="text" placeholder="01/01/2014">
+                                                        </div>
 
-                                <div class="col-md-4">
-                                    <label class="control-label">TO:</label>
-                                    <input class="form-control" type="text" placeholder="01/01/2014">
-                                </div>
-                            </div>
-                        </div>
+                                                        <div class="col-md-4">
+                                                            <label class="control-label">TO:</label>
+                                                            <input class="form-control" type="text" placeholder="01/01/2014">
+                                                        </div>
+                                                    </div>-->
+                        <!--                        </div>-->
 
                         <div class="form-group">
 
                             <div class="col-xs-12">
-                                <center><button type="submit" class="btn btn-primary">SUBMIT</button></center>
+                                <center><button type="submit" class="btn btn-primary" onclick="chart();" > SUBMIT </button></center>
                             </div>
-
                         </div>
 
                         <div class="padded">
-                            <div id="users_barchart" style="height: 330px; position: relative;">
+                            <div id="users_barchart" style="height: 400px; position: relative;">
+                                <div id="container">
 
+                                </div>
                             </div>
+
                         </div>
 
                     </form>

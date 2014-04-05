@@ -134,24 +134,25 @@
 
                     <div class="dropdown">
                         <?php
-                        if ($this->session->userdata('user_type_id_fk') != '') {
+                        if ($this->session->userdata('user_id') != '') {
+//                        if ($this->session->userdata('user_type_id_fk') != '') {
                             ?>
 
 
                             <a href="#" class="header-link clearfix" data-toggle="dropdown">
                                 <div class="avatar">
-    <!--                                    <img src="<?php echo base_url() ?>images/no-avatar.png" alt="">-->
+    <!--                                    <img src="<?php // echo base_url()  ?>images/no-avatar.png" alt="">-->
 
                                     <img src="<?php echo base_url() ?>images/profile_pic/<?= $img ?>">
-    <!--                                    <img src="<?php // echo site_url("register/loadImg/")         ?>">-->
+    <!--                                    <img src="<?php // echo site_url("register/loadImg/")          ?>">-->
 
                                 </div>
 
                                 <div class="user-name-w">
                                     <?php
-                                    if ($this->session->userdata('user_type_id_fk') != '') {
+                                    if ($this->session->userdata('user_id') != '') {
                                         $username = $this->session->userdata('username');
-                                        print_r($username);
+                                        echo $username;
                                     }
                                     ?>
                                 </div>
@@ -160,12 +161,12 @@
 
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Profile</a></li>
-    <!--                            <li><a href="<?php echo base_url(); ?>register/edit_user?id=<?= $row->user_id ?>">Profile</a></li>-->
+<!--                                <li><a href="#">Profile</a></li>-->
+    <!--                            <li><a href="<?php// echo base_url(); ?>register/edit_user?id=<?//= $row->user_id ?>">Profile</a></li>-->
 
 
                                 <?php
-                                if ($this->session->userdata('user_type_id_fk') != '') {
+                                if ($this->session->userdata('user_id') != '') {
                                     ?>
 
 

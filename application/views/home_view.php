@@ -10,7 +10,7 @@
 
         <link rel="stylesheet" href="<?php echo base_url() ?>css/token-input.css" type="text/css" />
         <link rel="stylesheet" href="<?php echo base_url() ?>css/token-input-facebook.css" type="text/css" />-->
-     
+
     </head>
 
     <body class="glossed" data-savefrom-link-count="182">
@@ -99,30 +99,26 @@
                             </div>
                             <h3><i class="fa fa-user"></i> About KPI</h3>
                         </div>
-                        <div class="widget-content">
+                        <div class="widget-content show-grid">
+                            <div class="col-md-12">
+                                <h1>Concept</h1>
+                                <h2>For Business:</h2>
+                                <h4>
+                                    We deliver a comprehensive, integrated, business support infrastructure:
+                                    Customer Relationship Management, Project Management, HR, Payroll, e-Commerce, Basic Accounting,
+                                    MIS and Reporting. Our cloud solution delivers all elements of the business are connected.
+                                    All data is available immediately from any location and can be shared across the organisation.
+                                </h4>
+                                <h2>Google Apps Integration</h2>
+                                <h4>   kpi.com is now available on Google Apps Marketplace.
+                                    Any user of Google can integrate kpi.com with Google apps, as Calendar or Google Docs.
+                                </h4><br/><br/>
+                                <center>
+                                    <iframe width="420" height="315" src="//www.youtube.com/embed/ezhnbxgEObE" frameborder="0" allowfullscreen>
 
-
-                            <center><h1>Concept</h1></center>
-
-
-
-
-                            <h2>kpi.com for Business</h2>
-                            <strong>
-                                We deliver a comprehensive, integrated, business support infrastructure:
-                                Customer Relationship Management, Project Management, HR, Payroll, e-Commerce, Basic Accounting,
-                                MIS and Reporting. Our cloud solution delivers all elements of the business are connected.
-                                All data is available immediately from any location and can be shared across the organisation.
-                            </strong>
-
-
-                            <h2>Google Apps Integration</h2>
-                            <strong>
-                                kpi.com is now available on Google Apps Marketplace.
-                                Any user of Google can integrate kpi.com with Google apps, as Calendar or Google Docs.
-                            </strong>
-
-                            <iframe width="420" height="315" src="//www.youtube.com/embed/ezhnbxgEObE" frameborder="0" allowfullscreen></iframe>
+                                    </iframe>
+                                </center>
+                            </div>
 
                         </div>
                     </div>
