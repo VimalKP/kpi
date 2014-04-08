@@ -290,12 +290,19 @@ $this->load->library('form_validation');
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <div class="col-md-offset-4 col-md-8">
-                                            <button type="submit" class="btn btn-primary">SAVE</button>
+                                    <div class="form-group col-md-4">
+                                        <div class="col-md-4">
+                                        </div>
+                                        <div>
+                                            <button type="submit" class="btn btn-primary">SAVE</button> &nbsp;
                                         </div>
                                     </div>
                                 </form>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2">
+                                        <a href="<?php echo base_url(); ?>register/get_register"><button class="btn btn-primary">BACK</button></a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

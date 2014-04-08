@@ -7,7 +7,7 @@ class Company extends CI_Controller {
 
     public function index() {
 
-        if ($this->session->userdata('user_type_id_fk') != 1) {
+        if ($this->session->userdata('user_id') == '') {
             // if session running then redirect to home page.
             // if session expired then go to login
             $this->load->view('common/header_view');
@@ -16,6 +16,13 @@ class Company extends CI_Controller {
             $this->load->view('common/footer_view');
         } else {
             $company_id = $this->session->userdata('company_id');
+            
+//            if($company_id==0){
+//               $company_id= $cid;
+////               echo 'if';
+//            }
+//            echo $company_id;
+//            exit();
             $this->load->model('Company_detail_model');
 
             $data['data'] = $this->Company_detail_model->getcompanydetail($company_id);
@@ -34,7 +41,10 @@ class Company extends CI_Controller {
                 }
             }
             $data['preusers'] = json_encode($preuser);
-
+//            echo '<pre>';
+//            print_r($data);
+//            echo '</pre>';
+//            exit();
 
             $this->load->view('common/header_view');
             $this->load->view('common/sidebar_view');
@@ -46,9 +56,16 @@ class Company extends CI_Controller {
 
     public function companydetail() {
 //        $companyarr = $this->input->post();
+        $company_id = $this->input->post('company_id');
+        if ($company_id == '') {
+            $company_id = $this->session->userdata('company_id');
+        }
 
-        $company_id = $this->session->userdata('company_id');
+//        echo   $_GET['id'];
+//        exit();
         $company_name = $this->input->post('company_name');
+
+
         if ($company_name == '') {
             $this->index();
         }
@@ -132,6 +149,7 @@ class Company extends CI_Controller {
                     $browser['user_type'] = $type;
                     $browser['company_id_fk'] = $company_id;
                     if (@!in_array(strtolower($type), $preuser)) {
+                        if($type!='')
                         $this->user_type_model->insert_record($browser);
                     }
                 }
@@ -153,7 +171,13 @@ class Company extends CI_Controller {
 //            $this->load->view('common/sidebar_view');
 //            $this->load->view('home_view');
 //            $this->load->view('common/footer_view');
-            $this->index();
+           $username=  $this->session->userdata('username');
+           if($username=='master_admin'){
+               redirect('company/get_company');
+           }else{
+              $this->index($company_id);  
+           }
+           
         }
     }
 

@@ -65,6 +65,20 @@ class Login extends CI_Controller {
 //                    print_r( $this->session->all_userdata());
 //                    exit();
 
+                    $login_log_mst_user_id_fk = $this->session->userdata('user_id');
+                    $loginArr = array(
+                        'user_id_fk' => $login_log_mst_user_id_fk,
+                        'login_time' => date("Y-m-d H:i:s"),
+                    );
+
+                    $this->load->model('login_log_mst_model');
+                    $where = array('user_id_fk' => $login_log_mst_user_id_fk, 'date(login_time)' => date("Y-m-d"));
+
+                    $logincheckArr = $this->login_log_mst_model->get_one_record($where);
+                    if ($logincheckArr == array()) {
+                        $data['loginDetail'] = $this->login_log_mst_model->insert_record($loginArr);
+                    }
+
                     $this->load->model('Company_detail_model');
                     $data['data'] = $this->Company_detail_model->getcompanydetail(1);
                     $comany_id = $this->session->userdata('company_id');
@@ -103,8 +117,17 @@ class Login extends CI_Controller {
 
     public function logout() {
 //        $this->session->unset_userdata($newdata);
-        $this->session->sess_destroy();
+//        $this->session->sess_destroy();
 //        $this->session->unset_userdata('user_type_id_fk');
+
+        $logout_log_mst_user_id_fk = $this->session->userdata('user_id');
+        $logoutArr = array(
+            'logout_time' => date("Y-m-d H:i:s"),
+        );
+        $this->load->model('login_log_mst_model');
+        $data['loginDetail'] = $this->login_log_mst_model->update_record(array('user_id_fk' => $logout_log_mst_user_id_fk,'date(login_time)' => date("Y-m-d")), $logoutArr);
+
+        $this->session->sess_destroy();
 
 
         $this->load->view('common/header_view');

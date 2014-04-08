@@ -19,5 +19,6 @@ if ($isLocal == true) {
     mysql_select_db(DB_DATABASE) or die("Unable to select database");
 }
 define('API_HOST', 'https://api.twitter.com/1.1/');
+define("API_GRAPH", 'https://graph.facebook.com/');
 ob_end_flush();
 ?>

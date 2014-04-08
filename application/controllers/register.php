@@ -158,10 +158,16 @@ class Register extends CI_Controller {
         }
     }
 
-    function get_register() {
-        $company_id = $this->session->userdata('company_id');
+    function get_register($company_id = -1) {
+        if ($company_id == -1) {
+            $company_id = $this->session->userdata('company_id');
+        }
         $this->load->model('registration_model');
         $data['registerArr'] = $this->registration_model->get_user_detail($company_id);
+//        echo '<pre>';
+//        print_r($data['registerArr']);
+//        echo '</pre>';
+//        exit();
 
         $this->load->view('common/header_view');
         $this->load->view('common/sidebar_view');
@@ -189,7 +195,7 @@ class Register extends CI_Controller {
             echo 'no';
         } else {
             $this->registration_model->del_particular_user($user_id, $regstatus);
-            $this->registration_model->updateparentid($user_id,$company_id);
+            $this->registration_model->updateparentid($user_id, $company_id);
             echo 'yes';
         }
 //        $data['registerArr'] = $this->registration_model->get_user_detail($company_id);
@@ -204,7 +210,7 @@ class Register extends CI_Controller {
     function edit_user() {
         $id = $_GET['id'];
         $this->load->model('user_type_model');
-        
+
 //        print_r($data['usertypeArr']);
 //        exit();
         $company_id = $this->session->userdata('company_id');
@@ -229,6 +235,13 @@ class Register extends CI_Controller {
         $this->load->view('common/sidebar_view');
 //             $this->load->view('common/menu_panel_view');
         $this->load->view('register_view', $data);
+        $this->load->view('common/footer_view');
+    }
+    
+    public function get_user_attendance(){
+        $this->load->view('common/header_view');
+        $this->load->view('common/sidebar_view');
+        $this->load->view('attendance_view');
         $this->load->view('common/footer_view');
     }
 

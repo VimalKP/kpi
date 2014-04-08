@@ -108,14 +108,27 @@
                 </div>
 
                 <?php
-                if ($this->session->userdata('parent_id') == 0) {
-                    ?>
-                    <li>
-                        <a href="<?php echo base_url() ?>graph" data-toggle="tooltip" data-placement="right" title="Analysis" data-original-title="Analysis">
-                            <i class="fa fa-bar-chart-o"></i>
-                        </a>
-                    </li>
-                <?php } ?>
+            }
+
+
+            if ($this->session->userdata('parent_id') == 0) {
+                ?>
+                <li>
+                    <a href="<?php echo base_url() ?>register/get_user_attendance" data-toggle="tooltip" data-placement="right" title="Attendance" data-original-title="Attendance">
+                        <i class="fa fa-user"></i>
+                    </a>
+                </li>
+
+                <?php
+            }
+
+            if ($this->session->userdata('parent_id') == 0) {
+                ?>
+                <li>
+                    <a href="<?php echo base_url() ?>graph" data-toggle="tooltip" data-placement="right" title="Analysis" data-original-title="Analysis">
+                        <i class="fa fa-bar-chart-o"></i>
+                    </a>
+                </li>
 
                 <?php
             }

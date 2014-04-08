@@ -22,6 +22,7 @@ $this->load->library('form_validation');
             selectHelper: true,
             select: function(start, end, allDay) {
                 var title = "H";
+                alert(title);
                 if (title) {
                     calendar.fullCalendar('renderEvent',
                     {

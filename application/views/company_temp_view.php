@@ -37,7 +37,13 @@
             <form action="<?php echo base_url() . $action ?>" role="form" method="POST" class="form-horizontal">
 
                 <input type="hidden" value="1" name="tb_no" id="tb_no">
-
+<!--               <input type="hidden" value="<?//=$data[0]->company_id;?>" name="company_id" id="company_id">  -->
+                <?php
+                        if ((isset($data)) && $data[0]->company_id != '') {
+                            $cmpid = $data[0]->company_id;
+                         ?>
+                <input type="hidden" value="<?=$cmpid?>" name="company_id" id="company_id">
+<?php } ?>
                 <div class="form-group">
                     <label class="col-md-4 control-label">Company Name</label>
                     <div class="col-md-8">

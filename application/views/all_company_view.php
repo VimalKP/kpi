@@ -63,7 +63,7 @@ $this->load->library('form_validation');
                                 ?>
 
                                 <td> <?php echo $row->company_id; ?> </td>
-                                <td> <?php echo $row->company_name; ?> </td>
+                                <td> <a href="<?php echo base_url(); ?>register/get_register/<?=$row->company_id?>"><?php echo $row->company_name; ?></a> </td>
                                 <td> <?php echo $row->company_address; ?> </td>
                                 <td> <?php echo $row->company_email; ?> </td>
                                 <td> <?php echo $row->company_phone; ?></td>

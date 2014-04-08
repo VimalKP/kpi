@@ -162,13 +162,17 @@
                                         for ($i = 0; $i < count($twitterdata); $i++) {
                                             $content = $twitterdata[$i]['content'];
                                             $brand = $twitterdata[$i]['brand'];
+                                            $profile_image = $twitterdata[$i]['profile_image'];
+                                            if($profile_image==''){
+                                                $profile_image='no-avatar.png';
+                                            }
                                             $posted = date('M d', strtotime($twitterdata[$i]['posted']));
                                             ?>
                                             <li>
                                                 <div class="row">
                                                     <div class="col-xs-2">
                                                         <div class="avatar">
-                                                            <img src="images/no-avatar.png" alt="">
+                                                            <img src="images/<?=$profile_image?>" alt="">
                                                         </div>
                                                     </div>
                                                     <div class="col-xs-10">
