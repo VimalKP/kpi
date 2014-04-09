@@ -541,3 +541,33 @@ function chart()
 
 
 }
+
+function absent(id){
+    //                alert(id)
+    var absentarr=id.split("_");
+    console.log(id);
+
+    var userid=absentarr[1];
+//      console.log($("#"+id).prop('checked'));
+    if($("#"+id).prop('checked')==true){
+        console.log('true');
+        var action='true';
+    }else{
+        console.log('false');
+        var action='false';
+    }
+//     console.log(userid);
+
+    $.ajax({
+        url:baseurl+"attendance/user_attendance",
+        type:'POST',
+        data:  {
+            "userid": userid,
+            "action": action
+        },
+
+        success:function(data){
+            
+        }
+    });
+}

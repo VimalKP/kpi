@@ -14,7 +14,7 @@
             </li>
 
             <?php
-            if ($this->session->userdata('user_type_id_fk') == 1) {//parent id =0
+            if ($this->session->userdata('parent_id') == 0 && $this->session->userdata('user_id') != '') {//parent id =0
                 ?>
                 <li>
                     <a href="<?php echo base_url() ?>register/get_register" data-toggle="tooltip" data-placement="right" title="" data-original-title="Users">
@@ -35,7 +35,7 @@
                 <?php
             }
 
-            if ($this->session->userdata('user_id') == 0 && $this->session->userdata('user_id') != '') {//parentid
+            if ($this->session->userdata('parent_id') == 0 && $this->session->userdata('company_id') == 0 && $this->session->userdata('user_id') != 0) {//parentid
                 ?>
                 <li>
                     <a href="<?php echo base_url() ?>company/get_company" data-toggle="tooltip" data-placement="right" title="" data-original-title="All Company">
@@ -45,7 +45,7 @@
                 <?php
             }
 
-            if ($this->session->userdata('user_type_id_fk') == 1) {//parent_id =0 
+            if ($this->session->userdata('parent_id') == 0 && $this->session->userdata('user_id') != '') {//parent_id =0 
                 ?>
                 <li>
                     <a href="<?php echo base_url() ?>company" data-toggle="tooltip" data-placement="right" title="" data-original-title="Company Details">
@@ -56,7 +56,7 @@
                 <?php
             }
 
-            if ($this->session->userdata('user_type_id_fk') != '') {
+            if ($this->session->userdata('user_id') != '') {
                 ?>
 
                 <div id='cssmenu'>
@@ -71,7 +71,7 @@
                             <ul style="display: block;">
 
                                 <?php
-                                if ($this->session->userdata('user_type_id_fk') == 1) {
+                                if ($this->session->userdata('parent_id') == 0) {
                                     ?>
                                     <li>
                                         <a href="<?php echo base_url() ?>create_kpi"><span>Create KPI</span></a>
@@ -89,7 +89,7 @@
                                 </li>
 
                                 <?php
-                                if ($this->session->userdata('user_type_id_fk') != 1) {
+                                if ($this->session->userdata('parent_id') != 0) {
                                     ?>
                                     <li>
                                         <a href="<?php echo base_url() ?>kpi_entry"><span>KPI Entry</span></a>
@@ -111,10 +111,10 @@
             }
 
 
-            if ($this->session->userdata('parent_id') == 0) {
+            if ($this->session->userdata('user_id') != '') {
                 ?>
                 <li>
-                    <a href="<?php echo base_url() ?>register/get_user_attendance" data-toggle="tooltip" data-placement="right" title="Attendance" data-original-title="Attendance">
+                    <a href="<?php echo base_url() ?>attendance" data-toggle="tooltip" data-placement="right" title="Attendance" data-original-title="Attendance">
                         <i class="fa fa-user"></i>
                     </a>
                 </li>
@@ -122,7 +122,7 @@
                 <?php
             }
 
-            if ($this->session->userdata('parent_id') == 0) {
+            if ($this->session->userdata('parent_id') == 0 && $this->session->userdata('user_id') != '') {
                 ?>
                 <li>
                     <a href="<?php echo base_url() ?>graph" data-toggle="tooltip" data-placement="right" title="Analysis" data-original-title="Analysis">

@@ -3,20 +3,17 @@ $this->load->library('form_validation');
 ?>
 
 <div class="all-wrapper fixed-header left-menu">
-
-
     <div class="main-content">
+        <div class="modal-dialog">
+            <!--            <div class="modal-content">-->
+            <div class="main">
+                <div class="widget widget-blue">
+                    <div class="widget-title">
+                        <div class="widget-controls">
+                            <a href="#" class="widget-control widget-control-full-screen" data-toggle="tooltip" data-placement="top" title="" data-original-title="Full Screen"><i class="fa fa-expand"></i></a>
+                            <a href="#" class="widget-control widget-control-full-screen widget-control-show-when-full" data-toggle="tooltip" data-placement="left" title="" data-original-title="Exit Full Screen"><i class="fa fa-expand"></i></a>
 
-<!--        <h4> <a href="<?php echo base_url() ?>register" style="color: red;"> ADD NEW USER</a></h4>-->
-        
-        <div class="col-md-12">
-            <div class="widget widget-blue">
-                <div class="widget-title">
-                    <div class="widget-controls">
-                        <a href="#" class="widget-control widget-control-full-screen" data-toggle="tooltip" data-placement="top" title="" data-original-title="Full Screen"><i class="fa fa-expand"></i></a>
-                        <a href="#" class="widget-control widget-control-full-screen widget-control-show-when-full" data-toggle="tooltip" data-placement="left" title="" data-original-title="Exit Full Screen"><i class="fa fa-expand"></i></a>
-
-                        <a href="#" class="widget-control widget-control-minimize" data-toggle="tooltip" data-placement="top" title="" data-original-title="Minimize"><i class="fa fa-minus-circle"></i></a>
+                            <a href="#" class="widget-control widget-control-minimize" data-toggle="tooltip" data-placement="top" title="" data-original-title="Minimize"><i class="fa fa-minus-circle"></i></a>
 
 <!--                                <a href="#" data-toggle="dropdown" class="widget-control widget-control-settings"><i class="fa fa-cog"></i></a>
                                 <div class="dropdown" data-toggle="tooltip" data-placement="top" title="" data-original-title="Settings">
@@ -35,20 +32,64 @@ $this->load->library('form_validation');
 <!--                                <a href="#" class="widget-control widget-control-refresh" data-toggle="tooltip" data-placement="top" title="" data-original-title="Refresh"><i class="fa fa-refresh"></i></a>
 
                                 <a href="#" class="widget-control widget-control-remove" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove"><i class="fa fa-times-circle"></i></a>-->
+                        </div>
+                        <h3><i class="fa fa-users"></i> List Of Users For Attendance</h3>
                     </div>
-                    <h3><i class="fa fa-users"></i> Users List</h3>
-                </div>
-                <div class="widget-content">
-                    <div class="table-responsive">
-                        <table style="text-align: center;" class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    
-                            </tbody>
-                        </table>
+                    <div class="widget-content">
+                        <div class="table-responsive">
+                            <table style="text-align: center;" class="table table-bordered table-hover">
+
+                                <thead>
+                                    <tr>
+                                        <th><center>Username</center></th>
+                                        <th><center>First name</center></th>
+                                        <th><center>Last name</center></th>
+                                        <th><center>Action</center></th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <?php
+                                    if (isset($usergetArr) && $usergetArr != array()) {
+
+                                        foreach ($usergetArr as $key => $value) {
+                                            echo"<tr>";
+                                    ?>
+
+                                        <td>
+                                    <?php
+                                            echo $value->username;
+                                    ?>
+                                        </td>
+
+                                        <td>
+                                    <?php
+                                            echo $value->firstname;
+                                    ?>
+                                        </td>
+
+                                        <td>
+                                    <?php
+                                            echo $value->lastname;
+                                    ?>
+                                        </td>
+
+                                        <td> <input type="checkbox" id="attendance_<?= $value->user_id ?>" onchange="absent(this.id); " <?php echo ( in_array($value->user_id, $absentuserids))?"checked='checked'":""; ?>> </td>
+
+                                <?php
+                                        }
+                                    }
+                                    echo "</tr>";
+                                ?>
+                                </tbody>
+
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<!--</div>-->
