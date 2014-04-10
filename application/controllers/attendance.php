@@ -43,33 +43,50 @@ class Attendance extends CI_Controller {
 
         $this->load->model('attendance_model');
         $where = array('user_id_fk' => $user_id, "attendance_status" => 1, 'attendance_date' => date("Y-m-d"));
+        $wheredelete = array('user_id_fk' => $user_id, 'date(attendance_date)' => date("Y-m-d"));
 
         $this->load->model('entry_kpi_model');
-        $update = array('user_id_fk' => $user_id, "kpi_value" => 'AB', 'entry_kpi_date_added' => date("Y-m-d"));
+
 
 
         if ($action == 'true') {
             $data['attendanceDetail'] = $this->attendance_model->insert_record($where);
-            
+
             //fetch all assigned kpi to that user
             //insert in entry_kpi table with all kpi
-            
+
             $this->load->model('kpi_user_model');
-            $getdetail = array('user_id_fk' => $user_id);
-            $data['getkpiArr'] = $this->kpi_user_model->get_record($getdetail);
-            echo '<pre>';
-            print_r($data['getkpiArr']);
-            echo '</pre>';
-            exit();
-            
-            $data['absentkpiArr'] = $this->entry_kpi_model->insert_record($update);
+            $getkpiArr = $this->kpi_user_model->get_record(array('user_id_fk' => $user_id));
+            $kpiarr = @$getkpiArr[0]['kpi_id_fk'];
+            $kpimainarr = explode(',', $kpiarr);
+            if (count($kpimainarr) > 0) {
+                for ($i = 0; $i < count($kpimainarr); $i++) {
+                    $kpiid = $kpimainarr[$i];
+                    $update = array('user_id_fk' => $user_id, 'kpi_id_fk' => $kpiid, "kpi_value" => 'AB', 'entry_kpi_date_added' => date("Y-m-d"));
+                    $data['absentkpiArr'] = $this->entry_kpi_model->insert_record($update);
+                }
+            }
+//            echo '<pre>';
+//            print_r($getkpiArr[0]['kpi_id_fk']);
+////            print_r($getkpiArr['kpi_id_fk']);
+//            echo '</pre>';
+//            exit();
+//
+//            foreach ($getkpiArr as $g) {
+//
+//                $data['absentkpiArr'] = $this->entry_kpi_model->insert_record($update);
+//            }
         } else {
 
-            $deleteattendenceArr = $this->attendance_model->get_one_record($where);
+            $deleteattendenceArr = $this->attendance_model->delete_record($wheredelete);
+
+            $delete = array('user_id_fk' => $user_id, 'entry_kpi_date_added' => date("Y-m-d"));
+            $deletekpientryArr = $this->entry_kpi_model->delete_record($delete);
+            
         }
     }
 
 }
 
 /* End of file welcome.php */
-    /* Location: ./application/controllers/welcome.php */
+/* Location: ./application/controllers/welcome.php */

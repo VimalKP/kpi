@@ -71,10 +71,19 @@ class Registration_model extends CI_Model {
 
     public function select($loginValues) {
         extract($loginValues);
+        $where = array('r.username' => $username, 'r.password' => $password, 'r.registration_status' => 0, 'c.company_status' => 0);
 //        print_r($loginValues);
-        $query = $this->db->get_where('registration', array('username' => $username, 'password' => $password, 'registration_status' => 0));
-
+        $this->db->select('*');
+        if (!empty($where)) {
+            foreach ($where as $key => $val) {
+                $this->db->where($key, $val);
+            }
+        }
+        $this->db->from('registration AS r'); //company_detail
+        $this->db->join('company_detail as c', 'r.company_id=c.company_id');
+//        $query = $this->db->get_where('registration', array('username' => $username, 'password' => $password, 'registration_status' => 0));
 //       / print_r($loginValues);
+        $query = $this->db->get();
         return $query->result();
 //        return print_r($loginValues);
     }

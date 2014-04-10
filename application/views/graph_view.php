@@ -40,8 +40,12 @@ $this->load->library('form_validation');
                         <div class="form-group">
                             <label class="col-md-4 control-label">Type Of Graph</label>
                             <div class="col-md-4">
-                                <select id="" name="" class="form-control rounded">
-                                    <option value="column">COLUMN</option>
+                                <select id="chartType" name="chartType" class="form-control rounded">
+                                    <option value="column">Column</option>
+                                    <option value="bar">Bar</option>
+                                    <option value="area">Area</option>
+                                    <option value="pie">Pie</option>
+                                    <option value="line">Line</option>
                                 </select>
                             </div>
                         </div>
@@ -97,12 +101,12 @@ $this->load->library('form_validation');
                             <div class="col-md-6">
                                 <div class="col-md-4">
                                     <label class="control-label">FROM:</label>
-                                    <input class="form-control" type="text" placeholder="01/01/2014">
+                                    <input class="form-control  input-datepicker" type="text" id="fromdate" placeholder="01/01/2014">
                                 </div>
 
                                 <div class="col-md-4">
                                     <label class="control-label">TO:</label>
-                                    <input class="form-control" type="text" placeholder="01/01/2014">
+                                    <input class="form-control  input-datepicker" type="text" id="todate" placeholder="01/01/2014">
                                 </div>
                             </div>
                         </div>
@@ -116,6 +120,7 @@ $this->load->library('form_validation');
 
                         <div class="padded">
                             <div id="users_barchart" style="height: 400px; position: relative;">
+                                <?php // include_once 'chart_container_view.php'; ?>
                                 <div id="container">
 
                                 </div>

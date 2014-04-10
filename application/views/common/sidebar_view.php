@@ -14,7 +14,7 @@
             </li>
 
             <?php
-            if ($this->session->userdata('parent_id') == 0 && $this->session->userdata('user_id') != '') {//parent id =0
+            if ($this->session->userdata('parent_id') == 0 && $this->session->userdata('user_id') != '' && $this->session->userdata('company_id') != 0) {//parent id =0
                 ?>
                 <li>
                     <a href="<?php echo base_url() ?>register/get_register" data-toggle="tooltip" data-placement="right" title="" data-original-title="Users">
@@ -35,7 +35,7 @@
                 <?php
             }
 
-            if ($this->session->userdata('parent_id') == 0 && $this->session->userdata('company_id') == 0 && $this->session->userdata('user_id') != 0) {//parentid
+            if ($this->session->userdata('company_id') == 0 && $this->session->userdata('user_id') == 0 && $this->session->userdata('user_id') != '') {//parentid
                 ?>
                 <li>
                     <a href="<?php echo base_url() ?>company/get_company" data-toggle="tooltip" data-placement="right" title="" data-original-title="All Company">
@@ -45,7 +45,7 @@
                 <?php
             }
 
-            if ($this->session->userdata('parent_id') == 0 && $this->session->userdata('user_id') != '') {//parent_id =0 
+            if ($this->session->userdata('parent_id') == 0 && $this->session->userdata('user_id') != '' && $this->session->userdata('company_id') != 0) {//parent_id =0
                 ?>
                 <li>
                     <a href="<?php echo base_url() ?>company" data-toggle="tooltip" data-placement="right" title="" data-original-title="Company Details">
@@ -56,7 +56,7 @@
                 <?php
             }
 
-            if ($this->session->userdata('user_id') != '') {
+            if ($this->session->userdata('user_id') != '' && $this->session->userdata('company_id') != 0) {
                 ?>
 
                 <div id='cssmenu'>
@@ -111,7 +111,7 @@
             }
 
 
-            if ($this->session->userdata('user_id') != '') {
+            if ($this->session->userdata('user_id') != '' && $this->session->userdata('company_id') != 0) {
                 ?>
                 <li>
                     <a href="<?php echo base_url() ?>attendance" data-toggle="tooltip" data-placement="right" title="Attendance" data-original-title="Attendance">
@@ -122,7 +122,7 @@
                 <?php
             }
 
-            if ($this->session->userdata('parent_id') == 0 && $this->session->userdata('user_id') != '') {
+            if ($this->session->userdata('parent_id') == 0 && $this->session->userdata('user_id') != '' && $this->session->userdata('company_id') != 0) {
                 ?>
                 <li>
                     <a href="<?php echo base_url() ?>graph" data-toggle="tooltip" data-placement="right" title="Analysis" data-original-title="Analysis">

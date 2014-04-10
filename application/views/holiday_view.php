@@ -20,73 +20,60 @@ $this->load->library('form_validation');
             },
             selectable: true,
             selectHelper: true,
-            select: function(start, end, allDay) {
-                var title = "H";
-                alert(title);
-                if (title) {
-                    calendar.fullCalendar('renderEvent',
-                    {
-                        title: title,
-                        start: start,
-                        end: end,
-                        allDay: allDay
-                    },
-                    true // make the event "stick"
-                );
+            select: function(date) {
+                var d = date.getDate();
+                if(d<10)
+                    d="0"+d;
+                var m = date.getMonth();
+                m = m+1;
+                var y = date.getFullYear();
+                var date = '';
+                if(m >= 10){
+                    date = y+"-"+m+"-"+d;
                 }
-                calendar.fullCalendar('unselect');
+                else{
+                    date = y+"-0"+m+"-"+d;
+                }
+                $('#calendar').fullCalendar('renderEvent', {title: 'H',start: date,id:date });
+                //                calendar.fullCalendar('unselect');
+                setHoliday(date,'add');  
+            }, eventClick: function(event) {
+                var d = event.start.getDate();
+                if(d<10)
+                    d="0"+d;
+                var m = event.start.getMonth();
+                m = m+1;
+                var y = event.start.getFullYear(); 
+                var date = '';
+                if(m >= 10){
+                    date = y+"-"+m+"-"+d;
+                }
+                else{
+                    date = y+"-0"+m+"-"+d;
+                }
+                $('#calendar').fullCalendar('removeEvents', date);
+                setHoliday(date,'delete');  
+            } ,
+            eventSources: ['<?php echo base_url(); ?>holiday/prepareHolidayEvent'],
+            eventRender: function (event, element) {
+                element.find('.fc-event-title').html("<b style='font-size: 12px;padding-left: 2px;'>"+event.title+"</b>");
             }
-//            editable: true
-            //			events: [
-            //				{
-            //					title: 'All Day Event',
-            //					start: new Date(y, m, 1)
-            //				},
-            //				{
-            //					title: 'Long Event',
-            //					start: new Date(y, m, d-5),
-            //					end: new Date(y, m, d-2)
-            //				},
-            //				{
-            //					id: 999,
-            //					title: 'Repeating Event',
-            //					start: new Date(y, m, d-3, 16, 0),
-            //					allDay: false
-            //				},
-            //				{
-            //					id: 999,
-            //					title: 'Repeating Event',
-            //					start: new Date(y, m, d+4, 16, 0),
-            //					allDay: false
-            //				},
-            //				{
-            //					title: 'Meeting',
-            //					start: new Date(y, m, d, 10, 30),
-            //					allDay: false
-            //				},
-            //				{
-            //					title: 'Lunch',
-            //					start: new Date(y, m, d, 12, 0),
-            //					end: new Date(y, m, d, 14, 0),
-            //					allDay: false
-            //				},
-            //				{
-            //					title: 'Birthday Party',
-            //					start: new Date(y, m, d+1, 19, 0),
-            //					end: new Date(y, m, d+1, 22, 30),
-            //					allDay: false
-            //				},
-            //				{
-            //					title: 'Click for Google',
-            //					start: new Date(y, m, 28),
-            //					end: new Date(y, m, 29),
-            //					url: 'http://google.com/'
-            //				}
-            //			]
         });
 
     });
-
+    function setHoliday(date,action){
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo base_url(); ?>holiday/holidayhandle',
+            data: {                   
+                action:action,
+                date:date
+            },
+            success:function(response){
+                //            $("#exceptionDiv").html(response);
+            }
+        });
+    }
 </script>
 <style>
 

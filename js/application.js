@@ -446,100 +446,97 @@ function changestatuscompany(id){
 
 function chart()
 {
-
-    var kpiid=$("#kpi_name").val();
-    var userid=$("#user_name").val();
+    var kpiid=$("#kpi_name_combo").val();
+    var userid=$("#user_name_combo").val();
+    var fromdate=$("#fromdate").val();
+    var todate=$("#todate").val();
+    var chartType=$("#chartType").val();
+    //    var kpiname=$("#kpi_name_combo").options[$("#kpi_name_combo").selectedIndex].text;
+    
     if(userid == 0 )
     {
-        alert('Select Username')
+        alert('Select Username');
+        return false;
     }
-    else
-
-    if(kpiid == 0)
+    else if(kpiid == 0)
     {
-        alert('Select KPI Name')
+        alert('Select KPI Name');
+        return false;
     }
-    //   alert(userid);
-    //    alert(kpiid);return false;
-    //   var el = document.getElementById('user_name');
-    //    var value = el.options[el.selectedIndex].value;
-    //    console.log(value);
-    //    console.log(userid);
+    else if(fromdate == '')
+    {
+        alert('Select From Date');
+        return false;
+    }
+    else if(todate=="")
+    {
+        alert('Select To Date');
+        return false;
+    }
+    
     $.ajax({
         url:baseurl+"graph/getkpivalue",
         type:'POST',
         async:false,
         data:  {
             "userid": userid,
-            "kpiid": kpiid
+            "kpiid": kpiid,
+            "fromdate": fromdate,
+            "todate": todate
         },
-
         success:function(data){
+           
             console.log(data);
-
             var obj =  $.parseJSON(data);
             var kpi_value = new Array();
             var date_value = new Array();
             kpi_value =  obj.valuearr;
             date_value=  obj.datearr;
-
-            //            array1=obj.valuearr;
-
-
-
-            console.log(kpi_value);
-            console.log(date_value);
-            //            console.log(array2);
-            $('#container').highcharts({
-                chart: {
-                    type: 'column'
-                },
-                title: {
-                    text: 'KPI Growth'
-                },
-                subtitle: {
-                    text: ''
-                },
-                xAxis: {
-                    categories: [
-                    '23-03-2014','24-03-2014','25-03-2014'
-                    //                        date_value
-                    ]
-                //                    type:'datetime'
-
-                },
-                yAxis: {
+            if(kpi_value==''){
+                alert("Sorry, Data not available!");
+                return false;
+            }else{
+                $('#container').highcharts({
+                    chart: {
+                        type: chartType
+                    },
                     title: {
-                        text: 'KPI VALUE'
+                        text: 'KPI Growth'
+                    },
+                    subtitle: {
+                        text: 'Analysis of Business Environment'
+                    },
+                    xAxis: {
+                        categories: date_value
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'KPI VALUE'
+                        }
+                    },
+                    tooltip: {
+                        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                        '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+                        footerFormat: '</table>',
+                        shared: true,
+                        useHTML: true
+                    },
+                    plotOptions: {
+                        column: {
+                            pointPadding: 0.2,
+                            borderWidth: 0
+                        }
+                    },
+                    series: [{
+                        name:"Selected KPI " ,
+                        data: kpi_value
                     }
-                },
-                tooltip: {
-
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-                    footerFormat: '</table>',
-                    shared: true,
-                    useHTML: true
-                },
-                plotOptions: {
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
-                    }
-                },
-                series: [{
-                    //                    name: 'userid:+.userid.',
-                    name:"userid : "+ userid ,
-                    data: kpi_value
-                }
-
-                ]
-            });
+                    ]
+                });
+            }
         }
     });
-
-
 }
 
 function absent(id){
@@ -548,7 +545,7 @@ function absent(id){
     console.log(id);
 
     var userid=absentarr[1];
-//      console.log($("#"+id).prop('checked'));
+    //      console.log($("#"+id).prop('checked'));
     if($("#"+id).prop('checked')==true){
         console.log('true');
         var action='true';
@@ -556,7 +553,7 @@ function absent(id){
         console.log('false');
         var action='false';
     }
-//     console.log(userid);
+    //     console.log(userid);
 
     $.ajax({
         url:baseurl+"attendance/user_attendance",

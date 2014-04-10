@@ -35,15 +35,37 @@ class Login extends CI_Controller {
 //            $username = $this->input->post('username');
 //            $password = $this->input->post('password');
             $out = $this->registration_model->select($loginValues);
-            if ($out == null) {
-                $data['error'] = "Invalid username or password.";
+
+            if (count($out) > 0) {
+                $success = 'yes';
+                $company_id = $out[0]->company_id;
+                $parent_id = $out[0]->parent_id;
+                if ($parent_id > 0) {
+                    $this->load->model('holiday_model');
+                    $arr = array('company_id_fk' => $company_id, 'holidaydate' => date('Y-m-d'));
+                    $holidayarr = $this->holiday_model->get_record($arr);
+                    if (count($holidayarr) > 0) {
+                        $success = '';
+                        $msg = "Today is Holiday, Enjoy Holiday";
+                    }
+                }
+//                echo '<pre>';
+//                print_r($holidayarr);
+//                echo '</pre>';
+//                exit();
+            } else {
+                $success = '';
+                $msg = "Invalid username or password.";
+            }
+            if ($out == null || $success == '') {
+                $data['error'] = ($msg != '') ? $msg : "Invalid username or password.";
 
                 $this->load->view('common/header_view');
                 $this->load->view('common/sidebar_view');
                 $this->load->view('login_view', $data);
                 $this->load->view('common/footer_view');
             } else {
-                if (count($out) > 0) {
+                if (count($out) > 0 && $success == 'yes') {
 //                    $this->session->set_userdata($out[0]);
 //                    print_r($out[0]);
 ////                    print_r($out[0]->username);
@@ -125,7 +147,7 @@ class Login extends CI_Controller {
             'logout_time' => date("Y-m-d H:i:s"),
         );
         $this->load->model('login_log_mst_model');
-        $data['loginDetail'] = $this->login_log_mst_model->update_record(array('user_id_fk' => $logout_log_mst_user_id_fk,'date(login_time)' => date("Y-m-d")), $logoutArr);
+        $data['loginDetail'] = $this->login_log_mst_model->update_record(array('user_id_fk' => $logout_log_mst_user_id_fk, 'date(login_time)' => date("Y-m-d")), $logoutArr);
 
         $this->session->sess_destroy();
 
