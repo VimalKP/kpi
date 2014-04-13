@@ -71,15 +71,25 @@ class Login extends CI_Controller {
 ////                    print_r($out[0]->username);
 //                    exit();
 
+                    $userid = $out[0]->user_id;
+                    $this->load->model('registration_model');
+                    $parent = $this->registration_model->parentcheck($userid);
+                    if (count($parent) > 0) {
+                        $parentcheck = 'yes';
+                    } else {
+                        $parentcheck = 'no';
+                    }
                     $newdata = array(
                         'user_id' => $out[0]->user_id,
                         'parent_id' => $out[0]->parent_id,
                         'username' => $out[0]->username,
                         'user_type_id_fk' => $out[0]->user_type_id_fk,
                         'company_id' => $out[0]->company_id,
-                        'profile_image' => $out[0]->profile_image
+                        'profile_image' => $out[0]->profile_image,
+                        'parentcheck' => $parentcheck
                     );
 
+                  
                     $this->session->set_userdata($newdata);
 
 //                    $this->session->all_userdata();

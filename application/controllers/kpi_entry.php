@@ -63,6 +63,7 @@ class Kpi_entry extends CI_Controller {
             'kpi_value' => $entrykpivalue,
             'comment' => $comment,
             'entry_kpi_date_added' => date("Y-m-d H:i:s"),
+            'approved_status' => 0
         );
         $whereArr = array(
             'user_id_fk' => $userid,

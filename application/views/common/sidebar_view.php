@@ -73,20 +73,28 @@
                                 <?php
                                 if ($this->session->userdata('parent_id') == 0) {
                                     ?>
+                               
                                     <li>
+
                                         <a href="<?php echo base_url() ?>create_kpi"><span>Create KPI</span></a>
                                     </li>
-                                    <?php
-                                }
-                                ?>
 
+                                    <?php
+                                            }
+                                ?>
+                                <?php if($this->session->userdata('parentcheck')== 'yes'){ ?>
                                 <li>
                                     <a href="<?php echo base_url() ?>kpi_assign"><span>Assign KPI</span></a>
                                 </li>
+                                <?php } ?>
 
+
+                                <?php if($this->session->userdata('parentcheck')== 'yes'){ ?>
                                 <li>
                                     <a href="<?php echo base_url() ?>target_assign"><span>Target KPI</span></a>
                                 </li>
+                                <?php } ?>
+
 
                                 <?php
                                 if ($this->session->userdata('parent_id') != 0) {
@@ -98,9 +106,12 @@
                                 }
                                 ?>
 
+                                    <?php if($this->session->userdata('parentcheck')== 'yes'){ ?>
                                 <li>
                                     <a href="<?php echo base_url() ?>kpi_approve"><span>Approve KPI</span></a>
                                 </li>
+                                <?php } ?>
+
                             </ul>
 
                         </li>

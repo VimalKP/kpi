@@ -75,6 +75,7 @@ class Company_detail_model extends CI_Model {
     
     function get_company_detail($user_id) {
         $this->db->select('*');
+         $query = $this->db->where('company_id >', 0);
         $query = $this->db->get('company_detail');
 //        $this->db->select('user_id');
 //        $parent_name = array(user_id,username);

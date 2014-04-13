@@ -173,6 +173,16 @@ class Registration_model extends CI_Model {
         $query = $this->db->query("UPDATE registration as r ,(SELECT user_id FROM registration WHERE parent_id=0 AND company_id=$company_id AND registration_status=0 LIMIT 1) as e SET r.parent_id=e.user_id WHERE r.user_id=$userid");
 //        return $query->result();
     }
+    
+    function parentcheck($userid){
+//    $query = $this->db->get_where('registration', array('parent_id' => 'user_id'));
+      $query = $this->db->query("select * from registration where parent_id = $userid  AND registration_status=0  ");
+      return $query->result();
+
+
+    }
+
+    
 
 //    function getext($id) {
 //        $query = $this->db->query("SELECT ext FROM windows_users_image_upload WHERE user_id = $id")->row();
