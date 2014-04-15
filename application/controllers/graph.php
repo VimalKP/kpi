@@ -20,6 +20,7 @@ class Graph extends CI_Controller {
     }
 
     function getkpivalue() {
+        $assos = array();
         $userid = $this->input->post('userid');
 //        $userid=2;
 //        $kpiid=4;
@@ -29,22 +30,35 @@ class Graph extends CI_Controller {
 
         $postArr = array("user_id_fk" => $userid, "kpi_id_fk" => $kpiid, "approved_status" => 1, "date(entry_kpi_date_added) >=" => date("Y-m-d", strtotime($fromdate)), "date(entry_kpi_date_added) <=" => date("Y-m-d", strtotime($todate)));
         $this->load->model('entry_kpi_model');
-        $graphdate = $this->entry_kpi_model->get_record($postArr);
-        $alldata = array();
+        $graphArr = $this->entry_kpi_model->get_record($postArr);
+
+        $targetData = array("user_id_fk" => $userid, "kpi_id_fk" => $kpiid, "date(target_date_added) >=" => date("Y-m-d", strtotime($fromdate)), "date(target_date_added) <=" => date("Y-m-d", strtotime($todate)));
+
+        $this->load->model('target_model');
+        $targetArr = $this->target_model->get_record($targetData);
+
+        $cnt = 0;
+        $sum_target = 0;
+        if (count($targetArr) > 0) {
+            foreach ($targetArr as $val) {
+                $sum_target+=intval($val['value_of_target']);
+                $cnt++;
+            }
+        }
+        $avg_target = $sum_target / $cnt;
         $allvalue = array();
         $dateArr = array();
-        if (count($graphdate) > 0) {
-            foreach ($graphdate as $value) {
-                $value_of_target = intval($value['kpi_value']);
-                $date = date("d-m-Y",  strtotime($value['entry_kpi_date_added']));
-                array_push($allvalue, $value_of_target);
+        if (count($graphArr) > 0) {
+            foreach ($graphArr as $value) {
+                $kpi_value = intval($value['kpi_value']);
+                $date = date("d-m-Y", strtotime($value['entry_kpi_date_added']));
+                array_push($allvalue, $kpi_value);
                 array_push($dateArr, $date);
             }
         }
 //        $graph_data['popul']['data'] = $value_of_target;
 //        $graph_data['popul']['name'] = 'KPI Value';
 //        $graph_data['axis']['categories'] = $dateArr;
-
         ////////////////////////////////// GRAPH 
 //        $this->load->library('highcharts');
 //        $this->highcharts->set_type('column'); // drauwing type
@@ -54,12 +68,11 @@ class Graph extends CI_Controller {
 //        $this->highcharts->set_xAxis($graph_data['axis']);
 ////        $this->highcharts->set_serie($graph_data['users']);
 //        $this->highcharts->set_serie($graph_data['popul']);
-
 //        $this->highcharts->render_to('container');
-
 //        $data['charts'] = $this->highcharts->render();
         ////////////////////////////////// GRAPH 
-        
+
+        $assos['avg_target'] = $avg_target;
         $assos['valuearr'] = $allvalue;
         $assos['datearr'] = $dateArr;
         echo json_encode($assos);

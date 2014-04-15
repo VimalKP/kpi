@@ -492,6 +492,7 @@ function chart()
             var date_value = new Array();
             kpi_value =  obj.valuearr;
             date_value=  obj.datearr;
+            var avg_target =  obj.avg_target;
             if(kpi_value==''){
                 alert("Sorry, Data not available!");
                 return false;
@@ -512,7 +513,18 @@ function chart()
                     yAxis: {
                         title: {
                             text: 'KPI VALUE'
-                        }
+                        },
+                        plotLines: [{
+                            id: 'Average Target',
+                            color: '#FF0000',
+                            dashStyle: 'ShortDash',
+                            width: 2,
+                            value: avg_target,
+                            zIndex: 0,
+                            label : {
+                                text : 'Average Target = '+avg_target
+                            }
+                        }]
                     },
                     tooltip: {
                         headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
