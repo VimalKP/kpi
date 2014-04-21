@@ -60,7 +60,7 @@ class Login extends CI_Controller {
 
                 $checkAb = $this->registration_model->select($loginValues, $absentuserids, 'abccheck');
                 if (count($checkAb) == 0) {
-                       $success = '';
+                    $success = '';
                     $msg = "Today You Are Absent, For Login Contact Your Administrator";
                 }
 
@@ -101,7 +101,8 @@ class Login extends CI_Controller {
                         'user_type_id_fk' => $out[0]->user_type_id_fk,
                         'company_id' => $out[0]->company_id,
                         'profile_image' => $out[0]->profile_image,
-                        'parentcheck' => $parentcheck
+                        'parentcheck' => $parentcheck,
+                        'is_holiday' => ''
                     );
 
 

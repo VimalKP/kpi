@@ -68,23 +68,27 @@ class Holiday extends CI_Controller {
         echo json_encode($events);
     }
 
-    function checkdate() {
-        $today = date('Y-m-d ');
-        $tommorow = date('Y-m-d', strtotime($today . ' + 1 day'));
-        $this->load->model('holiday_model');
-        $date = $this->holiday_model->checkdate($tommorow);
-        if (count($date) > 0) {
-            $success = 'yes';
-            $msg = "Tomorrow is Holiday ";
+//    function checkdate() {
+//        $today = date('Y-m-d ');
+//        $tommorow = date('Y-m-d', strtotime($today . ' + 1 day'));
+//        echo '<pre>';
+//        print_r($tommorow);
+//        echo '</pre>';
+//        exit();
+//        $this->load->model('holiday_model');
+//        $date = $this->holiday_model->checkdate($tommorow);
+//        if (count($date) > 0) {
+//            $success = 'yes';
+//            $msg = "Tomorrow is Holiday ";
+////        }
+////        if (count($date) > 0 && $success == 'yes') {
+//            
+//            $this->load->view('common/header_view', $data);
+//            $this->load->view('common/sidebar_view');
+//            $this->load->view('home_view');
+//            $this->load->view('common/footer_view');
 //        }
-//        if (count($date) > 0 && $success == 'yes') {
-            
-            $this->load->view('common/header_view', $data);
-            $this->load->view('common/sidebar_view');
-            $this->load->view('home_view');
-            $this->load->view('common/footer_view');
-        }
-    }
+//    }
 }
 
 ?>

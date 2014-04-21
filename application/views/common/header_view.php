@@ -30,7 +30,7 @@
 
         <script type="text/javascript" src="<?php echo base_url() ?>js/jquery-1.3.2.min.js"></script>
         <script type="text/javascript" src="<?php echo base_url() ?>js/application.js"></script>
-        
+
         <script type="text/javascript">
 
             $(document).ready(function(){
@@ -120,9 +120,9 @@
                 <div class="header-links hidden-xs">
 
 
-<!--                    <div class="top-search-w pull-right">
-                        <input type="text" class="top-search" placeholder="Search"/>
-                    </div>-->
+                    <!--                    <div class="top-search-w pull-right">
+                                            <input type="text" class="top-search" placeholder="Search"/>
+                                        </div>-->
                     <?php
                     $img = $this->session->userdata('profile_image');
                     if ($img == '') {
@@ -138,12 +138,12 @@
                             ?>
 
 
-                            <a href="#" class="header-link clearfix" data-toggle="dropdown">
+                            <a href="#" class="header-link clearfix" data-toggle="dropdown" style="width: 170px;">
                                 <div class="avatar">
-    <!--                                    <img src="<?php // echo base_url()   ?>images/no-avatar.png" alt="">-->
+    <!--                                    <img src="<?php // echo base_url()          ?>images/no-avatar.png" alt="">-->
 
                                     <img src="<?php echo base_url() ?>images/profile_pic/<?= $img ?>">
-    <!--                                    <img src="<?php // echo site_url("register/loadImg/")           ?>">-->
+    <!--                                    <img src="<?php // echo site_url("register/loadImg/")                  ?>">-->
 
                                 </div>
 
@@ -161,7 +161,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <!--                                <li><a href="#">Profile</a></li>-->
-                                    <!--                            <li><a href="<?php // echo base_url();  ?>register/edit_user?id=<? //= $row->user_id  ?>">Profile</a></li>-->
+                                    <!--                            <li><a href="<?php // echo base_url();         ?>register/edit_user?id=<? //= $row->user_id         ?>">Profile</a></li>-->
 
 
                                 <?php
@@ -190,4 +190,11 @@
                 <a class="current logo hidden-xs" href="<?php echo base_url() ?>home"><i class="fa fa-rocket"></i></a>
 <!--                <a class="menu-toggler" href="#"><i class="fa fa-bars"></i></a>-->
                 <h1>KEY PERFORMANCE INDICATOR</h1>
+                <?php
+                if ($this->session->userdata('is_holiday') != '') {
+                    ?>
+                    <div style="float: right; line-height: 50px;">
+                        <span class="badge alert-animated">Tomorrow Holiday</span></a>
+                    </div>
+                <?php } ?>
             </div>
