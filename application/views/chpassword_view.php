@@ -35,7 +35,7 @@ $this->load->library('form_validation');
                                 <a href="#" class="widget-control widget-control-remove" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove"><i class="fa fa-times-circle"></i></a>-->
                             </div>
 
-                        <h3><i class="fa fa-file-text-o"></i> Login Form</h3>
+                        <h3><i class="fa fa-file-text-o"></i> Reset Password</h3>
                     </div>
                     <div class="widget-content">
                         <div class="modal-body">
@@ -49,7 +49,14 @@ $this->load->library('form_validation');
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">Password</label>
+                                    <label class="col-md-3 control-label">New Password</label>
+                                    <div class="col-md-9">
+                                        <input id="password" name="password" type="password" class="form-control  rounded" placeholder="Enter password" value="<?php echo set_value('password'); ?>">
+                                        <span class="error"><?php echo form_error('password'); ?></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Conform New Password</label>
                                     <div class="col-md-9">
                                         <input id="password" name="password" type="password" class="form-control  rounded" placeholder="Enter password" value="<?php echo set_value('password'); ?>">
                                         <span class="error"><?php echo form_error('password'); ?></span>
@@ -67,8 +74,8 @@ $this->load->library('form_validation');
 
                                 <div class="form-group">
                                     <div class="col-md-offset-3 col-md-9">
-                                        <button type="submit" class="btn btn-primary">LOGIN</button>
-                                        <a href="<?php echo base_url() ?>chpassword"><label style="margin-left: 30px;" class="control-label">Forgot Password</label></a>
+                                        <button type="submit" class="btn btn-primary">Change Password</button>
+<!--                                        <a href="<?php echo base_url() ?>chpassword"><label style="margin-left: 30px;" class="control-label">Forgot Password</label></a>-->
                                     </div>
                                 </div>
 

@@ -69,4 +69,9 @@ class Holiday_model extends CI_Model {
             return FALSE;
     }
 
+    function checkdate($tommorow)
+    {
+        $query=  $this->db->get_where('holiday',array('holidaydate'=>$tommorow));
+        return $query->result();
+    }
 }

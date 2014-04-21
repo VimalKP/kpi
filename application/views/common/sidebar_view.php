@@ -144,12 +144,24 @@
                 <?php
             }
 
-            if ($this->session->userdata('user_type_id_fk') != '') {
+            if ($this->session->userdata('parent_id') == 0 && $this->session->userdata('user_id') != '' && $this->session->userdata('company_id') != 0) {
                 ?>
 
                 <li>
                     <a href="<?php echo base_url() ?>holiday" data-toggle="tooltip" data-placement="right" title="Set Holiday" data-original-title="Holiday">
                         <i class="fa fa-calendar"></i>
+                    </a>
+                </li>
+
+                <?php
+            }
+            
+            if ($this->session->userdata('user_type_id_fk') != '') {
+                ?>
+
+                <li>
+                    <a href="<?php echo base_url() ?>register/change_pwd" data-toggle="tooltip" data-placement="right" title="Change Password" data-original-title="Change Password">
+                        <i class="fa fa-star"></i>
                     </a>
                 </li>
 

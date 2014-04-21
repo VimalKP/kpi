@@ -6,12 +6,17 @@ if (!defined('BASEPATH'))
 class Graph extends CI_Controller {
 
     public function index() {
+        
+        $userid = $this->session->userdata('user_id');
 
         $this->load->model('kpi_master_model');
         $data['kpiArr'] = $this->kpi_master_model->getAllKpi();
 
         $this->load->model('registration_model');
         $data['registerArr'] = $this->registration_model->getAllregister();
+        
+        $this->load->model('registration_model');
+        $data['usergetArr'] = $this->registration_model->get_child_and_user($userid);
 
         $this->load->view('common/header_view');
         $this->load->view('common/sidebar_view');

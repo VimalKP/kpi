@@ -120,9 +120,9 @@
                 <div class="header-links hidden-xs">
 
 
-                    <div class="top-search-w pull-right">
+<!--                    <div class="top-search-w pull-right">
                         <input type="text" class="top-search" placeholder="Search"/>
-                    </div>
+                    </div>-->
                     <?php
                     $img = $this->session->userdata('profile_image');
                     if ($img == '') {

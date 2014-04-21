@@ -69,7 +69,7 @@ class Registration_model extends CI_Model {
         $this->db->insert('registration', $postArr);
     }
 
-    public function select($loginValues) {
+    public function select($loginValues, $absentuserids, $check) {
         extract($loginValues);
         $where = array('r.username' => $username, 'r.password' => $password, 'r.registration_status' => 0, 'c.company_status' => 0);
 //        print_r($loginValues);
@@ -79,6 +79,12 @@ class Registration_model extends CI_Model {
                 $this->db->where($key, $val);
             }
         }
+
+        if ($check == 'abccheck' && count($absentuserids) > 0) {
+
+            $this->db->where_not_in('r.user_id', $absentuserids);
+        }
+
         $this->db->from('registration AS r'); //company_detail
         $this->db->join('company_detail as c', 'r.company_id=c.company_id');
 //        $query = $this->db->get_where('registration', array('username' => $username, 'password' => $password, 'registration_status' => 0));
@@ -110,12 +116,23 @@ class Registration_model extends CI_Model {
     }
 
     function get_child_user($userid) {
-        $query = $this->db->get_where('registration', array('parent_id' => $userid,'registration_status'=>0));
+        $query = $this->db->get_where('registration', array('parent_id' => $userid, 'registration_status' => 0));
         return $query->result();
     }
 
+    function get_child_and_user($userid) {
+//        $this->db->or_where('user_id', $userid);
+//        $query = $this->db->get_where('registration', array('parent_id' => $userid, 'registration_status' => 0));
+
+        $query = $this->db->query("select * from registration where parent_id = $userid OR user_id = $userid");
+
+        return $query->result();
+    }
+
+    // select * from registration where parent_id = $userid OR user_id = $userid
+
     function get_child_user_array($userid) {
-        $query = $this->db->get_where('registration', array('parent_id' => $userid,'registration_status'=>0));
+        $query = $this->db->get_where('registration', array('parent_id' => $userid, 'registration_status' => 0));
 //        return $query->result();
         if ($query->num_rows() > 0)
             return $query->result_array();
@@ -135,7 +152,7 @@ class Registration_model extends CI_Model {
     }
 
     public function getuseralldetail($userid) {
-        $query = $this->db->get_where('registration', array('user_id' => $userid,'registration_status'=>0));
+        $query = $this->db->get_where('registration', array('user_id' => $userid, 'registration_status' => 0));
         return $query->result();
     }
 
@@ -173,16 +190,23 @@ class Registration_model extends CI_Model {
         $query = $this->db->query("UPDATE registration as r ,(SELECT user_id FROM registration WHERE parent_id=0 AND company_id=$company_id AND registration_status=0 LIMIT 1) as e SET r.parent_id=e.user_id WHERE r.user_id=$userid");
 //        return $query->result();
     }
-    
-    function parentcheck($userid){
+
+    function parentcheck($userid) {
 //    $query = $this->db->get_where('registration', array('parent_id' => 'user_id'));
-      $query = $this->db->query("select * from registration where parent_id = $userid  AND registration_status=0  ");
-      return $query->result();
-
-
+        $query = $this->db->query("select * from registration where parent_id = $userid  AND registration_status=0  ");
+        return $query->result();
     }
 
-    
+    function change_pwd_new($pass) {
+        $query = $this->db->get_where('registration', array('password' => $pass));
+        return $query->result();
+    }
+
+    function forgotpass($id) {
+        $this->db->select('*');
+        $query = $this->db->get_where('registration', array('user_id' => $id));
+        return $query->result();
+    }
 
 //    function getext($id) {
 //        $query = $this->db->query("SELECT ext FROM windows_users_image_upload WHERE user_id = $id")->row();

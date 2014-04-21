@@ -30,11 +30,19 @@ class Login extends CI_Controller {
             $this->load->view('common/footer_view');
         } else {
 
-
+            $this->load->model('attendance_model');
+            $absentArr = $this->attendance_model->get_record(array('attendance_date' => date("Y-m-d")));
+            $absentuserids = array();
+            if (count($absentArr) > 0) {
+                foreach ($absentArr as $value) {
+                    $absentuserids[] = $value['user_id_fk'];
+                }
+            }
+            $data['absentuserids'] = $absentuserids;
             $this->load->model('registration_model');
 //            $username = $this->input->post('username');
 //            $password = $this->input->post('password');
-            $out = $this->registration_model->select($loginValues);
+            $out = $this->registration_model->select($loginValues, $absentuserids, 'check');
 
             if (count($out) > 0) {
                 $success = 'yes';
@@ -49,6 +57,13 @@ class Login extends CI_Controller {
                         $msg = "Today is Holiday, Enjoy Holiday";
                     }
                 }
+
+                $checkAb = $this->registration_model->select($loginValues, $absentuserids, 'abccheck');
+                if (count($checkAb) == 0) {
+                       $success = '';
+                    $msg = "Today You Are Absent, For Login Contact Your Administrator";
+                }
+
 //                echo '<pre>';
 //                print_r($holidayarr);
 //                echo '</pre>';
@@ -89,7 +104,7 @@ class Login extends CI_Controller {
                         'parentcheck' => $parentcheck
                     );
 
-                  
+
                     $this->session->set_userdata($newdata);
 
 //                    $this->session->all_userdata();

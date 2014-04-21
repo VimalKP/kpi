@@ -59,8 +59,8 @@ $this->load->library('form_validation');
                                 <select id="user_name_combo" name="user_name" class="form-control rounded" onchange="selectkpishow()">
                                     <option value="0">-----------------------SELECT--------------------------</option>
                                     <?php
-                                    if (isset($registerArr) && $registerArr != array()) {
-                                        foreach ($registerArr as $key => $value) {
+                                    if (isset($usergetArr) && $usergetArr != array()) {
+                                        foreach ($usergetArr as $key => $value) {
                                             $sel = "";
                                             if ($value->user_id == $selected)
                                                 $sel = "selected";

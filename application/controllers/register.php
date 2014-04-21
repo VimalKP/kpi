@@ -244,6 +244,104 @@ class Register extends CI_Controller {
         $this->load->view('attendance_view');
         $this->load->view('common/footer_view');
     }
+    
+    public function change_pwd() {
+        $this->load->view('common/header_view');
+        $this->load->view('common/sidebar_view');
+        $this->load->view('changepwd_view');
+        $this->load->view('common/footer_view');
+    }
+
+    public function change_pwd_new() {
+        $userid = $this->session->userdata('user_id');
+
+        $register_password = $this->input->post('password');
+        $new_password = $this->input->post('new_password');
+//        echo "<pre>";
+//        print_r("$register_password");
+//        print_r("$new_password");
+//        echo "</pre>";
+//        exit();
+        $newpassArr = array(
+            'password' => $new_password
+        );
+//
+//        $newpassArr = $this->input->post();
+
+        $this->load->helper(array('form'));
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('password', 'password', 'required');
+        $this->form_validation->set_rules('new_password', 'New Password', 'required|min_length[5]|max_length[20]|matches[new_re_password]');
+        $this->form_validation->set_rules('new_re_password', 'Re-Password', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            $data['error'] = "";
+
+            $this->load->view('common/header_view');
+            $this->load->view('common/sidebar_view');
+            $this->load->view('changepwd_view', $data);
+            $this->load->view('common/footer_view');
+        } else {
+            $this->load->model('registration_model');
+            $password = $this->registration_model->change_pwd_new($register_password);
+            if (count($password) > 0) {
+                $this->load->model('registration_model');
+                $password = $this->registration_model->updatedata($newpassArr, $userid);
+
+                $this->load->view('common/header_view');
+                $this->load->view('common/sidebar_view');
+                $this->load->view('home_view');
+                $this->load->view('common/footer_view');
+            } else {
+                $data['error'] = "Password is Wrong";
+                $this->load->view('common/header_view');
+                $this->load->view('common/sidebar_view');
+                $this->load->view('changepwd_view', $data);
+                $this->load->view('common/footer_view');
+            }
+        }
+    }
+
+    function forgotpass($id) {
+//         $id = $_GET['id'];
+//        $id = 4;
+        $this->load->model('registration_model');
+        $data['detail'] = $this->registration_model->forgotpass($id);
+        $new_password = $this->input->post('n_password');
+            $newpassArr = array(
+                'password' => $new_password
+            );
+        
+
+        $this->load->helper(array('form'));
+        $this->load->library('form_validation');
+
+//        $this->form_validation->set_rules('password', 'password', 'required');
+        $this->form_validation->set_rules('n_password', 'New Password', 'required|min_length[5]|max_length[20]|matches[c_password]');
+        $this->form_validation->set_rules('c_password', 'Conform-Password', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            $data['error'] = "";
+            $this->load->view('common/header_view');
+            $this->load->view('common/sidebar_view');
+            $this->load->view('forgotpassword_view', $data);
+            $this->load->view('common/footer_view');
+        } else {
+                $this->load->model('registration_model');
+                $chpassword = $this->registration_model->updatedata($newpassArr, $id);
+//                echo 'your password is successfully changed';
+                
+                $this->load->view('common/header_view');
+                $this->load->view('common/sidebar_view');
+                $this->load->view('login_view');
+                $this->load->view('common/footer_view');
+            
+        }
+
+//        echo "<pre>";
+//        print_r($data['detail']);
+//        echo "</pre>";
+//        exit();
+    }
 
     function register_check($arr) {
 
