@@ -33,7 +33,7 @@ $this->load->library('form_validation');
                                 <a href="#" class="widget-control widget-control-remove" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove"><i class="fa fa-times-circle"></i></a>-->
                             </div>
 
-                            <h3><i class="fa fa-book"></i> Registration Form</h3>
+                            <h3><i class="fa fa-book"></i> Register New User</h3>
                         </div>
 
                         <div class="widget-content">

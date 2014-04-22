@@ -21,6 +21,10 @@ class Kpi_entry extends CI_Controller {
 
 
         $data['get_target'] = $this->entry_kpi_model->get_assign_target($user_id);
+//        echo '<pre>';
+//        print_r($data);
+//        echo '</pre>';
+//        exit();
         $whereArr = array(
             'user_id_fk' => $user_id,
             'DATE(entry_kpi_date_added)' => date("Y-m-d"),

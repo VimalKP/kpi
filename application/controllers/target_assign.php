@@ -52,7 +52,7 @@ class Target_assign extends CI_Controller {
         $value = $this->input->post('value_of_target');
         $user_id_fk = $this->input->post('user_id_fk');
         $select = array('kpi_id_fk' => $kpi_id_fk, 'user_id_fk' => $user_id_fk);
-        $update = array('value_of_target' => $value, 'target_date_added' => date("Y-m-d H:i:s"));
+        $update = array('value_of_target' => $value, 'target_date_added' => date("Y-m-d H:i:s"), 'update_status' => 1);
         $postArr = array('kpi_id_fk' => $kpi_id_fk, 'value_of_target' => $value, 'target_date_added' => date("Y-m-d H:i:s"), 'user_id_fk' => $user_id_fk);
         $this->load->model('target_model');
         $data = $this->target_model->get_record($select);

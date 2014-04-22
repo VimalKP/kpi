@@ -103,7 +103,13 @@ function kpigetname(id){
                     else{
                         text_input='<input id="kpi_'+kpi_id+'" name="text" type="text" class="form-control rounded" value="">';
                     }
-                    assignkpi+='<div class="form-group"><label class="col-md-3 control-label">'+kpi_name+'</label> <div class="col-xs-5">'+text_input+'</div><button type="submit" id="target_'+kpi_id+'" onclick="save_target(\''+kpi_id+'\', \''+userid+'\');" class="btn btn-primary add">SAVE</button></div>';
+                    if(kpi_name.length>15){
+                       var kpname=kpi_name.substring(0,15)+'...';  
+                    }else{
+                         var kpname=kpi_name;
+                    }
+                   
+                    assignkpi+='<div class="form-group"><label class="col-md-3 control-label" title="'+kpi_name+'">'+kpname+'</label> <div class="col-xs-5">'+text_input+'</div><button type="submit" id="target_'+kpi_id+'" onclick="save_target(\''+kpi_id+'\', \''+userid+'\');" class="btn btn-primary add">SAVE</button></div>';
                 }
                 $("#assign_kpi").html('');
                 $("#assign_kpi").html(assignkpi);

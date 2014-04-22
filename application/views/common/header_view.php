@@ -163,7 +163,8 @@
                                 <!--                                <li><a href="#">Profile</a></li>-->
                                     <!--                            <li><a href="<?php // echo base_url();         ?>register/edit_user?id=<? //= $row->user_id         ?>">Profile</a></li>-->
 
-
+                                <li><a href="<?php echo base_url(); ?>profile">Profile</a></li>
+                                
                                 <?php
                                 if ($this->session->userdata('user_id') != '') {
                                     ?>

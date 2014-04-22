@@ -41,7 +41,17 @@ $this->load->library('form_validation');
                 <div class="widget-content">
                     <div class="modal-body">
                         <form class="form-horizontal">
-<!--                        <form action="<?php // echo base_url()          ?>kpi_approve" role="form" class="form-horizontal" method="post">-->
+<!--                        <form action="<?php // echo base_url()           ?>kpi_approve" role="form" class="form-horizontal" method="post">-->
+
+                            <?php
+                            for ($i = 0; $i < count($get_target); $i++) {
+                                if ($get_target[$i]['update_status'] == 1) {
+                                    echo 'your target is changed';
+                                } else {
+                                    echo '';
+                                }
+                            }
+                            ?>
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">User Name</label>
