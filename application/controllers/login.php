@@ -175,6 +175,8 @@ class Login extends CI_Controller {
         $this->load->model('login_log_mst_model');
         $data['loginDetail'] = $this->login_log_mst_model->update_record(array('user_id_fk' => $logout_log_mst_user_id_fk, 'date(login_time)' => date("Y-m-d")), $logoutArr);
 
+//        $this->session->unset_userdata($this->session->userdata());
+
         $this->session->sess_destroy();
 
 

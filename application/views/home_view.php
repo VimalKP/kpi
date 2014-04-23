@@ -164,7 +164,7 @@
                                             $brand = $twitterdata[$i]['brand'];
                                             $profile_image = $twitterdata[$i]['profile_image'];
                                             if($profile_image==''){
-                                                $profile_image='no-avatar.png';
+                                                $profile_image='http://localhost/kpi/images/no-avatar.png';
                                             }
                                             $posted = date('M d', strtotime($twitterdata[$i]['posted']));
                                             ?>
@@ -172,7 +172,7 @@
                                                 <div class="row">
                                                     <div class="col-xs-2">
                                                         <div class="avatar">
-                                                            <img src="images/<?=$profile_image?>" alt="">
+                                                            <img src="http://localhost/kpi/images/<?=$profile_image?>" alt="">
                                                         </div>
                                                     </div>
                                                     <div class="col-xs-10">

@@ -138,7 +138,7 @@
                             ?>
 
 
-                            <a href="#" class="header-link clearfix" data-toggle="dropdown" style="width: 170px;">
+                            <a href="#" class="header-link clearfix" data-toggle="dropdown" style="width: 200px;">
                                 <div class="avatar">
     <!--                                    <img src="<?php // echo base_url()          ?>images/no-avatar.png" alt="">-->
 

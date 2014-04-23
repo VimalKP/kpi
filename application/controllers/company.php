@@ -236,7 +236,7 @@ class Company extends CI_Controller {
         $company_website = $this->input->post('company_website');
         $facebook_page = $this->input->post('facebook_page');
         $twitter_page = $this->input->post('twitter_page');
-        $usertype = $this->input->post('usertype');
+//        $usertype = $this->input->post('usertype');
         $username = $this->input->post('username');
         $password = $this->input->post('password');
 //        echo '<pre>';
@@ -276,6 +276,7 @@ class Company extends CI_Controller {
         } else {
             $this->load->model('Company_detail_model');
             $this->load->model('social_media_model');
+            $this->load->model('registration_model');
 
             $company_id = $this->Company_detail_model->insertdata($postArr);
 
@@ -290,7 +291,7 @@ class Company extends CI_Controller {
                 'brand' => $postArr['twitter_page']
             );
             $companyUser = array(
-                'company_id_fk' => $company_id,
+                'company_id' => $company_id,
                 'firstname' => $username,
                 'username' => $username,
                 'password' => $password,

@@ -114,9 +114,6 @@ class kpiclass {
         curl_setopt($curlopt, CURLOPT_SSL_VERIFYPEER, FALSE);
         $result_access_t = curl_exec($curlopt);
         $twitter_response = json_decode($result_access_t, TRUE);
-        if ($twitter_response['errors']) {
-            
-        }
         curl_close($curlopt);
         return $twitter_response;
     }

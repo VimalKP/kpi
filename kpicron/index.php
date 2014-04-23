@@ -34,15 +34,16 @@ if (count($result) > 0) {
             if ($brand != '') {
                 $twitter_details = $kpiobj->getResponse(API_HOST . "statuses/user_timeline.json?screen_name=$brand&count=200&include_rts=1&include_entities=1", $access_token[$index]);
                 if (count($twitter_details) > 0) {
-                    for ($j = $k; $j < count($twitter_details); $j++) {
+                    for ($j = 0; $j < count($twitter_details); $j++) {
                         $tweet_id = $twitter_details[$j]['id_str'];
                         $body = $twitter_details[$j]['text'];
                         $screen_name = $twitter_details[$j]['user']['screen_name'];
                         $created_at = $kpiobj->formateDate(trim($twitter_details[$j]['created_at']), '');
                         $link = "https://twitter.com/" . $screen_name . "/status/" . $tweet_id;
                         if ($tweet_id != '') {
-                            $kpiobj->insert("INSERT INTO posts (brand_id_fk,postid,content,posted) VALUES
+                            $kpiobj->insert("INSERT INTO posts (brand_id_fk,postid,content,posted,link) VALUES
                      ('$brand_id','$tweet_id','" . htmlspecialchars_decode(addslashes($body)) . "','$created_at','$link')");
+                         
                         }
                     }
                 }

@@ -61,6 +61,7 @@ class Kpi_approve extends CI_Controller {
         $userid = $this->input->post('userid');
         $kpiid = $this->input->post('kpiid');
         $comment = $this->input->post('comment');
+        $approved_value = $this->input->post('finalmain');
 
         $parent_id = $this->session->userdata('user_id');
         $updateArr = array();
@@ -68,6 +69,7 @@ class Kpi_approve extends CI_Controller {
         $updateArr['approved_status'] = 1;
         $updateArr['approved_comment'] = $comment;
         $updateArr['approved_date'] = date("Y-m-d H:i:s");
+        $updateArr['approved_value'] = $approved_value;
 
         $where = array();
         $where['user_id_fk'] = $userid;

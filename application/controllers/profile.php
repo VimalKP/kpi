@@ -92,6 +92,7 @@ class Profile extends CI_Controller {
 
             if (!$this->upload->do_upload('profile_image')) {
                 $error = array('error' => $this->upload->display_errors());
+                unset($postArr['profile_image']);
 //                echo '<pre>';
 //                print_r($error);
 //                echo '</pre>';

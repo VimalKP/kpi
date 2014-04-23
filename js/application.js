@@ -104,9 +104,9 @@ function kpigetname(id){
                         text_input='<input id="kpi_'+kpi_id+'" name="text" type="text" class="form-control rounded" value="">';
                     }
                     if(kpi_name.length>15){
-                       var kpname=kpi_name.substring(0,15)+'...';  
+                        var kpname=kpi_name.substring(0,15)+'...';  
                     }else{
-                         var kpname=kpi_name;
+                        var kpname=kpi_name;
                     }
                    
                     assignkpi+='<div class="form-group"><label class="col-md-3 control-label" title="'+kpi_name+'">'+kpname+'</label> <div class="col-xs-5">'+text_input+'</div><button type="submit" id="target_'+kpi_id+'" onclick="save_target(\''+kpi_id+'\', \''+userid+'\');" class="btn btn-primary add">SAVE</button></div>';
@@ -267,6 +267,7 @@ function cancel(id)
 }
 function entrykpi(kpiid,userid){
     var entrykpivalue=$.trim($("#kpi_"+kpiid).val());
+   
     var comment=$.trim($("#comment_"+kpiid).val());
     var classarr=  $("#button_"+kpiid).attr('class');
     var  statusclassarr=classarr.split(" ");
@@ -276,30 +277,34 @@ function entrykpi(kpiid,userid){
     console.log(comment);
     console.log(classarr);
     if(actualclass=='add'){
-        $.ajax({
-            url:baseurl+"kpi_entry/addkpi_entry",
-            type:'POST',
-            data:  {
-                "kpiid": kpiid,
-                "entrykpivalue": entrykpivalue,
-                "comment": comment,
-                "userid": userid,
-                "action": actualclass
-            },
+        if(entrykpivalue==''){
+            alert("Enter value")
+        }else{
+            $.ajax({
+                url:baseurl+"kpi_entry/addkpi_entry",
+                type:'POST',
+                data:  {
+                    "kpiid": kpiid,
+                    "entrykpivalue": entrykpivalue,
+                    "comment": comment,
+                    "userid": userid,
+                    "action": actualclass
+                },
                 
-            success:function(data){
-                console.log(data)
-                console.log('success');
-                var obj=$.parseJSON(data);
-                $("#kpi_"+kpiid).attr('disabled','disabled');
-                $("#comment_"+kpiid).attr('disabled','disabled');
-                $("#button_"+kpiid).text('');
-                $("#button_"+kpiid).text('UPDATE');
-                $("#button_"+kpiid).removeClass('add');
-                $("#button_"+kpiid).addClass('update');
+                success:function(data){
+                    console.log(data)
+                    console.log('success');
+                    var obj=$.parseJSON(data);
+                    $("#kpi_"+kpiid).attr('disabled','disabled');
+                    $("#comment_"+kpiid).attr('disabled','disabled');
+                    $("#button_"+kpiid).text('');
+                    $("#button_"+kpiid).text('UPDATE');
+                    $("#button_"+kpiid).removeClass('add');
+                    $("#button_"+kpiid).addClass('update');
         
-            }
-        });
+                }
+            });
+        }
     }else{
         $("#kpi_"+kpiid).removeAttr('disabled','disabled');
         $("#comment_"+kpiid).removeAttr('disabled','disabled');
@@ -308,6 +313,7 @@ function entrykpi(kpiid,userid){
         $("#button_"+kpiid).removeClass('update');
         $("#button_"+kpiid).addClass('add');
     }
+   
 
 }
 
@@ -360,6 +366,7 @@ function userkpiname(id)
 function approvekpivalue(userid,kpiid){
     
     var comment=$("#comment_"+kpiid).val();
+    var finalmain =$("#final_"+kpiid).val();
     
     $.ajax({
         url:baseurl+"kpi_approve/approvekpivalue",
@@ -367,6 +374,7 @@ function approvekpivalue(userid,kpiid){
         data:  {
             "userid": userid,
             "comment": comment,
+            "finalmain": finalmain,
             "kpiid": kpiid
         },
         success:function(data){
