@@ -74,6 +74,7 @@ $this->load->library('form_validation');
             }
         });
     }
+   
 </script>
 <style>
 
@@ -95,21 +96,6 @@ $this->load->library('form_validation');
     <div class="main-content">
         <div class="widget-content">
             <div class="row">
-                <div class="col-md-6">
-                    <div class="widget widget-blue">
-                        <div class="widget-title">
-                            <div class="widget-controls">
-                                <a href="#" class="widget-control widget-control-full-screen" data-toggle="tooltip" data-placement="top" title="" data-original-title="Full Screen"><i class="fa fa-expand"></i></a>
-                                <a href="#" class="widget-control widget-control-full-screen widget-control-show-when-full" data-toggle="tooltip" data-placement="left" title="" data-original-title="Exit Full Screen"><i class="fa fa-expand"></i></a>
-                                <a href="#" class="widget-control widget-control-minimize" data-toggle="tooltip" data-placement="top" title="" data-original-title="Minimize"><i class="fa fa-minus-circle"></i></a>
-                            </div>
-                            <h3><i class="fa fa-calendar"></i> Calendar</h3>
-                        </div>
-                        <div class="widget-content">
-                            <div id="calendar"></div>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="col-md-6">
                     <div class="widget widget-green">
@@ -124,10 +110,10 @@ $this->load->library('form_validation');
                         <div class="widget-content">
                             <!--                        <div class="widget-content" style="height: 500px;">-->
                             <div class="modal-body">
-                                <form action="<?php echo base_url() ?>" role="form" method="POST" class="form-horizontal">
+                                <form action="<?php echo base_url() ?>holiday/batchholiday" role="form" method="POST" class="form-horizontal">
 
                                     <div class="form-group">
-                                        <center><img src="images/holiday.jpg"></center>
+                                        <center><img src="<?php echo base_url() ?>/images/holiday.jpg"></center>
                                     </div>
 
                                     <div class="form-group">
@@ -135,10 +121,10 @@ $this->load->library('form_validation');
                                         <div class="col-md-8">
                                             <select class="form-control rounded"  name="batch">
                                                 <option value="0">--------------------------SELECT--------------------------</option>
-                                                <option value="all_Sunday">All Sunday</option>
-                                                <option value="all_Saturday">All Saturday</option>
-                                                <option value="odd_Saturday">Odd Saturday</option>
-                                                <option value="even_Saturday">Even Saturday</option>
+                                                <option value="all_sunday">All Sunday</option>
+                                                <option value="all_saturday">All Saturday</option>
+                                                <option value="odd_saturday">Odd Saturday</option>
+                                                <option value="even_saturday">Even Saturday</option>
                                             </select>
                                         </div>
                                     </div>
@@ -149,10 +135,26 @@ $this->load->library('form_validation');
                                         </div>
                                     </div>
 
-                                    
+
                                 </form>
                             </div>
 
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="widget widget-blue">
+                        <div class="widget-title">
+                            <div class="widget-controls">
+                                <a href="#" class="widget-control widget-control-full-screen" data-toggle="tooltip" data-placement="top" title="" data-original-title="Full Screen"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="widget-control widget-control-full-screen widget-control-show-when-full" data-toggle="tooltip" data-placement="left" title="" data-original-title="Exit Full Screen"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="widget-control widget-control-minimize" data-toggle="tooltip" data-placement="top" title="" data-original-title="Minimize"><i class="fa fa-minus-circle"></i></a>
+                            </div>
+                            <h3><i class="fa fa-calendar"></i> Calendar</h3>
+                        </div>
+                        <div class="widget-content">
+                            <div id="calendar"></div>
                         </div>
                     </div>
                 </div>

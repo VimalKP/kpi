@@ -89,6 +89,94 @@ class Holiday extends CI_Controller {
 //            $this->load->view('common/footer_view');
 //        }
 //    }
+    public function batchholiday() {
+
+        $batch = $this->input->post('batch');
+        $company_id = $this->session->userdata('company_id');
+        $this->load->model('holiday_model');
+        $allholiday = array();
+//         $arr = array('company_id_fk' => $company_id);
+        $holidayarr = $this->holiday_model->getholidayarray($company_id);
+        for ($i = 0; $i < count($holidayarr); $i++) {
+            array_push($allholiday, $holidayarr[$i]['holidaydate']);
+        }
+//        echo '<pre>';
+//        print_r($allholiday);
+//        echo '</pre>';
+//        exit();
+        $startDate = '2014-01-01';
+        $endDate = '2014-12-31';
+        if ($batch != '0') {
+            if ($batch == 'all_sunday') {
+                $data = $this->getDateForSpecificDayBetweenDates($startDate, $endDate, 0);
+            }
+            if ($batch == 'all_saturday') {
+                $data = $this->getDateForSpecificDayBetweenDates($startDate, $endDate, 6);
+            }
+            if ($batch == 'odd_saturday') {
+                $data = $this->getDateForSpecificDayBetweenDates($startDate, $endDate, 6);
+                $oddarr = array();
+                for ($i = 0; $i < count($data); $i++) {
+                    $date = $data[$i];
+                    $actdate = date('j', strtotime($date));
+                    if ($actdate % 2 != 0) {
+                        array_push($oddarr, $date);
+                    }
+                }
+                $data = $oddarr;
+            }
+            if ($batch == 'even_saturday') {
+                $data = $this->getDateForSpecificDayBetweenDates($startDate, $endDate, 6);
+                $oddarr = array();
+                for ($i = 0; $i < count($data); $i++) {
+                    $date = $data[$i];
+                    $actdate = date('j', strtotime($date));
+                    if ($actdate % 2 == 0) {
+                        array_push($oddarr, $date);
+                    }
+                }
+                $data = $oddarr;
+            }
+        }
+        for ($i = 0; $i < count($data); $i++) {
+            $date = $data[$i];
+            if (!in_array($date, $allholiday)) {
+                $holidaydata = array(
+                    'company_id_fk' => $company_id,
+                    'holidaydate' => $date
+                );
+                $this->holiday_model->insert_record($holidaydata);
+            }
+        }
+//        $this->index();
+        redirect('holiday');
+//        echo '<pre>';
+//        print_r($data);
+//        echo '</pre>';
+//        exit();
+    }
+
+    public function getDateForSpecificDayBetweenDates($startDate, $endDate, $weekdayNumber) {
+        $startDate = strtotime($startDate);
+        $endDate = strtotime($endDate);
+
+        $dateArr = array();
+
+        do {
+            if (date("w", $startDate) != $weekdayNumber) {
+                $startDate += ( 24 * 3600); // add 1 day
+            }
+        } while (date("w", $startDate) != $weekdayNumber);
+
+
+        while ($startDate <= $endDate) {
+            $dateArr[] = date('Y-m-d', $startDate);
+            $startDate += ( 7 * 24 * 3600); // add 7 days
+        }
+
+        return($dateArr);
+    }
+
 }
 
 ?>

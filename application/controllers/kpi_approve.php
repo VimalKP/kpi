@@ -40,6 +40,7 @@ class Kpi_approve extends CI_Controller {
                 $childkpiArr[$userid][$kpiid]['kpiName'] = $kpi_value['kpi_name'];
                 $childkpiArr[$userid][$kpiid]['kpiValue'] = $kpi_value['kpi_value'];
                 $childkpiArr[$userid][$kpiid]['kpiComment'] = $kpi_value['comment'];
+                $childkpiArr[$userid][$kpiid]['kpiapproved_value'] = $kpi_value['approved_value'];
                 $childkpiArr[$userid][$kpiid]['value_of_target'] = $kpi_value['value_of_target'];
                 $childkpiArr[$userid][$kpiid]['approved_status'] = $kpi_value['approved_status'];
             }

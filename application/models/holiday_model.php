@@ -59,7 +59,7 @@ class Holiday_model extends CI_Model {
         if (!empty($where)) {
             foreach ($where as $key => $val) {
                 $this->db->where($key, $val);
-            } 
+            }
             $this->db->delete($this->tableName);
         }
 
@@ -69,9 +69,19 @@ class Holiday_model extends CI_Model {
             return FALSE;
     }
 
-    function checkdate($tommorow)
-    {
-        $query=  $this->db->get_where('holiday',array('holidaydate'=>$tommorow));
+    public function getholidayarray($company_id_fk) {
+        $this->db->select('holidaydate');
+        $this->db->where('company_id_fk', $company_id_fk);
+        $sql = $this->db->get($this->tableName);
+        if ($sql->num_rows() > 0)
+            return $sql->result_array();
+        else
+            return array();
+    }
+
+    function checkdate($tommorow) {
+        $query = $this->db->get_where('holiday', array('holidaydate' => $tommorow));
         return $query->result();
     }
+
 }

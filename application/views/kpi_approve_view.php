@@ -60,6 +60,17 @@ $this->load->library('form_validation');
                                             <div id="user" class="form-group">
                                                 <span class="col-md-12"><?php echo $valueusername; ?></span>
                                             </div>
+
+                                            <div class="widget-header">
+                                                <label class="col-xs-2">Name Of KPI</label>
+                                                <label class="col-xs-1">For Approve</label>
+                                                <label class="col-xs-1" style="margin-right: 10px;">Original Target</label>
+                                                <label class="col-xs-2" style="margin-right: 10px;">Final Approve Value</label>
+                                                <label class="col-xs-2" style="margin-right: 10px;">Comment By User</label>
+                                                <label class="col-xs-2">Comment For Approve</label>
+                                                <label class="col-xs-1" style="padding-left: 26px;" width="30" height="30">Approve Work</label>        
+                                            </div>
+
                                     <?php
                                         if (isset($childkpisArr[$keyuserid])) {
                                             $kpiValuesArr = array();
@@ -71,9 +82,9 @@ $this->load->library('form_validation');
                                                     if ($valuekpi['approved_status'] == 0) {
                                     ?>
                                                         <div id="assign_kpi" class="form-group">
-                                                            <label class="col-md-2 control-label"><?php echo $valuekpi['kpiName']; ?></label>
-                                                            <label class="col-md-1 control-label"><?php echo $valuekpi['kpiValue']; ?></label>
-                                                            <label class="col-md-1 control-label" style="margin-right: 10px;"><?php echo $valuekpi['value_of_target']; ?></label>
+                                                            <label class="col-xs-2"><?php echo $valuekpi['kpiName']; ?></label>
+                                                            <label class="col-xs-1"><?php echo $valuekpi['kpiValue']; ?></label>
+                                                            <label class="col-xs-1" style="margin-right: 10px;"><?php echo $valuekpi['value_of_target']; ?></label>
 
                                                             <div class="col-xs-2">
                                                                 <input class="form-control" type="text" id="final_<?= $keykpiid ?>" name="final" value="<?php echo $valuekpi['kpiValue']; ?>">
@@ -86,7 +97,7 @@ $this->load->library('form_validation');
                                                             <div class="col-xs-2">
                                                                 <textarea class="form-control col-md-2" style="height: 40px;" cols="20" type="text" id="comment_<?= $keykpiid ?>" rows="1" name="comment_<?= $keykpiid ?>" placeholder="comment"></textarea>
                                                             </div>
-                                                            <a href="javascript:void(0)" onclick="approvekpivalue(<?= $keyuserid; ?>,<?= $keykpiid ?>);" style="padding-left: 26px;"> <img title="Approve" src="<?php echo base_url(); ?>images/approve.png" width="30" height="30"></a>
+                                                            <a href="javascript:void(0)" onclick="approvekpivalue(<?= $keyuserid; ?>,<?= $keykpiid ?>);" style="padding-left: 41px;"> <img title="Approve" src="<?php echo base_url(); ?>images/approve.png" width="30" height="30"></a>
                                                         </div>
 
 
@@ -141,9 +152,9 @@ $this->load->library('form_validation');
                                         for ($i = 0; $i < $totalkpis; $i++) {
                                             $kpiid = $value['kpiid'][$i];
                                     ?>
-                                            <div id="assign_kpi" class="form-group col-md-12">        
-                                                <label class="col-md-3 control-label"><?php echo $value['kpis_' . $kpiid]['kpiName']; ?></label>
-                                                <label class="col-md-2 control-label"><?php echo $value['kpis_' . $kpiid]['kpiValue']; ?></label>
+                                            <div id="assign_kpi" class="form-group col-md-12">
+                                                <label class="col-md-8 control-label"><?php echo $value['kpis_' . $kpiid]['kpiName']; ?></label>
+                                                <label class="col-md-2 control-label"><?php echo $value['kpis_' . $kpiid]['kpiapproved_value']; ?></label>
                                             </div>
                                     <?php
                                         }

@@ -16,7 +16,7 @@ class Company extends CI_Controller {
             $this->load->view('common/footer_view');
         } else {
             $company_id = $this->session->userdata('company_id');
-            
+
 //            if($company_id==0){
 //               $company_id= $cid;
 ////               echo 'if';
@@ -149,8 +149,8 @@ class Company extends CI_Controller {
                     $browser['user_type'] = $type;
                     $browser['company_id_fk'] = $company_id;
                     if (@!in_array(strtolower($type), $preuser)) {
-                        if($type!='')
-                        $this->user_type_model->insert_record($browser);
+                        if ($type != '')
+                            $this->user_type_model->insert_record($browser);
                     }
                 }
                 $this->Company_detail_model->update_record(array('company_id' => $company_id), $postArr);
@@ -171,13 +171,12 @@ class Company extends CI_Controller {
 //            $this->load->view('common/sidebar_view');
 //            $this->load->view('home_view');
 //            $this->load->view('common/footer_view');
-           $username=  $this->session->userdata('username');
-           if($username=='master_admin'){
-               redirect('company/get_company');
-           }else{
-              $this->index($company_id);  
-           }
-           
+            $username = $this->session->userdata('username');
+            if ($username == 'master_admin') {
+                redirect('company/get_company');
+            } else {
+                $this->index($company_id);
+            }
         }
     }
 
@@ -197,7 +196,19 @@ class Company extends CI_Controller {
 
     function edit_company() {
         $id = $_GET['id'];
-
+        $this->load->model('user_type_model');
+        $preuserArr = $this->user_type_model->get_record(array('company_id_fk' => $id));
+//            }
+        $j = 0;
+        $preuser = array();
+        if (count($preuserArr) > 0) {
+            foreach ($preuserArr as $k => $v) {
+//                    $preuser[$j]['id'] = $v['user_type_id'];
+                $preuser[$j]['name'] = $v['user_type'];
+                $j++;
+            }
+        }
+        $data['preusers'] = json_encode($preuser);
         $this->load->model('company_detail_model');
         $data['usergetArr'] = $this->company_detail_model->get_company($id);
 //        echo '<pre>';

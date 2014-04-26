@@ -23,54 +23,6 @@
             <div class="main-content">
 
                 <div class="row">
-                    <div class="widget widget-green" id="widget_profit_chart">
-                        <div class="widget-title">
-                            <div class="widget-controls">
-                                <a href="#" class="widget-control widget-control-full-screen" data-toggle="tooltip" data-placement="top" title="" data-original-title="Full Screen"><i class="fa fa-expand"></i></a>
-                                <a href="#" class="widget-control widget-control-full-screen widget-control-show-when-full" data-toggle="tooltip" data-placement="left" title="" data-original-title="Exit Full Screen"><i class="fa fa-expand"></i></a>
-
-                                <a href="#" class="widget-control widget-control-minimize" data-toggle="tooltip" data-placement="top" title="" data-original-title="Minimize"><i class="fa fa-minus-circle"></i></a>
-
-<!--                                <a href="#" data-toggle="dropdown" class="widget-control widget-control-settings"><i class="fa fa-cog"></i></a>
-                                <div class="dropdown" data-toggle="tooltip" data-placement="top" title="" data-original-title="Settings">
-                                    <ul class="dropdown-menu dropdown-menu-small" role="menu" aria-labelledby="dropdownMenu1">
-                                        <li class="dropdown-header">Set Widget Color</li>
-                                        <li><a data-widget-color="blue" class="set-widget-color" href="#">Blue</a></li>
-                                        <li><a data-widget-color="red" class="set-widget-color" href="#">Red</a></li>
-                                        <li><a data-widget-color="green" class="set-widget-color" href="#">Green</a></li>
-                                        <li><a data-widget-color="orange" class="set-widget-color" href="#">Orange</a></li>
-                                        <li><a data-widget-color="purple" class="set-widget-color" href="#">Purple</a></li>
-                                    </ul>
-                                </div>-->
-
-
-
-<!--                                <a href="#" class="widget-control widget-control-refresh" data-toggle="tooltip" data-placement="top" title="" data-original-title="Refresh"><i class="fa fa-refresh"></i></a>
-
-                                <a href="#" class="widget-control widget-control-remove" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove"><i class="fa fa-times-circle"></i></a>-->
-                            </div>
-                            <h3><i class="fa fa-bar-chart-o"></i> Profit Chart</h3>
-                        </div>
-                        <div class="widget-content">
-
-                            <div class="widget-content-tp">
-                                <div class="padded-no-sides">
-                                    <div id="areachart" style="height: 250px;">
-
-
-
-                                    </div>
-
-                                </div>
-
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="row">
                     <div class="widget widget-red" id="widget_profit_chart">
                         <div class="widget-title">
                             <div class="widget-controls">
@@ -163,8 +115,8 @@
                                             $content = $twitterdata[$i]['content'];
                                             $brand = $twitterdata[$i]['brand'];
                                             $profile_image = $twitterdata[$i]['profile_image'];
-                                            if($profile_image==''){
-                                                $profile_image='http://localhost/kpi/images/no-avatar.png';
+                                            if ($profile_image == '') {
+                                                $profile_image = 'http://localhost/kpi/images/no-avatar.png';
                                             }
                                             $posted = date('M d', strtotime($twitterdata[$i]['posted']));
                                             ?>
@@ -172,7 +124,7 @@
                                                 <div class="row">
                                                     <div class="col-xs-2">
                                                         <div class="avatar">
-                                                            <img src="http://localhost/kpi/images/<?=$profile_image?>" alt="">
+                                                            <img src="http://localhost/kpi/images/<?= $profile_image ?>" alt="">
                                                         </div>
                                                     </div>
                                                     <div class="col-xs-10">
@@ -260,67 +212,37 @@
                             </div>
                             <div class="widget-content">
                                 <ul class="chat-messages-list">
-
-                                    <li>
-                                        <div class="row">
-                                            <div class="col-xs-10">
-                                                <div class="chat-bubble chat-bubble-left">
-                                                    <div class="bubble-arrow"></div>
-                                                    <div class="meta-info">
-                                                        <a href="#">JOHN RONALD</a>
-                                                        on Jun 25
+                                    <?php
+                                    if (isset($facebookdata)) {
+                                        for ($i = 0; $i < count($facebookdata); $i++) {
+                                            $content = $facebookdata[$i]['content'];
+                                            $brand = $facebookdata[$i]['brand'];
+                                            $profile_image = $facebookdata[$i]['profile_image'];
+                                            if ($profile_image == '') {
+                                                $profile_image = 'http://localhost/kpi/images/no-avatar.png';
+                                            }
+                                            $posted = date('M d', strtotime($facebookdata[$i]['posted']));
+                                            ?>
+                                            <li>
+                                                <div class="row">
+                                                    <div class="col-xs-2">
+                                                        <div class="avatar">
+                                                            <img src="http://localhost/kpi/images/<?= $profile_image ?>" alt="">
+                                                        </div>
                                                     </div>
-                                                    <p>Mr. Rajesh Patel (Salse Department) Won Gold Medal In Final Year Of Master Of Management.</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-2">
-                                                <div class="avatar">
-                                                    <img src="images/no-avatar.png" alt="">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <li>
-                                        <div class="row">
-                                            <div class="col-xs-10">
-                                                <div class="chat-bubble chat-bubble-left">
-                                                    <div class="bubble-arrow"></div>
-                                                    <div class="meta-info">
-                                                        <a href="#">JOHN RONALD</a>
-                                                        on Jun 26
+                                                    <div class="col-xs-10">
+                                                        <div class="chat-bubble chat-bubble-right">
+                                                            <div class="bubble-arrow"></div>
+                                                            <div class="meta-info"><a href="#">@<?= ucfirst($brand) ?></a> on <?= $posted ?></div>
+                                                            <p><?= $content ?></p>
+                                                        </div>
                                                     </div>
-                                                    <p>Leave Management Page Is Start Soon.</p>
                                                 </div>
-                                            </div>
-                                            <div class="col-xs-2">
-                                                <div class="avatar">
-                                                    <img src="images/no-avatar.png" alt="">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <li>
-                                        <div class="row">
-                                            <div class="col-xs-10">
-                                                <div class="chat-bubble chat-bubble-left">
-                                                    <div class="bubble-arrow"></div>
-                                                    <div class="meta-info">
-                                                        <a href="#">JOHN RONALD</a>
-                                                        on Jun 27
-                                                    </div>
-                                                    <p>CONGRATULATION, Company Won Best Company Award Of Year 2013.</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-2">
-                                                <div class="avatar">
-                                                    <img src="images/no-avatar.png" alt="">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-
+                                            </li>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
                                 </ul>
 
                             </div>

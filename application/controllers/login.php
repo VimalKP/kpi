@@ -136,6 +136,14 @@ class Login extends CI_Controller {
                     $this->load->model('social_media_model');
 //        $array = array('company_id' => $comany_id);
                     $data['twitterdata'] = $this->social_media_model->get_record($comany_id, 'twitter', 3);
+                    $data['facebookdata'] = $this->social_media_model->get_record($comany_id, 'facebook', 3);
+
+                    if (count($data['twitterdata']) == 0) {
+                        $data['twitterdata'] = $this->social_media_model->get_record(1, 'twitter', 3);
+                    }
+                    if (count($data['facebookdata']) == 0) {
+                        $data['facebookdata'] = $this->social_media_model->get_record(1, 'facebook', 3);
+                    }
 //                    $this->session->userdata('username');
                     if ($this->session->userdata('user_type_id_fk') != 1) {
                         // if session running then redirect to home page.
