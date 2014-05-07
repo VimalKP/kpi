@@ -77,7 +77,7 @@ class Entry_kpi_model extends CI_Model {
         return $query->result();
     }
 
-    function get_assign_target($user_id_fk) {
+    function get_assign_target($user_id_fk,$kpiarr) {
 //         $names = array('Frank', 'Todd', 'James');
 //SELECT *
 //FROM `kpi_master` AS k
@@ -94,7 +94,7 @@ class Entry_kpi_model extends CI_Model {
         $this->db->from('kpi_master as k');
         $this->db->join('target as t', 't.kpi_id_fk = k.kpi_id');
         $this->db->where('t.user_id_fk', $user_id_fk);
-//        $this->db->where_in('k.kpi_id', $kpiarr);
+        $this->db->where_in('k.kpi_id', $kpiarr);
 //        $query = $this->db->get('kpi_master');
         $query = $this->db->get();
         if ($query->num_rows() > 0)
@@ -112,7 +112,6 @@ class Entry_kpi_model extends CI_Model {
          * 
          */
 //        $where = "name='Joe' AND status='boss' OR status='active'";
-
 //        $this->db->where($where);
 //        $query="SELECT * FROM `entry_kpi` as ke
 //          join target as t ON t.user_id_fk=ke.user_id_fk
@@ -131,6 +130,28 @@ class Entry_kpi_model extends CI_Model {
             return $query->result_array();
         else
             return array();
+    }
+
+    function notification($userid) {
+        $query = $this->db->query("SELECT * FROM target AS t JOIN entry_kpi AS ke ON t.user_id_fk = ke.user_id_fk JOIN kpi_master AS k ON t.kpi_id_fk = k.kpi_id WHERE ke.user_id_fk =$userid AND ke.approved_status =1 AND date( ke.entry_kpi_date_added ) = CURDATE( ) AND ke.kpi_id_fk = t.kpi_id_fk");
+//        $this->db->query("SELECT * FROM target AS t JOIN entry_kpi AS ke ON t.user_id_fk = ke.user_id_fk JOIN kpi_master AS k ON t.kpi_id_fk = k.kpi_id WHERE ke.user_id_fk =$userid AND ke.approved_status =1 AND date( ke.entry_kpi_date_added ) = CURDATE( ) AND ke.kpi_id_fk = t.kpi_id_fk");
+//        $this->db->select('t.value_of_target,t.kpi_id_fk,k.kpi_name');
+//        $this->db->from('entry_kpi as ke');
+//        $this->db->join('target as t', 't.user_id_fk=ke.user_id_fk');
+//        $this->db->join('kpi_master as k', 't.kpi_id_fk=k.kpi_id');
+//        $this->db->where('ke.kpi_id_fk ', ' t.kpi_id_fk');
+//        $this->db->where(array('ke.user_id_fk' => $userid, 'ke.approved_status' => 1, 'date(ke.entry_kpi_date_added)' => date('Y-m-d')));
+//        $query = $this->db->get();
+//         echo"<pre>";
+//         print_r($query->result_array());
+//         echo"</pre>";
+//         exit();
+        if ($query->num_rows() > 0)
+            return $query->result_array();
+        else
+            return array();
+//        $query=$this->db->get_where('entry_kpi',array('user_id_fk'=>$userid,'approved_status'=>0));
+//         return $query->result();
     }
 
 }

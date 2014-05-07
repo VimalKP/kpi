@@ -1,17 +1,17 @@
 <?php
 
 /**
- * Description of User_type_model
+ * Description of login_log_mst
  *
  * @author Vimal Patel
  */
-class Attendance_model extends CI_Model {
+class message_model extends CI_Model {
 
     var $tableName;
 
     function __construct() {
         parent::__construct();
-        $this->tableName = "attendance";
+        $this->tableName = "message";
     }
 
     function get_record($where = array(), $limit = NULL, $offset = NULL) {
@@ -22,7 +22,7 @@ class Attendance_model extends CI_Model {
         }
         if ($limit != NULL && $offset != NULL)
             $this->db->limit($limit, $offset);
-        $this->db->order_by('user_id_fk', 'asc');
+        $this->db->order_by('message_id', 'asc');
         $sql = $this->db->get($this->tableName);
         if ($sql->num_rows() > 0)
             return $sql->result_array();
@@ -55,26 +55,26 @@ class Attendance_model extends CI_Model {
             return FALSE;
     }
 
-    public function delete_record($where) {
-      if (!empty($where)) {
-            foreach ($where as $key => $val) {
-                $this->db->where($key, $val);
-            }
-        }
+    public function delete_record($id) {
+        $this->db->where_in('login_log_mst_id', $id);
         $this->db->delete($this->tableName);
         if ($this->db->affected_rows() > 0)
             return TRUE;
         else
             return FALSE;
     }
-    function get_detail($where)
+    function get_msg()
     {
-    $query =    $this->db->get_where('attendance',$where);
-        return $query->result();
-    }
+       $query = $this->db->get('message');
+       return $query->result();
 
-    
+
+       }
+
+       function updatemsg($id,$data)
+       {
+           $this->db->where('user_id_fk', $id);
+           $this->db->update('message', $data);
+       }
 
 }
-
-?>

@@ -7,7 +7,7 @@ $this->load->library('form_validation');
 
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="widget widget-green">
+                <div class="widget widget-red">
                     <div class="widget-title">
 
                         <div class="widget-controls">
@@ -35,26 +35,27 @@ $this->load->library('form_validation');
                                 <a href="#" class="widget-control widget-control-remove" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove"><i class="fa fa-times-circle"></i></a>-->
                         </div>
 
-                        <h3><i class="fa fa-file-text-o"></i> User Login</h3>
+                        <h3><i class="fa fa-pencil"></i> Message</h3>
                     </div>
                     <div class="widget-content">
                         <div class="modal-body">
 
-                            <form action="<?php echo base_url() ?>login/dologin" method="POST" role="form" class="form-horizontal">
+                            <form action="<?php echo base_url() ?>message/message_sent" method="POST" role="form" class="form-horizontal">
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">Username</label>
+                                    <label class="col-md-3 control-label">Message</label>
                                     <div class="col-md-9">
-                                        <input id="username" name="username" type="text" class="form-control  rounded" placeholder="Enter Username" value="<?php echo set_value('username'); ?>">
-                                        <span class="error"><?php echo form_error('username'); ?></span>
+                                        <?php
+                                    if ((isset($msgarr)) && $msgarr[0]->message_text != '') {
+                                        $msg = $msgarr[0]->message_text;
+                                    }else
+                                    {
+                                        $msg = set_value('message_text');
+                                    }
+                                    ?>
+                                        <textarea   class="form-control" type="text" id="message_text" rows="3" name="message_text" placeholder="Enter Your Message Here" value="<?php echo $msg; ?>"><?= $msg ?> </textarea>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">Password</label>
-                                    <div class="col-md-9">
-                                        <input id="password" name="password" type="password" class="form-control  rounded" placeholder="Enter password" value="<?php echo set_value('password'); ?>">
-                                        <span class="error"><?php echo form_error('password'); ?></span>
-                                    </div>
-                                </div>
+
                                 <!--                                <div class="form-group">
                                                                     <div class="col-md-offset-3 col-md-9">
                                                                         <div class="checkbox">
@@ -67,20 +68,13 @@ $this->load->library('form_validation');
 
                                 <div class="form-group">
                                     <div class="col-md-offset-3 col-md-9">
-                                        <button type="submit" class="btn btn-primary">LOGIN</button>
-                                        <a href="<?php echo base_url() ?>chpassword"><label style="margin-left: 30px;" class="control-label">Forgot Password</label></a>
+                                        <button type="submit" class="btn btn-primary">Send To All</button>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <div class="col-md-offset-3 col-md-9">
-                                        <span class="error">
-                                            <?php
-                                            if (isset($error)) {
-                                                echo $error;
-                                            }
-                                            ?>
-                                        </span>
+                                        <span class="error"><?php echo form_error('message_text'); ?></span>
                                     </div>
                                 </div>
 

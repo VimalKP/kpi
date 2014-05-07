@@ -45,14 +45,14 @@ $this->load->library('form_validation');
                             <thead>
                                 <tr>
                                     <th><center>First Name</center></th>
-                            <th><center>Last Name</center></th>
-                            <th><center>User Name</center></th>
-                            <th><center>Email ID</center></th>
-                            <th><center>Phone NO.</center></th>
-                            <th><center>Parent User Name</center></th>
-                            <th><center>User Status</center></th>
-                            <th><center>Action</center></th>
-                            </tr>
+                                    <th><center>Last Name</center></th>
+                                    <th><center>User Name</center></th>
+                                    <th><center>Email ID</center></th>
+                                    <th><center>Phone NO.</center></th>
+                                    <th><center>Parent User Name</center></th>
+                                    <th><center>User Status</center></th>
+                                    <th><center>Action</center></th>
+                                </tr>
                             </thead>
                             <tbody>
                                 <?php
@@ -63,11 +63,11 @@ $this->load->library('form_validation');
 
                                 foreach ($registerArr as $row) {
                                     echo"<tr>";
-                                    ?>
+                                ?>
 
                                 <td> <?php echo $row->firstname; ?> </td>
                                 <td> <?php echo $row->lastname; ?> </td>
-                                <td> <?php echo $row->username; ?> </td>
+                                <td> <?php echo $row->username; ?> (<?php echo $row->user_type ?>)</td>
                                 <td> <?php echo $row->email_id; ?> </td>
                                 <td> <?php echo $row->phone_number; ?></td>
                                 <td> <?php echo ($row->parent_id == 0) ? "Admin" : $parent_name[$row->parent_id]; ?></td>
@@ -75,32 +75,33 @@ $this->load->library('form_validation');
 
                                 <!--                                 echo "<option value='" . $value->user_id . "' $sel>" . $value->username . "</option>";-->
 
-                                                                                                        <!--                                <td><a href="<?php echo base_url(); ?>register/edit_user"> Edit</a> <a href="<?php echo base_url(); ?>register/delete_user">Delete</a>   </td>-->
-                                <?php
-                                if ($row->registration_status == 0) {
-                                    if ($row->parent_id == 0) {
-                                        ?>
-                                        <td></td>
-                                        <?php
-                                    } else {
-                                        ?>
-                                        <td><span id="users_<?= $row->user_id ?>" class="label label-success" style="cursor: pointer" onclick="changestatus(this.id);">Active</span></td> <?php } ?>
-                                <?php } else { ?>
-                                    <td><span id="users_<?= $row->user_id ?>" class="label label-danger" style="cursor: pointer" onclick="changestatus(this.id);">Deactive</span></td>
-                                <?php } ?>
+                                                                                                            <!--                                <td><a href="<?php echo base_url(); ?>register/edit_user"> Edit</a> <a href="<?php echo base_url(); ?>register/delete_user">Delete</a>   </td>-->
+                            <?php
+                                    if ($row->registration_status == 0) {
+                                        if ($row->parent_id == 0) {
+                            ?>
+                                            <td></td>
+                            <?php
+                                        } else {
+                            ?>
+                                            <td><span id="users_<?= $row->user_id ?>" class="label label-success" style="cursor: pointer" onclick="changestatus(this.id);">Active</span></td> <?php } ?>
+                            <?php } else {
+ ?>
+                                        <td><span id="users_<?= $row->user_id ?>" class="label label-danger" style="cursor: pointer" onclick="changestatus(this.id);">Deactive</span></td>
+<?php } ?>
 
-                                <td class="text-right">
-                                <center> <a href="<?php echo base_url(); ?>register/edit_user?id=<?= $row->user_id ?>" class="btn btn-default btn-xs">edit</a></center>
-    <!--                                    <a href="<?php // echo base_url();                  ?>register/delete_user?id=<? //= $row->user_id                  ?>" class="btn btn-danger btn-xs "><i class="fa fa-times"></i></a>-->
-                                </td>
+                                    <td class="text-right">
+                                        <center> <a href="<?php echo base_url(); ?>register/edit_user?id=<?= $row->user_id ?>" class="btn btn-default btn-xs">edit</a></center>
+            <!--                                    <a href="<?php // echo base_url();                   ?>register/delete_user?id=<? //= $row->user_id                   ?>" class="btn btn-danger btn-xs "><i class="fa fa-times"></i></a>-->
+                                    </td>
 
-                                                <!--                                <td><a href="<?php echo base_url(); ?>register/edit_user?id=<?= $row->user_id ?>"> Edit</a> <a href="<?php echo base_url(); ?>register/delete_user?id=<?= $row->user_id ?>">Delete</a>   </td>-->
+                                                        <!--                                <td><a href="<?php echo base_url(); ?>register/edit_user?id=<?= $row->user_id ?>"> Edit</a> <a href="<?php echo base_url(); ?>register/delete_user?id=<?= $row->user_id ?>">Delete</a>   </td>-->
 
 
 
-                                <?php
-                            }
-                            echo "</tr>";
+                            <?php
+                                }
+                                echo "</tr>";
                             ?>
                             </tbody>
                         </table>

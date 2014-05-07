@@ -30,7 +30,6 @@ class Home extends CI_Controller {
         $this->load->view('common/header_view');
         $this->load->view('common/sidebar_view');
         $this->load->view('home_view', $data);
-
         $this->load->view('common/footer_view');
     }
 

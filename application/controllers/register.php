@@ -130,10 +130,7 @@ class Register extends CI_Controller {
 
             if (!$this->upload->do_upload('profile_image')) {
                 $error = array('error' => $this->upload->display_errors());
-                echo '<pre>';
-                print_r($error);
-                echo '</pre>';
-                exit();
+                unset($postArr['profile_image']);
 //                $this->load->view('register_view', $error);
             } else {
                 $data = array('upload_data' => $this->upload->data());
@@ -164,6 +161,14 @@ class Register extends CI_Controller {
         }
         $this->load->model('registration_model');
         $data['registerArr'] = $this->registration_model->get_user_detail($company_id);
+
+//        $company_id = $this->session->userdata('company_id');
+//        $this->load->model('user_type_model');
+//        $data['userRoll'] = $this->user_type_model->get_userroll($company_id);
+//        echo"<pre>";
+//        print_r($data['userRoll']);
+//        echo"</pre>";
+//        exit();
 //        echo '<pre>';
 //        print_r($data['registerArr']);
 //        echo '</pre>';
@@ -237,14 +242,14 @@ class Register extends CI_Controller {
         $this->load->view('register_view', $data);
         $this->load->view('common/footer_view');
     }
-    
-    public function get_user_attendance(){
+
+    public function get_user_attendance() {
         $this->load->view('common/header_view');
         $this->load->view('common/sidebar_view');
         $this->load->view('attendance_view');
         $this->load->view('common/footer_view');
     }
-    
+
     public function change_pwd() {
         $this->load->view('common/header_view');
         $this->load->view('common/sidebar_view');
@@ -308,10 +313,10 @@ class Register extends CI_Controller {
         $this->load->model('registration_model');
         $data['detail'] = $this->registration_model->forgotpass($id);
         $new_password = $this->input->post('n_password');
-            $newpassArr = array(
-                'password' => $new_password
-            );
-        
+        $newpassArr = array(
+            'password' => $new_password
+        );
+
 
         $this->load->helper(array('form'));
         $this->load->library('form_validation');
@@ -326,15 +331,14 @@ class Register extends CI_Controller {
             $this->load->view('forgotpassword_view', $data);
             $this->load->view('common/footer_view');
         } else {
-                $this->load->model('registration_model');
-                $chpassword = $this->registration_model->updatedata($newpassArr, $id);
+            $this->load->model('registration_model');
+            $chpassword = $this->registration_model->updatedata($newpassArr, $id);
 //                echo 'your password is successfully changed';
-                
-                $this->load->view('common/header_view');
-                $this->load->view('common/sidebar_view');
-                $this->load->view('login_view');
-                $this->load->view('common/footer_view');
-            
+
+            $this->load->view('common/header_view');
+            $this->load->view('common/sidebar_view');
+            $this->load->view('login_view');
+            $this->load->view('common/footer_view');
         }
 
 //        echo "<pre>";

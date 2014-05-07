@@ -11,6 +11,73 @@
         <link rel="stylesheet" href="<?php echo base_url() ?>css/token-input.css" type="text/css" />
         <link rel="stylesheet" href="<?php echo base_url() ?>css/token-input-facebook.css" type="text/css" />-->
 
+        <script type="text/javascript">
+            var datearr=new Array();
+            var approvearr=new Array();
+            $(document).ready(function(){
+
+                $.ajax({
+                    url:"http://localhost/kpi/graph/graph_home",
+                    type:'POST',
+                    async:false,
+                    data:  {
+                        "action": "fetchdata"
+                    },
+                    success:function(data){
+                        var obj =  $.parseJSON(data);
+                        datearr=obj.datearr;
+                        approvearr=obj.approvedarr;
+                        //                        console.log(array1);
+                        $('#container').highcharts({
+                            chart: {
+                                type: 'column'
+                            },
+                            title: {
+                                text: 'KPI Growth'
+                            },
+                            subtitle: {
+                                text: 'Analysis of Business Environment'
+                            },
+                            xAxis: {
+                                categories: datearr
+                            },
+                            yAxis: {
+                                title: {
+                                    text: 'KPI VALUE'
+                                }
+                            },
+                            tooltip: {
+                                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                                    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+                                footerFormat: '</table>',
+                                shared: true,
+                                useHTML: true
+                            },
+                            plotOptions: {
+                                column: {
+                                    pointPadding: 0.2,
+                                    borderWidth: 0
+                                }
+                            },
+                            series: [{
+                                    name:"Completed Target " ,
+                                    data: approvearr
+                                }
+                            ]
+                        });
+                                        
+                    
+                    
+                    
+                    }
+
+
+                });
+            });
+            //            console.log(array1)
+        </script>
+
     </head>
 
     <body class="glossed" data-savefrom-link-count="182">
@@ -22,59 +89,113 @@
 
             <div class="main-content">
 
-                <div class="row">
-                    <div class="widget widget-red" id="widget_profit_chart">
-                        <div class="widget-title">
-                            <div class="widget-controls">
-                                <a href="#" class="widget-control widget-control-full-screen" data-toggle="tooltip" data-placement="top" title="" data-original-title="Full Screen"><i class="fa fa-expand"></i></a>
-                                <a href="#" class="widget-control widget-control-full-screen widget-control-show-when-full" data-toggle="tooltip" data-placement="left" title="" data-original-title="Exit Full Screen"><i class="fa fa-expand"></i></a>
+                <?php
+                if ($this->session->userdata('user_id') != '' && $this->session->userdata('user_id') != 1) {
+                ?>
 
-                                <a href="#" class="widget-control widget-control-minimize" data-toggle="tooltip" data-placement="top" title="" data-original-title="Minimize"><i class="fa fa-minus-circle"></i></a>
+                    <div class="row">
+                        <div class="widget widget-green" id="widget_profit_chart">
+                            <div class="widget-title">
+                                <div class="widget-controls">
+                                    <a href="#" class="widget-control widget-control-full-screen" data-toggle="tooltip" data-placement="top" title="" data-original-title="Full Screen"><i class="fa fa-expand"></i></a>
+                                    <a href="#" class="widget-control widget-control-full-screen widget-control-show-when-full" data-toggle="tooltip" data-placement="left" title="" data-original-title="Exit Full Screen"><i class="fa fa-expand"></i></a>
 
-<!--                                <a href="#" data-toggle="dropdown" class="widget-control widget-control-settings"><i class="fa fa-cog"></i></a>
-                                <div class="dropdown" data-toggle="tooltip" data-placement="top" title="" data-original-title="Settings">
-                                    <ul class="dropdown-menu dropdown-menu-small" role="menu" aria-labelledby="dropdownMenu1">
-                                        <li class="dropdown-header">Set Widget Color</li>
-                                        <li><a data-widget-color="blue" class="set-widget-color" href="#">Blue</a></li>
-                                        <li><a data-widget-color="red" class="set-widget-color" href="#">Red</a></li>
-                                        <li><a data-widget-color="green" class="set-widget-color" href="#">Green</a></li>
-                                        <li><a data-widget-color="orange" class="set-widget-color" href="#">Orange</a></li>
-                                        <li><a data-widget-color="purple" class="set-widget-color" href="#">Purple</a></li>
-                                    </ul>
-                                </div>-->
+                                    <a href="#" class="widget-control widget-control-minimize" data-toggle="tooltip" data-placement="top" title="" data-original-title="Minimize"><i class="fa fa-minus-circle"></i></a>
+
+        <!--                                <a href="#" data-toggle="dropdown" class="widget-control widget-control-settings"><i class="fa fa-cog"></i></a>
+                                        <div class="dropdown" data-toggle="tooltip" data-placement="top" title="" data-original-title="Settings">
+                                            <ul class="dropdown-menu dropdown-menu-small" role="menu" aria-labelledby="dropdownMenu1">
+                                                <li class="dropdown-header">Set Widget Color</li>
+                                                <li><a data-widget-color="blue" class="set-widget-color" href="#">Blue</a></li>
+                                                <li><a data-widget-color="red" class="set-widget-color" href="#">Red</a></li>
+                                                <li><a data-widget-color="green" class="set-widget-color" href="#">Green</a></li>
+                                                <li><a data-widget-color="orange" class="set-widget-color" href="#">Orange</a></li>
+                                                <li><a data-widget-color="purple" class="set-widget-color" href="#">Purple</a></li>
+                                            </ul>
+                                        </div>-->
 
 
 
-<!--                                <a href="#" class="widget-control widget-control-refresh" data-toggle="tooltip" data-placement="top" title="" data-original-title="Refresh"><i class="fa fa-refresh"></i></a>
+        <!--                                <a href="#" class="widget-control widget-control-refresh" data-toggle="tooltip" data-placement="top" title="" data-original-title="Refresh"><i class="fa fa-refresh"></i></a>
 
-                                <a href="#" class="widget-control widget-control-remove" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove"><i class="fa fa-times-circle"></i></a>-->
+                                        <a href="#" class="widget-control widget-control-remove" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove"><i class="fa fa-times-circle"></i></a>-->
+                                </div>
+                                <h3><i class="fa fa-bar-chart-o"></i> Last Week Work</h3>
                             </div>
-                            <h3><i class="fa fa-user"></i> About KPI</h3>
-                        </div>
-                        <div class="widget-content show-grid">
-                            <div class="col-md-12">
-                                <h1>Concept</h1>
-                                <h2>For Business:</h2>
-                                <h4>
-                                    We deliver a comprehensive, integrated, business support infrastructure:
-                                    Customer Relationship Management, Project Management, HR, Payroll, e-Commerce, Basic Accounting,
-                                    MIS and Reporting. Our cloud solution delivers all elements of the business are connected.
-                                    All data is available immediately from any location and can be shared across the organisation.
-                                </h4>
-                                <h2>Google Apps Integration</h2>
-                                <h4>   kpi.com is now available on Google Apps Marketplace.
-                                    Any user of Google can integrate kpi.com with Google apps, as Calendar or Google Docs.
-                                </h4><br/><br/>
-                                <center>
-                                    <iframe width="420" height="315" src="//www.youtube.com/embed/ezhnbxgEObE" frameborder="0" allowfullscreen>
+                            <div class="widget-content">
 
-                                    </iframe>
-                                </center>
+                                <div class="widget-content-tp">
+                                    <div class="padded-no-sides">
+
+                                        <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto">
+
+                                        </div>
+
+
+                                    </div>
+
+
+                                </div>
                             </div>
-
                         </div>
                     </div>
-                </div>
+                <?php } ?>
+
+                    <div class="row">
+                        <div class="widget widget-red" id="widget_profit_chart">
+
+                            <div class="widget-title">
+                                <div class="widget-controls">
+                                    <a href="#" class="widget-control widget-control-full-screen" data-toggle="tooltip" data-placement="top" title="" data-original-title="Full Screen"><i class="fa fa-expand"></i></a>
+                                    <a href="#" class="widget-control widget-control-full-screen widget-control-show-when-full" data-toggle="tooltip" data-placement="left" title="" data-original-title="Exit Full Screen"><i class="fa fa-expand"></i></a>
+
+                                    <a href="#" class="widget-control widget-control-minimize" data-toggle="tooltip" data-placement="top" title="" data-original-title="Minimize"><i class="fa fa-minus-circle"></i></a>
+
+    <!--                                <a href="#" data-toggle="dropdown" class="widget-control widget-control-settings"><i class="fa fa-cog"></i></a>
+                                    <div class="dropdown" data-toggle="tooltip" data-placement="top" title="" data-original-title="Settings">
+                                        <ul class="dropdown-menu dropdown-menu-small" role="menu" aria-labelledby="dropdownMenu1">
+                                            <li class="dropdown-header">Set Widget Color</li>
+                                            <li><a data-widget-color="blue" class="set-widget-color" href="#">Blue</a></li>
+                                            <li><a data-widget-color="red" class="set-widget-color" href="#">Red</a></li>
+                                            <li><a data-widget-color="green" class="set-widget-color" href="#">Green</a></li>
+                                            <li><a data-widget-color="orange" class="set-widget-color" href="#">Orange</a></li>
+                                            <li><a data-widget-color="purple" class="set-widget-color" href="#">Purple</a></li>
+                                        </ul>
+                                    </div>-->
+
+
+
+    <!--                                <a href="#" class="widget-control widget-control-refresh" data-toggle="tooltip" data-placement="top" title="" data-original-title="Refresh"><i class="fa fa-refresh"></i></a>
+
+                                    <a href="#" class="widget-control widget-control-remove" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove"><i class="fa fa-times-circle"></i></a>-->
+                                </div>
+                                <h3><i class="fa fa-user"></i> About KPI</h3>
+                            </div>
+                            <div class="widget-content show-grid">
+                                <div class="col-md-12">
+                                    <h1>Concept</h1>
+                                    <h2>For Business:</h2>
+                                    <h4>
+                                        We deliver a comprehensive, integrated, business support infrastructure:
+                                        Customer Relationship Management, Project Management, HR, Payroll, e-Commerce, Basic Accounting,
+                                        MIS and Reporting. Our cloud solution delivers all elements of the business are connected.
+                                        All data is available immediately from any location and can be shared across the organisation.
+                                    </h4>
+                                    <h2>Google Apps Integration</h2>
+                                    <h4>   kpi.com is now available on Google Apps Marketplace.
+                                        Any user of Google can integrate kpi.com with Google apps, as Calendar or Google Docs.
+                                    </h4><br/><br/>
+                                    <center>
+                                        <iframe width="420" height="315" src="//www.youtube.com/embed/ezhnbxgEObE" frameborder="0" allowfullscreen>
+
+                                        </iframe>
+                                    </center>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                
 
                 <div class="row">
                     <div class="col-md-6">
@@ -119,7 +240,7 @@
                                                 $profile_image = 'http://localhost/kpi/images/no-avatar.png';
                                             }
                                             $posted = date('M d', strtotime($twitterdata[$i]['posted']));
-                                            ?>
+                                    ?>
                                             <li>
                                                 <div class="row">
                                                     <div class="col-xs-2">
@@ -136,7 +257,7 @@
                                                     </div>
                                                 </div>
                                             </li>
-                                            <?php
+                                    <?php
                                         }
                                     }
                                     ?>
@@ -157,7 +278,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </li>
-                                    
+
                                                                         <li>
                                                                             <div class="row">
                                                                                 <div class="col-xs-2">
@@ -222,7 +343,7 @@
                                                 $profile_image = 'http://localhost/kpi/images/no-avatar.png';
                                             }
                                             $posted = date('M d', strtotime($facebookdata[$i]['posted']));
-                                            ?>
+                                    ?>
                                             <li>
                                                 <div class="row">
                                                     <div class="col-xs-2">
@@ -239,7 +360,7 @@
                                                     </div>
                                                 </div>
                                             </li>
-                                            <?php
+                                    <?php
                                         }
                                     }
                                     ?>

@@ -1,17 +1,17 @@
 <?php
 
 /**
- * Description of User_type_model
+ * Description of kpi_user
  *
  * @author Vimal Patel
  */
-class Attendance_model extends CI_Model {
+class Holiday_history_model extends CI_Model {
 
     var $tableName;
 
     function __construct() {
         parent::__construct();
-        $this->tableName = "attendance";
+        $this->tableName = "holiday_history";
     }
 
     function get_record($where = array(), $limit = NULL, $offset = NULL) {
@@ -22,7 +22,7 @@ class Attendance_model extends CI_Model {
         }
         if ($limit != NULL && $offset != NULL)
             $this->db->limit($limit, $offset);
-        $this->db->order_by('user_id_fk', 'asc');
+        $this->db->order_by('history_id', 'asc');
         $sql = $this->db->get($this->tableName);
         if ($sql->num_rows() > 0)
             return $sql->result_array();
@@ -56,25 +56,32 @@ class Attendance_model extends CI_Model {
     }
 
     public function delete_record($where) {
-      if (!empty($where)) {
+        if (!empty($where)) {
             foreach ($where as $key => $val) {
                 $this->db->where($key, $val);
             }
+            $this->db->delete($this->tableName);
         }
-        $this->db->delete($this->tableName);
+
         if ($this->db->affected_rows() > 0)
             return TRUE;
         else
             return FALSE;
     }
-    function get_detail($where)
-    {
-    $query =    $this->db->get_where('attendance',$where);
+
+    public function getholidayhistoryarray($company_id_fk) {
+        $this->db->select('*');
+        $this->db->where('company_id_fk', $company_id_fk);
+        $sql = $this->db->get($this->tableName);
+        if ($sql->num_rows() > 0)
+            return $sql->result_array();
+        else
+            return array();
+    }
+
+    function checkdate($tommorow) {
+        $query = $this->db->get_where('holiday', array('holidaydate' => $tommorow));
         return $query->result();
     }
 
-    
-
 }
-
-?>

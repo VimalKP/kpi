@@ -288,6 +288,7 @@ class Company extends CI_Controller {
             $this->load->model('Company_detail_model');
             $this->load->model('social_media_model');
             $this->load->model('registration_model');
+            $this->load->model('user_type_model');
 
             $company_id = $this->Company_detail_model->insertdata($postArr);
 
@@ -301,11 +302,23 @@ class Company extends CI_Controller {
                 'channel_name' => 'twitter',
                 'brand' => $postArr['twitter_page']
             );
+            
+            
+            
+            $newCompany=array(
+                'company_id_fk'=>$company_id,
+                'user_type'=>'admin'
+            );
+            
+          $user_type_id_fk=  $this->user_type_model->insert_record($newCompany);
+            
+            
             $companyUser = array(
                 'company_id' => $company_id,
                 'firstname' => $username,
                 'username' => $username,
                 'password' => $password,
+                'user_type_id_fk' => $user_type_id_fk
             );
 
             $this->social_media_model->insert_record_brand($brandData_fb);

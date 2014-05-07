@@ -15,49 +15,49 @@
 
             <?php
             if ($this->session->userdata('parent_id') == 0 && $this->session->userdata('user_id') != '' && $this->session->userdata('company_id') != 0) {//parent id =0
-                ?>
+            ?>
                 <li>
                     <a href="<?php echo base_url() ?>register/get_register" data-toggle="tooltip" data-placement="right" title="" data-original-title="Users">
                         <i class="fa fa-users"></i>
                     </a>
                 </li>
-                <?php
+            <?php
             }
 
             if ($this->session->userdata('user_id') == '') {
 //            if ($this->session->userdata('user_type_id_fk') == '' && $this->session->userdata('user_id') != '') {
-                ?>
+            ?>
                 <li>
                     <a href="<?php echo base_url() ?>login" data-toggle="tooltip" data-placement="right" title="" data-original-title="Login">
                         <i class="fa fa-sign-in"></i>
                     </a>
                 </li>
-                <?php
+            <?php
             }
 
             if ($this->session->userdata('company_id') == 0 && $this->session->userdata('user_id') == 0 && $this->session->userdata('user_id') != '') {//parentid
-                ?>
+            ?>
                 <li>
                     <a href="<?php echo base_url() ?>company/get_company" data-toggle="tooltip" data-placement="right" title="" data-original-title="All Company">
                         <i class="fa fa-briefcase"></i>
                     </a>
                 </li>
-                <?php
+            <?php
             }
 
             if ($this->session->userdata('parent_id') == 0 && $this->session->userdata('user_id') != '' && $this->session->userdata('company_id') != 0) {//parent_id =0
-                ?>
+            ?>
                 <li>
                     <a href="<?php echo base_url() ?>company" data-toggle="tooltip" data-placement="right" title="" data-original-title="Company Details">
                         <span class="badge"></span>
                         <i class="fa fa-desktop"></i>
                     </a>
                 </li>
-                <?php
+            <?php
             }
 
             if ($this->session->userdata('user_id') != '' && $this->session->userdata('company_id') != 0) {
-                ?>
+            ?>
 
                 <div id='cssmenu'>
                     <ul>
@@ -70,163 +70,133 @@
 
                             <ul style="display: block;">
 
-                                <?php
-                                if ($this->session->userdata('parent_id') == 0) {
-                                    ?>
-                               
-                                    <li>
+                            <?php
+                            if ($this->session->userdata('parent_id') == 0) {
+                            ?>
 
-                                        <a href="<?php echo base_url() ?>create_kpi"><span>Create KPI</span></a>
-                                    </li>
+                                <li>
 
-                                    <?php
-                                            }
-                                ?>
-                                <?php if($this->session->userdata('parentcheck')== 'yes'){ ?>
+                                    <a href="<?php echo base_url() ?>create_kpi"><span>Create KPI</span></a>
+                                </li>
+
+                            <?php
+                            }
+                            ?>
+                            <?php if ($this->session->userdata('parentcheck') == 'yes') {
+                            ?>
                                 <li>
                                     <a href="<?php echo base_url() ?>kpi_assign"><span>Assign KPI</span></a>
                                 </li>
-                                <?php } ?>
+                            <?php } ?>
 
 
-                                <?php if($this->session->userdata('parentcheck')== 'yes'){ ?>
+                            <?php if ($this->session->userdata('parentcheck') == 'yes') {
+                            ?>
                                 <li>
                                     <a href="<?php echo base_url() ?>target_assign"><span>Target KPI</span></a>
                                 </li>
-                                <?php } ?>
+                            <?php } ?>
 
 
-                                <?php
-                                if ($this->session->userdata('parent_id') != 0) {
-                                    ?>
-                                    <li>
-                                        <a href="<?php echo base_url() ?>kpi_entry"><span>KPI Entry</span></a>
-                                    </li>
-                                    <?php
-                                }
-                                ?>
+                            <?php
+                            if ($this->session->userdata('parent_id') != 0) {
+                            ?>
+                                <li>
+                                    <a href="<?php echo base_url() ?>kpi_entry"><span>KPI Entry</span></a>
+                                </li>
+                            <?php
+                            }
+                            ?>
 
-                                    <?php if($this->session->userdata('parentcheck')== 'yes'){ ?>
+                            <?php if ($this->session->userdata('parentcheck') == 'yes') {
+                            ?>
                                 <li>
                                     <a href="<?php echo base_url() ?>kpi_approve"><span>Approve KPI</span></a>
                                 </li>
-                                <?php } ?>
+                            <?php } ?>
 
-                            </ul>
+                        </ul>
 
-                        </li>
-                    </ul>
-                </div>
+                    </li>
+                </ul>
+            </div>
 
-                <?php
-            }
+            <?php
+                        }
 
 
-            if ($this->session->userdata('user_id') != '' && $this->session->userdata('company_id') != 0) {
-                ?>
-                <li>
-                    <a href="<?php echo base_url() ?>attendance" data-toggle="tooltip" data-placement="right" title="Attendance" data-original-title="Attendance">
-                        <i class="fa fa-user"></i>
-                    </a>
-                </li>
+                        if ($this->session->userdata('user_id') != '' && $this->session->userdata('company_id') != 0) {
+            ?>
+                            <li>
+                                <a href="<?php echo base_url() ?>attendance" data-toggle="tooltip" data-placement="right" title="Attendance" data-original-title="Attendance">
+                                    <i class="fa fa-user"></i>
+                                </a>
+                            </li>
 
-                <?php
-            }
+            <?php
+                        }
 
-            if ($this->session->userdata('parent_id') == 0 && $this->session->userdata('user_id') != '' && $this->session->userdata('company_id') != 0) {
-                ?>
-                <li>
-                    <a href="<?php echo base_url() ?>graph" data-toggle="tooltip" data-placement="right" title="Analysis" data-original-title="Analysis">
-                        <i class="fa fa-bar-chart-o"></i>
-                    </a>
-                </li>
+                        if ($this->session->userdata('user_id') != '' && $this->session->userdata('company_id') != 0) {
+            ?>
+                            <li>
+                                <a href="<?php echo base_url() ?>graph" data-toggle="tooltip" data-placement="right" title="Analysis" data-original-title="Analysis">
+                                    <i class="fa fa-bar-chart-o"></i>
+                                </a>
+                            </li>
 
-                <?php
-            }
+            <?php
+                        }
 
-            if ($this->session->userdata('parent_id') == 0 && $this->session->userdata('user_id') != '' && $this->session->userdata('company_id') != 0) {
-                ?>
-
-                <li>
-                    <a href="<?php echo base_url() ?>holiday" data-toggle="tooltip" data-placement="right" title="Set Holiday" data-original-title="Holiday">
-                        <i class="fa fa-calendar"></i>
-                    </a>
-                </li>
-
-                <?php
-            }
-            
-            if ($this->session->userdata('user_type_id_fk') != '') {
-                ?>
-
-                <li>
-                    <a href="<?php echo base_url() ?>register/change_pwd" data-toggle="tooltip" data-placement="right" title="Change Password" data-original-title="Change Password">
-                        <i class="fa fa-star"></i>
-                    </a>
-                </li>
-
-                <?php
-            }
+                        if ($this->session->userdata('parent_id') == 0 && $this->session->userdata('user_id') != '' && $this->session->userdata('company_id') != 0) {
             ?>
 
+                            <li>
+                                <a href="<?php echo base_url() ?>holiday" data-toggle="tooltip" data-placement="right" title="Set Holiday" data-original-title="Holiday">
+                                    <i class="fa fa-calendar"></i>
+                                </a>
+                            </li>
 
+            <?php
+                        }
 
-            <!--
-            <li>
-                <a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Charts">
-                    <i class="fa fa-bar-chart-o"></i>
-                </a>
-            </li>
-            <li>
-                <a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Tables">
-                    <i class="fa fa-th"></i>
-                </a>
-            </li>
-            <li>
-                <a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Layouts">
-                    <i class="fa fa-font"></i>
-                </a>
-            </li>
-            <li>
-                <a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Calendar">
-                    <span class="badge">5</span>
-                    <i class="fa fa-calendar"></i>
-                </a>
-            </li>echo $this->calendar->generate();
-            <li>
-                <a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Maps">
-                    <i class="fa fa-map-marker"></i>
-                </a>
-            </li>
-            <li>
-                <a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Extra Pages">
-                    <i class="fa fa-sign-in"></i>
-                </a>
-            </li>-->
-
-
-
-            <!--    <?php
-//                            if ($this->session->userdata('user_type_id_fk') != '') {
+                        if ($this->session->userdata('user_type_id_fk') != '') {
             ?>
 
+                            <li>
+                                <a href="<?php echo base_url() ?>register/change_pwd" data-toggle="tooltip" data-placement="right" title="Change Password" data-original-title="Change Password">
+                                    <i class="fa fa-star"></i>
+                                </a>
+                            </li>
 
-                                        <li>
-                                            <a href="<?php echo base_url() ?>login/logout" data-toggle="tooltip" data-placement="right" title="Logout" data-original-title="Logout">
-<i class="fa fa-sign-out"></i>
-</a>
-</li>        -->
+            <?php
+                        }
+                        if ($this->session->userdata('parent_id') == 0 && $this->session->userdata('user_id') != '' && $this->session->userdata('company_id') != 0) {//parent_id =0
+            ?>
+                            <li>
+                                <a href="<?php echo base_url() ?>message" data-toggle="tooltip" data-placement="right" title="" data-original-title="Message">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                            </li>
+            <?php
+                        }
 
+                        if ($this->session->userdata('user_id') == '') {
+            ?>
+                            <li>
+                                <a href="<?php echo base_url() ?>contact" data-toggle="tooltip" data-placement="right" title="" data-original-title="Contact Us">
+                                    <i class="fa fa-phone"></i>
+                                </a>
+                            </li>
 
-
-
-
+                            <li>
+                                <a href="<?php echo base_url() ?>about" data-toggle="tooltip" data-placement="right" title="" data-original-title="About Us">
+                                    <i class="fa fa-flag"></i>
+                                </a>
+                            </li>
+            <?php
+                        }
+            ?>
 
         </ul>
-
-
-
     </div>
-
-
 </div>

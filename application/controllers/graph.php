@@ -6,17 +6,19 @@ if (!defined('BASEPATH'))
 class Graph extends CI_Controller {
 
     public function index() {
-        
+
         $userid = $this->session->userdata('user_id');
+        $companyid = $this->session->userdata('company_id');
+        $parent_id = $this->session->userdata('parent_id');
 
         $this->load->model('kpi_master_model');
         $data['kpiArr'] = $this->kpi_master_model->getAllKpi();
 
         $this->load->model('registration_model');
         $data['registerArr'] = $this->registration_model->getAllregister();
-        
+
         $this->load->model('registration_model');
-        $data['usergetArr'] = $this->registration_model->get_child_and_user($userid);
+        $data['usergetArr'] = $this->registration_model->get_child_and_user($companyid,$userid,$parent_id);
 
         $this->load->view('common/header_view');
         $this->load->view('common/sidebar_view');
@@ -41,24 +43,30 @@ class Graph extends CI_Controller {
 
         $this->load->model('target_model');
         $targetArr = $this->target_model->get_record($targetData);
-
+        $targetval = array();
         $cnt = 0;
         $sum_target = 0;
         if (count($targetArr) > 0) {
             foreach ($targetArr as $val) {
+                $target_value = intval($val['value_of_target']);
                 $sum_target+=intval($val['value_of_target']);
                 $cnt++;
+                array_push($targetval, $target_value);
             }
         }
         $avg_target = $sum_target / $cnt;
         $allvalue = array();
         $dateArr = array();
+        $approvedvalue = array();
+
         if (count($graphArr) > 0) {
             foreach ($graphArr as $value) {
                 $kpi_value = intval($value['kpi_value']);
+                $approved_value = intval($value['approved_value']);
                 $date = date("d-m-Y", strtotime($value['entry_kpi_date_added']));
                 array_push($allvalue, $kpi_value);
                 array_push($dateArr, $date);
+                array_push($approvedvalue, $approved_value);
             }
         }
 //        $graph_data['popul']['data'] = $value_of_target;
@@ -80,6 +88,8 @@ class Graph extends CI_Controller {
         $assos['avg_target'] = $avg_target;
         $assos['valuearr'] = $allvalue;
         $assos['datearr'] = $dateArr;
+        $assos['approvedarr'] = $approvedvalue;
+        $assos['targetarr']=$targetval;
         echo json_encode($assos);
 //        $this->load->view('chart_container_view', $data['charts']);
     }
@@ -105,6 +115,32 @@ class Graph extends CI_Controller {
             }
         }
         echo $html;
+    }
+
+    function graph_home() {
+
+        if ($_POST['action'] == 'fetchdata') {
+
+            $userid = $this->input->post('userid');
+            $todate = date('Y-m-d');
+            $fromdate = date('Y-m-d', strtotime($todate . ' - 7 day'));
+            $postArr = array("user_id_fk" => $userid, "approved_status" => 1, "date(entry_kpi_date_added) >=" => date("Y-m-d", strtotime($fromdate)), "date(entry_kpi_date_added) <=" => date("Y-m-d", strtotime($todate)));
+            $this->load->model('entry_kpi_model');
+            $graphArr = $this->entry_kpi_model->get_record($postArr);
+            $dateArr = array();
+            $approvedvalue = array();
+            if (count($graphArr) > 0) {
+                foreach ($graphArr as $value) {
+                    $approved_value = intval($value['approved_value']);
+                    $date = date("d-m-Y", strtotime($value['entry_kpi_date_added']));
+                    array_push($dateArr, $date);
+                    array_push($approvedvalue, $approved_value);
+                }
+            }
+            $assos['datearr'] = $dateArr;
+            $assos['approvedarr'] = $approvedvalue;
+            echo json_encode($assos);
+        }
     }
 
 }

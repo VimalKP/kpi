@@ -10,8 +10,17 @@ class Attendance extends CI_Controller {
 
         $this->load->model('registration_model');
         $data['usergetArr'] = $this->registration_model->get_child_user($userid);
+        $todate=date('Y-m-d');
+        $fromdate = date('Y-m-d', strtotime($todate . ' - 30 day'));
+        $this->load->model('attendance_model');
+        $where=array('user_id_fk'=>$userid,'attendance_status'=>1,"date(attendance_date) >=" => date("Y-m-d", strtotime($fromdate)), "date(attendance_date) <=" => date("Y-m-d", strtotime($todate)));
+        $data['detail'] =$this->attendance_model->get_detail($where);
+
+
+
+
 //        echo"<pre>";
-//        print_r($data['usergetArr']);
+//        print_r($data['detail']);
 //        echo"</pre>";
 //        exit();
 

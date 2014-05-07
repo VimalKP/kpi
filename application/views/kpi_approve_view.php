@@ -55,73 +55,80 @@ $this->load->library('form_validation');
                                 $approvedArr = array();
                                 if (isset($childusersArr) && count($childusersArr) > 0) {
                                     foreach ($childusersArr as $keyuserid => $valueusername) {
-                                ?>
+                                        ?>
                                         <div class="widget-content">
                                             <div id="user" class="form-group">
                                                 <span class="col-md-12"><?php echo $valueusername; ?></span>
                                             </div>
 
-                                            <div class="widget-header">
-                                                <label class="col-xs-2">Name Of KPI</label>
-                                                <label class="col-xs-1">For Approve</label>
-                                                <label class="col-xs-1" style="margin-right: 10px;">Original Target</label>
-                                                <label class="col-xs-2" style="margin-right: 10px;">Final Approve Value</label>
-                                                <label class="col-xs-2" style="margin-right: 10px;">Comment By User</label>
-                                                <label class="col-xs-2">Comment For Approve</label>
-                                                <label class="col-xs-1" style="padding-left: 26px;" width="30" height="30">Approve Work</label>        
-                                            </div>
+                                            <?php
+                                            if (isset($childkpisArr[$keyuserid])) {
+                                                $kpiValuesArr = array();
+                                                $kpiValuesArr = $childkpisArr[$keyuserid];
+                                                if (isset($kpiValuesArr) && count($kpiValuesArr) > 0) {
+                                                    ?>
+                                                    <div id="" class="form-group">
+                                                        <label class="col-xs-2">KPI</label>
+                                                        <label class="col-xs-1">Value Added</label>
+                                                        <label class="col-xs-1" style="margin-right: 10px;">Target</label>
+                                                        <label class="col-xs-2">Approve Value</label>
+                                                        <label class="col-xs-2">User Comment</label>
+                                                        <label class="col-xs-2">Approve Comment</label>
+                                                        <label class="col-xs-1">Action</label>
+                                                    </div>
+                                            <div style="clear: both;"></div>
+                                                    <?php
+                                                    foreach ($kpiValuesArr as $keykpiid => $valuekpi) {
 
-                                    <?php
-                                        if (isset($childkpisArr[$keyuserid])) {
-                                            $kpiValuesArr = array();
-                                            $kpiValuesArr = $childkpisArr[$keyuserid];
-                                            if (isset($kpiValuesArr) && count($kpiValuesArr) > 0) {
+                                                        if ($valuekpi['approved_status'] == 0) {
+                                                            if(strlen($valuekpi['kpiName'])>10){
+                                                                $kpiname=substr($valuekpi['kpiName'], 0, 10);
+                                                                $kpiname=$kpiname.'..';
+                                                            }else{
+                                                                $kpiname=$valuekpi['kpiName'];
+                                                            }
+                                                            ?>
+                                                            <div id="assign_kpi" class="form-group">
+                                                                <label class="col-xs-2" title="<?=$valuekpi['kpiName'];?>"><?php echo $kpiname; ?></label>
+                                                                <label class="col-xs-1"><?php echo $valuekpi['kpiValue']; ?></label>
+                                                                <label class="col-xs-1" style="margin-right: 10px;"><?php echo $valuekpi['value_of_target']; ?></label>
 
-                                                foreach ($kpiValuesArr as $keykpiid => $valuekpi) {
+                                                                <div class="col-xs-2">
+                                                                    <input class="form-control" type="text" id="final_<?= $keykpiid ?>" name="final" value="<?php echo $valuekpi['kpiValue']; ?>">
+                                                                </div>
 
-                                                    if ($valuekpi['approved_status'] == 0) {
-                                    ?>
-                                                        <div id="assign_kpi" class="form-group">
-                                                            <label class="col-xs-2"><?php echo $valuekpi['kpiName']; ?></label>
-                                                            <label class="col-xs-1"><?php echo $valuekpi['kpiValue']; ?></label>
-                                                            <label class="col-xs-1" style="margin-right: 10px;"><?php echo $valuekpi['value_of_target']; ?></label>
+                                                                <div class="col-xs-2">
+                                                                    <textarea class="form-control col-md-2" style="height: 40px; margin-right: 10px;" rows="1" name="" disabled="disabled"><?php echo $valuekpi['kpiComment']; ?></textarea>
+                                                                </div>
 
-                                                            <div class="col-xs-2">
-                                                                <input class="form-control" type="text" id="final_<?= $keykpiid ?>" name="final" value="<?php echo $valuekpi['kpiValue']; ?>">
+                                                                <div class="col-xs-2">
+                                                                    <textarea class="form-control col-md-2" style="height: 40px;" cols="20" type="text" id="comment_<?= $keykpiid ?>" rows="1" name="comment_<?= $keykpiid ?>" placeholder="comment"></textarea>
+                                                                </div>
+                                                                <a href="javascript:void(0)" onclick="approvekpivalue(<?= $keyuserid; ?>,<?= $keykpiid ?>);" style="padding-left: 41px;"> <img title="Approve" src="<?php echo base_url(); ?>images/approve.png" width="30" height="30"></a>
                                                             </div>
 
-                                                            <div class="col-xs-2">
-                                                                <textarea class="form-control col-md-2" style="height: 40px; margin-right: 10px;" rows="1" name="" disabled="disabled"><?php echo $valuekpi['kpiComment']; ?></textarea>
-                                                            </div>
 
-                                                            <div class="col-xs-2">
-                                                                <textarea class="form-control col-md-2" style="height: 40px;" cols="20" type="text" id="comment_<?= $keykpiid ?>" rows="1" name="comment_<?= $keykpiid ?>" placeholder="comment"></textarea>
-                                                            </div>
-                                                            <a href="javascript:void(0)" onclick="approvekpivalue(<?= $keyuserid; ?>,<?= $keykpiid ?>);" style="padding-left: 41px;"> <img title="Approve" src="<?php echo base_url(); ?>images/approve.png" width="30" height="30"></a>
-                                                        </div>
-
-
-                                                        <!--                                                            <div id="assign_kpi" class="form-group">
-                                                                                                                        <label class="col-md-3 control-label"><?php echo $valuekpi['kpiName']; ?></label>
-                                                                                                                        <label class="col-md-2 control-label"><?php echo $valuekpi['kpiValue']; ?></label>
-                                                                                                                        <textarea class="form-control col-md-6" style="width: 40%!important;height: 40px;" cols="20" type="text" id="comment_<?= $keykpiid ?>" rows="1" name="comment_<?= $keykpiid ?>" placeholder="comment"></textarea>
-                                                                                                                        <a href="javascript:void(0)" onclick="approvekpivalue(<?= $keyuserid; ?>,<?= $keykpiid ?>);" style="padding-left: 46px;"> <img title="Approve" src="<?php echo base_url(); ?>images/approve.png" width="30" height="30"></a>
-                                                                                                                    </div>-->
-                                    <?php
-                                                    } else {
-                                                        $approvedArr[$approvedIndex]['userid'] = $keyuserid;
-                                                        $approvedArr[$approvedIndex]['username'] = $valueusername;
-                                                        $approvedArr[$approvedIndex]['kpiid'][] = $keykpiid;
-                                                        $approvedArr[$approvedIndex]['kpis_' . $keykpiid] = $valuekpi;
+                                                            <!--                                                            <div id="assign_kpi" class="form-group">
+                                                                                                                            <label class="col-md-3 control-label"><?php echo $valuekpi['kpiName']; ?></label>
+                                                                                                                            <label class="col-md-2 control-label"><?php echo $valuekpi['kpiValue']; ?></label>
+                                                                                                                            <textarea class="form-control col-md-6" style="width: 40%!important;height: 40px;" cols="20" type="text" id="comment_<?= $keykpiid ?>" rows="1" name="comment_<?= $keykpiid ?>" placeholder="comment"></textarea>
+                                                                                                                            <a href="javascript:void(0)" onclick="approvekpivalue(<?= $keyuserid; ?>,<?= $keykpiid ?>);" style="padding-left: 46px;"> <img title="Approve" src="<?php echo base_url(); ?>images/approve.png" width="30" height="30"></a>
+                                                                                                                        </div>-->
+                                                            <?php
+                                                        } else {
+                                                            $approvedArr[$approvedIndex]['userid'] = $keyuserid;
+                                                            $approvedArr[$approvedIndex]['username'] = $valueusername;
+                                                            $approvedArr[$approvedIndex]['kpiid'][] = $keykpiid;
+                                                            $approvedArr[$approvedIndex]['kpis_' . $keykpiid] = $valuekpi;
+                                                        }
                                                     }
                                                 }
                                             }
-                                        }
-                                        $approvedIndex++;
-                                    ?>
+                                            $approvedIndex++;
+                                            ?>
 
-                                    </div>
-                                <?php
+                                        </div>
+                                        <?php
                                     }
                                 } else {
                                     echo "Not Entry Found to Approve";
@@ -142,25 +149,30 @@ $this->load->library('form_validation');
                                 <?php
                                 if (count($approvedArr) > 0) {
                                     foreach ($approvedArr as $value) {
-                                ?>
+                                        ?>
                                         <div class="widget-content">
                                             <div id="user" class="form-group">
                                                 <span class="col-md-12"><?php echo $value['username'] ?></span>
                                             </div>
-                                    <?php
-                                        $totalkpis = count($value['kpiid']);
-                                        for ($i = 0; $i < $totalkpis; $i++) {
-                                            $kpiid = $value['kpiid'][$i];
-                                    ?>
-                                            <div id="assign_kpi" class="form-group col-md-12">
-                                                <label class="col-md-8 control-label"><?php echo $value['kpis_' . $kpiid]['kpiName']; ?></label>
-                                                <label class="col-md-2 control-label"><?php echo $value['kpis_' . $kpiid]['kpiapproved_value']; ?></label>
-                                            </div>
-                                    <?php
-                                        }
-                                    ?>
-                                    </div>
-                                <?php
+                                            <?php
+                                            $totalkpis = count($value['kpiid']);
+                                            for ($i = 0; $i < $totalkpis; $i++) {
+                                                $kpiid = $value['kpiid'][$i];
+                                                $kpiname=$value['kpis_' . $kpiid]['kpiName'];
+                                                 if(strlen($kpiname)>10){
+                                                                $kpiname=substr($kpiname, 0, 10);
+                                                                $kpiname=$kpiname.'..';
+                                                            }
+                                                ?>
+                                                <div id="assign_kpi" class="form-group col-md-12">
+                                                    <label class="col-md-8 control-label" title="<?=$value['kpis_' . $kpiid]['kpiName'];?>"><?php echo $kpiname; ?></label>
+                                                    <label class="col-md-2 control-label"><?php echo $value['kpis_' . $kpiid]['kpiapproved_value']; ?></label>
+                                                </div>
+                                                <?php
+                                            }
+                                            ?>
+                                        </div>
+                                        <?php
                                     }
                                 } else {
                                     echo "Not approved Till!";

@@ -96,7 +96,7 @@ $this->load->library('form_validation');
     <div class="main-content">
         <div class="widget-content">
             <div class="row">
-
+                
                 <div class="col-md-6">
                     <div class="widget widget-green">
                         <div class="widget-title">
@@ -142,8 +142,8 @@ $this->load->library('form_validation');
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-6">
+				
+				<div class="col-md-6">
                     <div class="widget widget-blue">
                         <div class="widget-title">
                             <div class="widget-controls">
@@ -158,7 +158,57 @@ $this->load->library('form_validation');
                         </div>
                     </div>
                 </div>
+				
+                <?php if (isset($holidayarr) && $holidayarr != array()) { ?>
+                    <div class="col-md-6">
+                        <div class="widget widget-green">
+                            <div class="widget-title">
+                                <div class="widget-controls">
+                                    <a href="#" class="widget-control widget-control-full-screen" data-toggle="tooltip" data-placement="top" title="" data-original-title="Full Screen"><i class="fa fa-expand"></i></a>
+                                    <a href="#" class="widget-control widget-control-full-screen widget-control-show-when-full" data-toggle="tooltip" data-placement="left" title="" data-original-title="Exit Full Screen"><i class="fa fa-expand"></i></a>
+                                    <a href="#" class="widget-control widget-control-minimize" data-toggle="tooltip" data-placement="top" title="" data-original-title="Minimize"><i class="fa fa-minus-circle"></i></a>
+                                </div>
+                                <h3><i class="fa fa-calendar-o"></i> Batch Holiday History</h3>
+                            </div>
+                            <div class="widget-content">
+                                <!--                        <div class="widget-content" style="height: 500px;">-->
+                                <div class="modal-body">
+                                    <div class="table-responsive">
+                                        <table style="text-align: center;" class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th><center>Holiday Type </center></th>
+                                            <th><center>Status</center></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                if (count($holidayarr) > 0) {
+                                                    for ($i = 0; $i < count($holidayarr); $i++) {
+                                                        $holiday_message = $holidayarr[$i]['holiday_message'];
+                                                        $history_id = $holidayarr[$i]['history_id'];
+                                                        $holiday_type = $holidayarr[$i]['holiday_type'];
+                                                        ?>
+                                                        <tr>
+                                                            <td><?= $holiday_message; ?></td>
+                                                            <td><span id="history_^<?= $history_id ?>_^<?=$holiday_type?>" class="label label-danger" style="cursor: pointer" onclick="deleteholiday(this.id);">Delete</span></td>
+                                                        </tr>
+                                                    <?php
+                                                    }
+                                                }
+                                                ?>
+                                            </tbody>
+                                        </table>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+<?php } ?>
+                </div>
             </div>
+			
         </div>
     </div>
-</div>

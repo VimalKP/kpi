@@ -7,7 +7,7 @@ class Create_kpi extends CI_Controller {
 
     public function index() {
 
-        if ($this->session->userdata('user_type_id_fk') != 1) {
+        if ($this->session->userdata('user_id') == '') {
             $this->load->view('common/header_view');
             $this->load->view('common/sidebar_view');
             $this->load->view('login_view');

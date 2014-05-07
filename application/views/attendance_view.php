@@ -75,7 +75,70 @@ $this->load->library('form_validation');
                                     ?>
                                         </td>
 
-                                        <td> <input type="checkbox" id="attendance_<?= $value->user_id ?>" onchange="absent(this.id); " <?php echo ( in_array($value->user_id, $absentuserids))?"checked='checked'":""; ?>> </td>
+                                        <td> <input type="checkbox" id="attendance_<?= $value->user_id ?>" onchange="absent(this.id); " <?php echo ( in_array($value->user_id, $absentuserids)) ? "checked='checked'" : ""; ?>> </td>
+
+                                <?php
+                                        }
+                                    }
+                                    echo "</tr>";
+                                ?>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="main">
+                    <div class="widget widget-red">
+                        <div class="widget-title">
+                            <div class="widget-controls">
+                                <a href="#" class="widget-control widget-control-full-screen" data-toggle="tooltip" data-placement="top" title="" data-original-title="Full Screen"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="widget-control widget-control-full-screen widget-control-show-when-full" data-toggle="tooltip" data-placement="left" title="" data-original-title="Exit Full Screen"><i class="fa fa-expand"></i></a>
+                                <a href="#" class="widget-control widget-control-minimize" data-toggle="tooltip" data-placement="top" title="" data-original-title="Minimize"><i class="fa fa-minus-circle"></i></a>
+                            </div>
+                            <h3><i class="fa fa-user"></i> Your Attendance ( Last 30 Days )</h3>
+                        </div>
+                        <div class="widget-content">
+                            <div class="table-responsive">
+                                <table style="text-align: center;" class="table table-bordered table-hover">
+
+                                    <thead>
+                                        <tr>
+                                            <th><center> No. Of Absent</center></th>
+                                            <th><center> Absent Date</center></th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+
+                                    <?php
+                                    if (isset($detail) && $detail != array()) {
+
+                                        foreach ($detail as $key => $value) {
+
+                                            echo"<tr>";
+//                                            echo "<pre>";
+//                                            print_r($a);
+//                                            echo "</pre>";
+//                                            exit();
+                                    ?>
+                                        <td>
+                                    <?php echo $key + 1; ?>
+                                        </td>        
+
+                                        <td>
+                                    <?php
+                                            echo date("d-m-Y", strtotime($value->attendance_date));
+                                    ?>
+                                        </td>
+
+
+
+
 
                                 <?php
                                         }
@@ -87,6 +150,10 @@ $this->load->library('form_validation');
                             </table>
                         </div>
                     </div>
+
+
+
+
                 </div>
             </div>
         </div>

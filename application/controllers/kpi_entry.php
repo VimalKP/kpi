@@ -17,10 +17,23 @@ class Kpi_entry extends CI_Controller {
 //        } else {
         $user_id = $this->session->userdata('user_id');
         $this->load->model('entry_kpi_model');
+        $this->load->model('kpi_user_model');
         $data['data'] = $this->entry_kpi_model->getentrydetail($user_id);
 
-
-        $data['get_target'] = $this->entry_kpi_model->get_assign_target($user_id);
+        $whereArr = array(
+            'user_id_fk' => $user_id
+        );
+        $kpiarr=array();
+        $assignkpiarr = $this->kpi_user_model->get_record($whereArr);
+        if (count($assignkpiarr) > 0) {
+            $assignkpi = $assignkpiarr[0]['kpi_id_fk'];
+            $kpiarr = explode(',', $assignkpi);
+        }
+//        echo '<pre>';
+//        print_r($data);
+//        echo '</pre>';
+//        exit();
+        $data['get_target'] = $this->entry_kpi_model->get_assign_target($user_id,$kpiarr);
 //        echo '<pre>';
 //        print_r($data);
 //        echo '</pre>';
@@ -99,6 +112,21 @@ class Kpi_entry extends CI_Controller {
             $assoc['$opt'] = $opt;
         }
         echo json_encode($assoc);
+    }
+
+    public function notification() {
+        $user_id = $this->session->userdata('user_id');
+//        $user_id =5;
+        $this->load->model('entry_kpi_model');
+        $data['status'] = $this->entry_kpi_model->notification($user_id);
+//        echo "<pre>";
+//        print_r($data['status']);
+//        echo "</pre>";
+//        exit();
+//        $this->load->view('common/header_view',$data);
+//        $this->load->view('common/sidebar_view');
+//        $this->load->view('kpi_entry_view');
+//        $this->load->view('common/footer_view');
     }
 
 }

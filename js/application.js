@@ -594,3 +594,26 @@ function absent(id){
         }
     });
 }
+
+function deleteholiday(id){
+    var historyarr=id.split("_^");
+  
+    var historyid=historyarr[1];
+    var historytype=historyarr[2];
+    console.log(id)
+   
+    if(confirm("Ary You sure you want to Delete all Holiday?")){
+        $.ajax({
+            url:baseurl+"holiday/delete_history_data",
+            type:'POST',
+            data:  {
+                "historyid": historyid,
+                "historytype": historytype
+            },
+               
+            success:function(data){
+                window.location.href=baseurl+'holiday'
+            }
+        });
+    }
+}

@@ -120,11 +120,17 @@ class Registration_model extends CI_Model {
         return $query->result();
     }
 
-    function get_child_and_user($userid) {
+    function get_child_and_user($companyid,$userid,$parent_id) {
 //        $this->db->or_where('user_id', $userid);
 //        $query = $this->db->get_where('registration', array('parent_id' => $userid, 'registration_status' => 0));
 
-        $query = $this->db->query("select * from registration where parent_id = $userid OR user_id = $userid");
+//        $query = $this->db->query("select * from registration where company_id=$companyid AND registration_status=0");
+      if($parent_id==0){
+        $query = $this->db->query("select * from registration where company_id=$companyid AND registration_status=0");  
+      }else{
+          $query = $this->db->query("select * from registration where company_id=$companyid AND (parent_id = $userid OR user_id = $userid) AND registration_status=0");
+      }
+        
 
         return $query->result();
     }
@@ -142,13 +148,22 @@ class Registration_model extends CI_Model {
 
     function get_user_detail($company_id) {
         $this->db->select('*');
-        $query = $this->db->get_where('registration', array('company_id' => $company_id));
+        $this->db->from('registration as r');
+        $this->db->join('user_type as u', 'r.user_type_id_fk=u.user_type_id');
+        $this->db->where(array('r.company_id'=>$company_id));
+        $query = $this->db->get();
+        return $query->result();
+
+
+
+
+//        $query = $this->db->get_where('registration', array('company_id' => $company_id));
 //        $this->db->select('user_id');
 //        $parent_name = array(user_id,username);
 //        $this->db->from('blogs');
 //        $this->db->join('comments', 'comments.id = blogs.id');
 //        $query = $this->db->get('registration');
-        return $query->result();
+//        return $query->result();
     }
 
     public function getuseralldetail($userid) {
@@ -205,6 +220,15 @@ class Registration_model extends CI_Model {
     function forgotpass($id) {
         $this->db->select('*');
         $query = $this->db->get_where('registration', array('user_id' => $id));
+        return $query->result();
+    }
+
+    function usertype($companyid) {
+        $this->db->select('*');
+        $this->db->from('registration as r');
+        $this->db->join('user_type as u', 'r.company_id=u.company_id_fk');
+         $this->db->where(array('u.company_id_fk'=>$companyid));
+        $query = $this->db->get();
         return $query->result();
     }
 
