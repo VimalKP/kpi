@@ -500,12 +500,16 @@ function chart()
         },
         success:function(data){
            
-            console.log(data);
+            
             var obj =  $.parseJSON(data);
             var kpi_value = new Array();
             var date_value = new Array();
             kpi_value =  obj.valuearr;
             date_value=  obj.datearr;
+            approved_value =  obj.approvedarr;
+            target_value =  obj.targetarr;
+            console.log(approved_value)
+            console.log(target_value)
             var avg_target =  obj.avg_target;
             if(kpi_value==''){
                 alert("Sorry, Data not available!");
@@ -527,18 +531,18 @@ function chart()
                     yAxis: {
                         title: {
                             text: 'KPI VALUE'
-                        },
-                        plotLines: [{
-                            id: 'Average Target',
-                            color: '#FF0000',
-                            dashStyle: 'ShortDash',
-                            width: 2,
-                            value: avg_target,
-                            zIndex: 0,
-                            label : {
-                                text : 'Average Target = '+avg_target
-                            }
-                        }]
+                        }
+                    //                        plotLines: [{
+                    //                            id: 'Average Target',
+                    //                            color: '#FF0000',
+                    //                            dashStyle: 'ShortDash',
+                    //                            width: 2,
+                    //                            value: avg_target,
+                    //                            zIndex: 0,
+                    //                            label : {
+                    //                                text : 'Average Target = '+avg_target
+                    //                            }
+                    //                        }]
                     },
                     tooltip: {
                         headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
@@ -552,11 +556,29 @@ function chart()
                         column: {
                             pointPadding: 0.2,
                             borderWidth: 0
+                        },
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: false,
+                                format: '<b>{point.name}</b>',
+                                style: {
+                                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                }
+                            }
                         }
+
                     },
-                    series: [{
+                    series: [
+                    {
                         name:"Selected KPI " ,
-                        data: kpi_value
+                        data: approved_value
+                    },
+                    {
+                        name:"Target Values" ,
+                        type: 'spline',
+                        data: target_value
                     }
                     ]
                 });

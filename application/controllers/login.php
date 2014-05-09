@@ -148,6 +148,7 @@ class Login extends CI_Controller {
                     $this->worknotify();
                     $this->checkholiday();
                     $this->msgcustom();
+                    $this->autotargetentry();
                     if ($this->session->userdata('user_type_id_fk') != 1) {
                         // if session running then redirect to home page.
                         // if session expired then go to login
@@ -171,6 +172,51 @@ class Login extends CI_Controller {
 //        }
 //        exit();
 //        $this->load->view("create_kpi_view");
+        }
+    }
+
+    public function autotargetentry() {
+        $company_id = $this->session->userdata('company_id');
+        $this->load->model('holiday_model');
+        $this->load->model('autotarget_model');
+        $this->load->model('registration_model');
+        $this->load->model('kpi_user_model');
+        $this->load->model('target_model');
+        $arr = array('company_id_fk' => $company_id, 'holidaydate' => date('Y-m-d'));
+        $arr1 = array('company_id_fk' => $company_id, 'date' => date('Y-m-d'));
+        $holidayarr = $this->holiday_model->get_record($arr);
+        $targetaddedarr = $this->autotarget_model->get_record($arr1);
+        if (count($holidayarr) == 0 && count($targetaddedarr) == 0 && $company_id != 0) {
+            $arr2 = array('company_id' => $company_id, 'registration_status' => 0,);
+            $regesarray = $this->registration_model->get_record($arr2);
+            $userarray = array();
+            for ($i = 0; $i < count($regesarray); $i++) {
+                $userid = $regesarray[$i]['user_id'];
+                $parentid = $regesarray[$i]['parent_id'];
+                if ($parentid != 0) {
+                    $userarray[] = $userid;
+                }
+            }
+            if (count($userarray) > 0) {
+                $userskpiarray = $this->kpi_user_model->getalluserskpi($userarray);
+                for ($i = 0; $i < count($userskpiarray); $i++) {
+                    $user_id_fk = $userskpiarray[$i]['user_id_fk'];
+                    $kpi_id_fk = $userskpiarray[$i]['kpi_id_fk'];
+                    $kpiarr = explode(',', $kpi_id_fk);
+                    $limit = count($kpiarr);
+                    $oldtargetarray = $this->target_model->ftech_old_target($user_id_fk, $kpiarr, $limit);
+                    if (count($oldtargetarray)) {
+                        for ($j = 0; $j < count($oldtargetarray); $j++) {
+                            $user_id_fk = $oldtargetarray[$j]['user_id_fk'];
+                            $kpi_id_fk = $oldtargetarray[$j]['kpi_id_fk'];
+                            $value_of_target = $oldtargetarray[$j]['value_of_target'];
+                            $postArr = array('kpi_id_fk' => $kpi_id_fk, 'value_of_target' => $value_of_target, 'target_date_added' => date("Y-m-d H:i:s"), 'user_id_fk' => $user_id_fk);
+                            $this->target_model->insert_record($postArr);
+                        }
+                    }
+                }
+            }
+            $this->autotarget_model->insert_record($arr1);
         }
     }
 

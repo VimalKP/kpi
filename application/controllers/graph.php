@@ -18,7 +18,7 @@ class Graph extends CI_Controller {
         $data['registerArr'] = $this->registration_model->getAllregister();
 
         $this->load->model('registration_model');
-        $data['usergetArr'] = $this->registration_model->get_child_and_user($companyid,$userid,$parent_id);
+        $data['usergetArr'] = $this->registration_model->get_child_and_user($companyid, $userid, $parent_id);
 
         $this->load->view('common/header_view');
         $this->load->view('common/sidebar_view');
@@ -44,17 +44,24 @@ class Graph extends CI_Controller {
         $this->load->model('target_model');
         $targetArr = $this->target_model->get_record($targetData);
         $targetval = array();
-        $cnt = 0;
-        $sum_target = 0;
+//        $cnt = 0;
+//        $sum_target = 0;
         if (count($targetArr) > 0) {
             foreach ($targetArr as $val) {
-                $target_value = intval($val['value_of_target']);
-                $sum_target+=intval($val['value_of_target']);
-                $cnt++;
+                if (is_bool($val['value_of_target'])) {
+                    if ($val['value_of_target'] == true)
+                        $target_value = 1;
+                    else
+                        $target_value = 0;
+                } else {
+                    $target_value = intval($val['value_of_target']);
+//                    $sum_target+=intval($val['value_of_target']);
+//                    $cnt++;
+                }
                 array_push($targetval, $target_value);
             }
         }
-        $avg_target = $sum_target / $cnt;
+//        $avg_target = $sum_target / $cnt;
         $allvalue = array();
         $dateArr = array();
         $approvedvalue = array();
@@ -84,12 +91,11 @@ class Graph extends CI_Controller {
 //        $this->highcharts->render_to('container');
 //        $data['charts'] = $this->highcharts->render();
         ////////////////////////////////// GRAPH 
-
-        $assos['avg_target'] = $avg_target;
+//        $assos['avg_target'] = $avg_target;
         $assos['valuearr'] = $allvalue;
         $assos['datearr'] = $dateArr;
         $assos['approvedarr'] = $approvedvalue;
-        $assos['targetarr']=$targetval;
+        $assos['targetarr'] = $targetval;
         echo json_encode($assos);
 //        $this->load->view('chart_container_view', $data['charts']);
     }

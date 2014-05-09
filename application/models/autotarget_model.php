@@ -1,17 +1,17 @@
 <?php
 
 /**
- * Description of target_model
+ * Description of User_type_model
  *
- * @author Vimal Patel
+ * @author kiran joshi
  */
-class target_model extends CI_Model {
+class Autotarget_model extends CI_Model {
 
     var $tableName;
 
     function __construct() {
         parent::__construct();
-        $this->tableName = "target";
+        $this->tableName = "autotarget";
     }
 
     function get_record($where = array(), $limit = NULL, $offset = NULL) {
@@ -22,7 +22,7 @@ class target_model extends CI_Model {
         }
         if ($limit != NULL && $offset != NULL)
             $this->db->limit($limit, $offset);
-        $this->db->order_by('target_id', 'asc');
+        $this->db->order_by('targetday_id', 'asc');
         $sql = $this->db->get($this->tableName);
         if ($sql->num_rows() > 0)
             return $sql->result_array();
@@ -56,7 +56,7 @@ class target_model extends CI_Model {
     }
 
     public function delete_record($id) {
-        $this->db->where_in('target_id', $id);
+        $this->db->where_in('user_type_id', $id);
         $this->db->delete($this->tableName);
         if ($this->db->affected_rows() > 0)
             return TRUE;
@@ -64,16 +64,6 @@ class target_model extends CI_Model {
             return FALSE;
     }
 
-    public function ftech_old_target($user_id_fk, $kpi_id_fk,$limit) {
-        $this->db->where('user_id_fk', $user_id_fk);
-        $this->db->where_in('kpi_id_fk', $kpi_id_fk);
-        $this->db->order_by('target_date_added', 'desc');
-        $this->db->limit($limit);
-        $sql = $this->db->get($this->tableName);
-        if ($sql->num_rows() > 0)
-            return $sql->result_array();
-        else
-            return array();
-    }
-
 }
+
+?>

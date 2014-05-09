@@ -164,7 +164,7 @@ $this->load->library('form_validation');
                                                                 $kpiname=$kpiname.'..';
                                                             }
                                                 ?>
-                                                <div id="assign_kpi" class="form-group col-md-12">
+                                            <div id="assign_kpi" class="form-group col-md-12" style="padding-bottom: 10px;">
                                                     <label class="col-md-8 control-label" title="<?=$value['kpis_' . $kpiid]['kpiName'];?>"><?php echo $kpiname; ?></label>
                                                     <label class="col-md-2 control-label"><?php echo $value['kpis_' . $kpiid]['kpiapproved_value']; ?></label>
                                                 </div>

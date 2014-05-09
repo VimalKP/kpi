@@ -13801,7 +13801,8 @@ table .checkbox
 }
 .page-header .avatar img
 {
-    width: 30px
+    width: 30px;
+    height:30px;
 }
 .page-header .user-name-w
 {

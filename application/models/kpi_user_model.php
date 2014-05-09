@@ -125,4 +125,13 @@ class kpi_user_model extends CI_Model {
             return FALSE;
     }
 
+    public function getalluserskpi($user_id_fk) {
+        $this->db->where_in('user_id_fk', $user_id_fk);
+        $sql = $this->db->get($this->tableName);
+        if ($sql->num_rows() > 0)
+            return $sql->result_array();
+        else
+            return array();
+    }
+
 }

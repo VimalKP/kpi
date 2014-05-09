@@ -94,6 +94,7 @@ class Entry_kpi_model extends CI_Model {
         $this->db->from('kpi_master as k');
         $this->db->join('target as t', 't.kpi_id_fk = k.kpi_id');
         $this->db->where('t.user_id_fk', $user_id_fk);
+        $this->db->where('DATE(t.target_date_added)', date("Y-m-d"));
         $this->db->where_in('k.kpi_id', $kpiarr);
 //        $query = $this->db->get('kpi_master');
         $query = $this->db->get();
@@ -125,6 +126,8 @@ class Entry_kpi_model extends CI_Model {
         $this->db->where('t.kpi_id_fk =ke.kpi_id_fk');
         $this->db->where_in('ke.user_id_fk', $childArr);
         $this->db->where_in('date(ke.entry_kpi_date_added)', date('Y-m-d'));
+        $this->db->where_in('date(t.target_date_added)', date('Y-m-d'));
+//        AND date( t.target_date_added ) = CURDATE( )
         $query = $this->db->get();
         if ($query->num_rows() > 0)
             return $query->result_array();

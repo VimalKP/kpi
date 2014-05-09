@@ -1,17 +1,17 @@
 <?php
 
 /**
- * Description of target_model
+ * Description of dummyentry_model
  *
- * @author Vimal Patel
+ * @author kiran joshi
  */
-class target_model extends CI_Model {
+class dummyentry_model extends CI_Model {
 
     var $tableName;
 
     function __construct() {
         parent::__construct();
-        $this->tableName = "target";
+        $this->tableName = "user_type";
     }
 
     function get_record($where = array(), $limit = NULL, $offset = NULL) {
@@ -22,7 +22,7 @@ class target_model extends CI_Model {
         }
         if ($limit != NULL && $offset != NULL)
             $this->db->limit($limit, $offset);
-        $this->db->order_by('target_id', 'asc');
+        $this->db->order_by('user_type_id', 'asc');
         $sql = $this->db->get($this->tableName);
         if ($sql->num_rows() > 0)
             return $sql->result_array();
@@ -56,7 +56,7 @@ class target_model extends CI_Model {
     }
 
     public function delete_record($id) {
-        $this->db->where_in('target_id', $id);
+        $this->db->where_in('user_type_id', $id);
         $this->db->delete($this->tableName);
         if ($this->db->affected_rows() > 0)
             return TRUE;
@@ -64,12 +64,30 @@ class target_model extends CI_Model {
             return FALSE;
     }
 
-    public function ftech_old_target($user_id_fk, $kpi_id_fk,$limit) {
-        $this->db->where('user_id_fk', $user_id_fk);
-        $this->db->where_in('kpi_id_fk', $kpi_id_fk);
-        $this->db->order_by('target_date_added', 'desc');
-        $this->db->limit($limit);
-        $sql = $this->db->get($this->tableName);
+    public function listofdistincttargetdate() {
+        $sql = $this->db->query("SELECT DISTINCT (
+date( `target_date_added` )
+) as date
+FROM `target`");
+        if ($sql->num_rows() > 0)
+            return $sql->result_array();
+        else
+            return array();
+    }
+
+    public function listofdistinctkpitdate() {
+        $sql = $this->db->query("SELECT DISTINCT (
+date( `entry_kpi_date_added` )
+) as date
+FROM `entry_kpi`");
+        if ($sql->num_rows() > 0)
+            return $sql->result_array();
+        else
+            return array();
+    }
+
+    public function targetvalue($kpiid, $user_id_fk, $date) {
+        $sql = $this->db->query("SELECT * from  target WHERE date( `target_date_added` )='$date' AND user_id_fk=$user_id_fk AND kpi_id_fk=$kpiid LIMIT 1 ");
         if ($sql->num_rows() > 0)
             return $sql->result_array();
         else
@@ -77,3 +95,5 @@ class target_model extends CI_Model {
     }
 
 }
+
+?>

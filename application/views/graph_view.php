@@ -44,7 +44,7 @@ $this->load->library('form_validation');
                                     <option value="column">Column</option>
                                     <option value="bar">Bar</option>
                                     <option value="area">Area</option>
-                                    <option value="pie">Pie</option>
+<!--                                    <option value="pie">Pie</option>-->
                                     <option value="line">Line</option>
                                 </select>
                             </div>
