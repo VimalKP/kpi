@@ -48,11 +48,10 @@ class Graph extends CI_Controller {
 //        $sum_target = 0;
         if (count($targetArr) > 0) {
             foreach ($targetArr as $val) {
-                if (is_bool($val['value_of_target'])) {
-                    if ($val['value_of_target'] == true)
-                        $target_value = 1;
-                    else
-                        $target_value = 0;
+                if ($val['value_of_target'] == 'true') {
+                    $target_value = 1;
+                } else if ($val['value_of_target'] == 'false') {
+                    $target_value = 0;
                 } else {
                     $target_value = intval($val['value_of_target']);
 //                    $sum_target+=intval($val['value_of_target']);
@@ -68,8 +67,15 @@ class Graph extends CI_Controller {
 
         if (count($graphArr) > 0) {
             foreach ($graphArr as $value) {
+                if ($value['approved_value'] == 'true') {
+                    $approved_value = 1;
+                } else if ($value['approved_value'] == 'false') {
+                    $approved_value = 0;
+                } else {
+                    $approved_value = intval($value['approved_value']);
+                }
+
                 $kpi_value = intval($value['kpi_value']);
-                $approved_value = intval($value['approved_value']);
                 $date = date("d-m-Y", strtotime($value['entry_kpi_date_added']));
                 array_push($allvalue, $kpi_value);
                 array_push($dateArr, $date);
